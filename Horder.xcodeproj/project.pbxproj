@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A31AFBC17B1B88100E34B17 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */; };
+		2A31AFBE17B1B8FD00E34B17 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */; };
+		2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31AFC017B1B96800E34B17 /* LetterBox.m */; };
+		2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31B45017B1BB9400E34B17 /* THUtil.m */; };
+		2A31B45417B1BBE700E34B17 /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31B45317B1BBE700E34B17 /* UIColor+FlatUI.m */; };
+		2A31B45817B1C04600E34B17 /* words.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A31B45517B1C04600E34B17 /* words.sqlite3 */; };
+		2A31B45917B1C04600E34B17 /* WordsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31B45717B1C04600E34B17 /* WordsDatabase.m */; };
 		2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616417B17FA400289A70 /* Foundation.framework */; };
 		2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616617B17FA400289A70 /* CoreGraphics.framework */; };
 		2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616817B17FA400289A70 /* UIKit.framework */; };
@@ -32,6 +39,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		2A31AFBF17B1B96800E34B17 /* LetterBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LetterBox.h; sourceTree = "<group>"; };
+		2A31AFC017B1B96800E34B17 /* LetterBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LetterBox.m; sourceTree = "<group>"; };
+		2A31B44F17B1BB9300E34B17 /* THUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THUtil.h; sourceTree = "<group>"; };
+		2A31B45017B1BB9400E34B17 /* THUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THUtil.m; sourceTree = "<group>"; };
+		2A31B45217B1BBE700E34B17 /* UIColor+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatUI.h"; sourceTree = "<group>"; };
+		2A31B45317B1BBE700E34B17 /* UIColor+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatUI.m"; sourceTree = "<group>"; };
+		2A31B45517B1C04600E34B17 /* words.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = words.sqlite3; sourceTree = "<group>"; };
+		2A31B45617B1C04600E34B17 /* WordsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordsDatabase.h; sourceTree = "<group>"; };
+		2A31B45717B1C04600E34B17 /* WordsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordsDatabase.m; sourceTree = "<group>"; };
 		2A96616117B17FA400289A70 /* Horder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A96616417B17FA400289A70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A96616617B17FA400289A70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A31AFBE17B1B8FD00E34B17 /* CoreMotion.framework in Frameworks */,
+				2A31AFBC17B1B88100E34B17 /* SpriteKit.framework in Frameworks */,
 				2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */,
 				2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */,
 				2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */,
@@ -74,6 +94,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A31AFC217B1B9E600E34B17 /* UtilityClasses */ = {
+			isa = PBXGroup;
+			children = (
+				2A31B45617B1C04600E34B17 /* WordsDatabase.h */,
+				2A31B45717B1C04600E34B17 /* WordsDatabase.m */,
+				2A31B45217B1BBE700E34B17 /* UIColor+FlatUI.h */,
+				2A31B45317B1BBE700E34B17 /* UIColor+FlatUI.m */,
+				2A31B44F17B1BB9300E34B17 /* THUtil.h */,
+				2A31B45017B1BB9400E34B17 /* THUtil.m */,
+			);
+			name = UtilityClasses;
+			sourceTree = "<group>";
+		};
 		2A96615817B17FA400289A70 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +129,8 @@
 		2A96616317B17FA400289A70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */,
+				2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */,
 				2A96616417B17FA400289A70 /* Foundation.framework */,
 				2A96616617B17FA400289A70 /* CoreGraphics.framework */,
 				2A96616817B17FA400289A70 /* UIKit.framework */,
@@ -107,6 +142,8 @@
 		2A96616A17B17FA400289A70 /* Horder */ = {
 			isa = PBXGroup;
 			children = (
+				2A31AFC217B1B9E600E34B17 /* UtilityClasses */,
+				2A96619317B199B400289A70 /* Nodes */,
 				2A96617317B17FA400289A70 /* AppDelegate.h */,
 				2A96617417B17FA400289A70 /* AppDelegate.m */,
 				2A96617617B17FA400289A70 /* Images.xcassets */,
@@ -118,6 +155,7 @@
 		2A96616B17B17FA400289A70 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2A31B45517B1C04600E34B17 /* words.sqlite3 */,
 				2A96616C17B17FA400289A70 /* Horder-Info.plist */,
 				2A96616D17B17FA400289A70 /* InfoPlist.strings */,
 				2A96617017B17FA400289A70 /* main.m */,
@@ -142,6 +180,15 @@
 				2A96618617B17FA400289A70 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2A96619317B199B400289A70 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				2A31AFBF17B1B96800E34B17 /* LetterBox.h */,
+				2A31AFC017B1B96800E34B17 /* LetterBox.m */,
+			);
+			name = Nodes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +249,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 2A96615817B17FA400289A70;
 			productRefGroup = 2A96616217B17FA400289A70 /* Products */;
@@ -220,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A96616F17B17FA400289A70 /* InfoPlist.strings in Resources */,
+				2A31B45817B1C04600E34B17 /* words.sqlite3 in Resources */,
 				2A96617717B17FA400289A70 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,7 +288,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A31B45417B1BBE700E34B17 /* UIColor+FlatUI.m in Sources */,
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
+				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
+				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
+				2A31B45917B1C04600E34B17 /* WordsDatabase.m in Sources */,
 				2A96617117B17FA400289A70 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,6 +490,7 @@
 				2A96618F17B17FA400289A70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2A96619017B17FA400289A70 /* Build configuration list for PBXNativeTarget "HorderTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +499,7 @@
 				2A96619217B17FA400289A70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
