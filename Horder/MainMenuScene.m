@@ -10,6 +10,7 @@
 #import "UIColor+FlatUI.h"
 #import "LetterBox.h"
 #import <CoreImage/CoreImage.h>
+#import "GameScene.h"
 
 @interface MainMenuScene ()
 @property BOOL contentCreated;
@@ -116,7 +117,12 @@
     NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
     for (SKNode *node in nodes) {
         if ([node.name isEqualToString:@"button"]) {
-            NSLog(@"Go to next scene");
+            SKScene *game = [[GameScene alloc] initWithSize:self.size];
+            CIFilter *blurTrans = [CIFilter filterWithName:@"CIGaussianBlur"];
+            [blurTrans setDefaults];
+            self.shouldEnableEffects = YES;
+            SKTransition *trans = [SKTransition transitionWithCIFilter:blurTrans duration:1.0];
+            [self.view presentScene:game transition:trans];
         }
     }
 }

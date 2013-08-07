@@ -24,6 +24,7 @@
 		2A5ACCF917B2C0E70093817B /* Button.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACCF817B2C0E70093817B /* Button.m */; };
 		2A5ACCFB17B2C1CA0093817B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5ACCFA17B2C1CA0093817B /* QuartzCore.framework */; };
 		2A5ACCFE17B2C3B10093817B /* button-sunflower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A5ACCFD17B2C3B10093817B /* button-sunflower@2x.png */; };
+		2A5ACD0117B2F95F0093817B /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACD0017B2F95F0093817B /* GameScene.m */; };
 		2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616417B17FA400289A70 /* Foundation.framework */; };
 		2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616617B17FA400289A70 /* CoreGraphics.framework */; };
 		2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616817B17FA400289A70 /* UIKit.framework */; };
@@ -72,6 +73,8 @@
 		2A5ACCF817B2C0E70093817B /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
 		2A5ACCFA17B2C1CA0093817B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2A5ACCFD17B2C3B10093817B /* button-sunflower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-sunflower@2x.png"; sourceTree = "<group>"; };
+		2A5ACCFF17B2F95F0093817B /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		2A5ACD0017B2F95F0093817B /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		2A96616117B17FA400289A70 /* Horder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A96616417B17FA400289A70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A96616617B17FA400289A70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -137,6 +140,8 @@
 			children = (
 				2A5ACCE717B29AC80093817B /* MainMenuScene.h */,
 				2A5ACCE817B29AC80093817B /* MainMenuScene.m */,
+				2A5ACCFF17B2F95F0093817B /* GameScene.h */,
+				2A5ACD0017B2F95F0093817B /* GameScene.m */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 			files = (
 				2A31B45417B1BBE700E34B17 /* UIColor+FlatUI.m in Sources */,
 				2A5ACCE417B1D1F30093817B /* RootViewController.m in Sources */,
+				2A5ACD0117B2F95F0093817B /* GameScene.m in Sources */,
 				2A5ACCE917B29AC80093817B /* MainMenuScene.m in Sources */,
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
