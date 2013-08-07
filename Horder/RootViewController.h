@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SpriteKit/SpriteKit.h>
 
 @interface RootViewController : UIViewController
+
+@property (nonatomic, strong) SKView *spriteView;
 
 @end

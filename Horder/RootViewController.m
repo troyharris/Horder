@@ -7,6 +7,8 @@
 //
 
 #import "RootViewController.h"
+#import "THUtil.h"
+#import "MainMenuScene.h"
 
 @interface RootViewController ()
 
@@ -18,9 +20,19 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _spriteView = [[SKView alloc] initWithFrame:CGRectMake(0, 0, [THUtil getRealDeviceWidth], [THUtil getRealDeviceHeight])];
+        _spriteView.showsNodeCount = YES;
+        _spriteView.showsDrawCount = YES;
+        _spriteView.showsFPS = YES;
+        self.view = _spriteView;
     }
     return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    MainMenuScene *menuScene = [[MainMenuScene alloc] initWithSize:CGSizeMake([THUtil getRealDeviceWidth], [THUtil getRealDeviceHeight])];
+    [_spriteView presentScene:menuScene];
 }
 
 - (void)viewDidLoad

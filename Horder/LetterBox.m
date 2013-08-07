@@ -18,7 +18,7 @@
     if (self) {
         self.name = @"box";
         self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-        _letterNode = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-Light"];
+        _letterNode = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-UltraLight"];
         _letterNode.fontSize = 44;
         _letterNode.text = [self getRandomLetter];
         _letterNode.position = CGPointMake(0, 0);
@@ -28,17 +28,34 @@
     return self;
 }
 
-static inline CGFloat skRandf() {
-    return rand() / (CGFloat) RAND_MAX;
-}
-
-static inline CGFloat skRand(CGFloat low, CGFloat high) {
-    return skRandf() * (high - low) + low;
+static inline CGFloat skArcRandi(NSInteger low, NSInteger high) {
+    int interval = high - low;
+    return (arc4random() % interval) + low;
 }
 
 -(UIColor *)getRandomColor {
-    NSArray *colorArr = @[[UIColor emerlandColor], [UIColor turquoiseColor], [UIColor carrotColor], [UIColor midnightBlueColor], [UIColor pomegranateColor], [UIColor orangeColor], [UIColor greenSeaColor], [UIColor peterRiverColor], [UIColor belizeHoleColor], [UIColor nephritisColor], [UIColor wisteriaColor], [UIColor amethystColor], [UIColor asbestosColor], [UIColor concreteColor], [UIColor wetAsphaltColor], [UIColor alizarinColor], [UIColor sunflowerColor], [UIColor pumpkinColor]];
-    return (UIColor *)[colorArr objectAtIndex:skRand(0, (colorArr.count - 1))];
+#warning CLEANUP - Move colorArr function somewhere else to support reuse.
+    NSArray *colorArr = @[
+                          [UIColor emerlandColor],
+                          [UIColor turquoiseColor],
+                          [UIColor carrotColor],
+                          //[UIColor midnightBlueColor],
+                          [UIColor pomegranateColor],
+                          [UIColor orangeColor],
+                          [UIColor greenSeaColor],
+                          [UIColor peterRiverColor],
+                          [UIColor belizeHoleColor],
+                          [UIColor nephritisColor],
+                          [UIColor wisteriaColor],
+                          [UIColor amethystColor],
+                          [UIColor asbestosColor],
+                          [UIColor concreteColor],
+                          [UIColor wetAsphaltColor],
+                          [UIColor alizarinColor],
+                          [UIColor sunflowerColor],
+                          [UIColor pumpkinColor]
+                          ];
+    return (UIColor *)[colorArr objectAtIndex:skArcRandi(0, (colorArr.count - 1))];
 }
 
 -(NSArray *)getAlphabet {
@@ -63,7 +80,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         }
     }
     //NSLog(@"Weighted Letters are: %d", [weightedLetters count]);
-    return (NSString *)[weightedLetters objectAtIndex:skRand(0, (weightedLetters.count - 1))];
+    return (NSString *)[weightedLetters objectAtIndex:skArcRandi(0, (weightedLetters.count - 1))];
 }
 
 @end

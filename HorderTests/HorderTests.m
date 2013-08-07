@@ -46,16 +46,16 @@
         XCTAssertTrue([box.name isEqualToString:@"box"], @"Box is misnamed");
     }
     for (NSString *key in letterCounts) {
-        int perc = ((11.0f - [(NSNumber *)[[WordsDatabase letterScores] objectForKey:key] floatValue]) / 212.0f) * 1000.0f;
+        CGFloat perc = ((11.0f - [(NSNumber *)[[WordsDatabase letterScores] objectForKey:key] floatValue]) / 212.0f) * 1000.0f;
         NSNumber *count = [letterCounts objectForKey:key];
         if ([count intValue] == 0) {
             XCTFail(@"Letter: %@ never appeared in 10000 tries", key);
         }
-        if ([count intValue] < (perc * 8)) {
-            XCTFail(@"Letter: %@ appeared %d times. Too little", key, [count intValue]);
+        if ([count floatValue] < (perc * 8)) {
+            XCTFail(@"Letter: %@ appeared %d times. Too little. Optimum is %f", key, [count intValue], (perc * 10));
         }
-        if ([count intValue] > (perc * 12)) {
-            XCTFail(@"Letter: %@ appeared %d times. Too many", key, [count intValue]);
+        if ([count floatValue] > (perc * 12)) {
+            XCTFail(@"Letter: %@ appeared %d times. Too many. Optimum is %f", key, [count intValue], (perc * 10));
         }
     }
     box = [[LetterBox alloc] initWithSize:CGSizeMake(64, 64)];
