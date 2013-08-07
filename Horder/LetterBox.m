@@ -20,8 +20,7 @@
         self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
         _letterNode = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-Light"];
         _letterNode.fontSize = 44;
-        _letter = arc4random_uniform(26) + 'A';
-        _letterNode.text = [NSString stringWithFormat:@"%c", _letter];
+        _letterNode.text = [self getRandomLetter];
         _letterNode.position = CGPointMake(0, 0);
         _letterNode.name = @"letter";
         [self addChild:_letterNode];
@@ -63,6 +62,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             [weightedLetters addObject:letter];
         }
     }
+    //NSLog(@"Weighted Letters are: %d", [weightedLetters count]);
     return (NSString *)[weightedLetters objectAtIndex:skRand(0, (weightedLetters.count - 1))];
 }
 

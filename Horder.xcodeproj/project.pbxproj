@@ -14,6 +14,9 @@
 		2A31B45417B1BBE700E34B17 /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31B45317B1BBE700E34B17 /* UIColor+FlatUI.m */; };
 		2A31B45817B1C04600E34B17 /* words.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A31B45517B1C04600E34B17 /* words.sqlite3 */; };
 		2A31B45917B1C04600E34B17 /* WordsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31B45717B1C04600E34B17 /* WordsDatabase.m */; };
+		2A5ACCE117B1D16A0093817B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5ACCE017B1D16A0093817B /* libsqlite3.dylib */; };
+		2A5ACCE417B1D1F30093817B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACCE317B1D1F30093817B /* RootViewController.m */; };
+		2A5ACCE517B1D1F30093817B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACCE317B1D1F30093817B /* RootViewController.m */; };
 		2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616417B17FA400289A70 /* Foundation.framework */; };
 		2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616617B17FA400289A70 /* CoreGraphics.framework */; };
 		2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616817B17FA400289A70 /* UIKit.framework */; };
@@ -50,6 +53,9 @@
 		2A31B45517B1C04600E34B17 /* words.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = words.sqlite3; sourceTree = "<group>"; };
 		2A31B45617B1C04600E34B17 /* WordsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordsDatabase.h; sourceTree = "<group>"; };
 		2A31B45717B1C04600E34B17 /* WordsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordsDatabase.m; sourceTree = "<group>"; };
+		2A5ACCE017B1D16A0093817B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		2A5ACCE217B1D1F30093817B /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		2A5ACCE317B1D1F30093817B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		2A96616117B17FA400289A70 /* Horder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A96616417B17FA400289A70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A96616617B17FA400289A70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A5ACCE117B1D16A0093817B /* libsqlite3.dylib in Frameworks */,
 				2A31AFBE17B1B8FD00E34B17 /* CoreMotion.framework in Frameworks */,
 				2A31AFBC17B1B88100E34B17 /* SpriteKit.framework in Frameworks */,
 				2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */,
@@ -129,6 +136,7 @@
 		2A96616317B17FA400289A70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A5ACCE017B1D16A0093817B /* libsqlite3.dylib */,
 				2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */,
 				2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */,
 				2A96616417B17FA400289A70 /* Foundation.framework */,
@@ -148,6 +156,8 @@
 				2A96617417B17FA400289A70 /* AppDelegate.m */,
 				2A96617617B17FA400289A70 /* Images.xcassets */,
 				2A96616B17B17FA400289A70 /* Supporting Files */,
+				2A5ACCE217B1D1F30093817B /* RootViewController.h */,
+				2A5ACCE317B1D1F30093817B /* RootViewController.m */,
 			);
 			path = Horder;
 			sourceTree = "<group>";
@@ -289,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A31B45417B1BBE700E34B17 /* UIColor+FlatUI.m in Sources */,
+				2A5ACCE417B1D1F30093817B /* RootViewController.m in Sources */,
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
 				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
@@ -301,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A5ACCE517B1D1F30093817B /* RootViewController.m in Sources */,
 				2A96618A17B17FA400289A70 /* HorderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
