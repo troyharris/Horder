@@ -12,6 +12,7 @@
 @interface LetterBox : SKSpriteNode
 
 @property (nonatomic, strong) SKLabelNode *letterNode;
+@property (nonatomic, strong) SKColor *originalColor;
 
 -(id)initWithSize:(CGSize)size;
 

@@ -18,6 +18,7 @@
     if (self) {
         self.name = @"box";
         self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+        self.originalColor = boxColor;
         _letterNode = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-UltraLight"];
         _letterNode.fontSize = 44;
         _letterNode.text = [self getRandomLetter];

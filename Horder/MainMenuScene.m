@@ -118,7 +118,7 @@
     for (SKNode *node in nodes) {
         if ([node.name isEqualToString:@"button"]) {
             SKScene *game = [[GameScene alloc] initWithSize:self.size];
-            CIFilter *blurTrans = [CIFilter filterWithName:@"CIGaussianBlur"];
+            CIFilter *blurTrans = [CIFilter filterWithName:@"CIModTransition"];
             [blurTrans setDefaults];
             self.shouldEnableEffects = YES;
             SKTransition *trans = [SKTransition transitionWithCIFilter:blurTrans duration:1.0];

@@ -7,7 +7,14 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <CoreMotion/CoreMotion.h>
 
-@interface GameScene : SKScene
+@interface GameScene : SKScene {
+    float verticalAxis, lateralAxis, longitudinalAxis;
+}
+
+@property (nonatomic, strong) CMMotionManager *motionManager;
+
+
 
 @end
