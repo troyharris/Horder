@@ -9,6 +9,7 @@
 #import "GameScene.h"
 #import "LetterBox.h"
 #import "WordsDatabase.h"
+#import "UIColor+FlatUI.h"
 
 @interface GameScene()
 @property BOOL contentCreated;
@@ -16,6 +17,8 @@
 @property (nonatomic, strong) SKLabelNode *wordLabel;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) NSNumber *score;
+@property (nonatomic, strong) SKSpriteNode *okayButton;
+@property (nonatomic, strong) SKSpriteNode *clearButton;
 @end
 
 @implementation GameScene
@@ -86,6 +89,17 @@
     _scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
     [self addChild:_scoreLabel];
     
+    _okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor sunflowerColor] size:CGSizeMake(64, 64)];
+    _okayButton.position = CGPointMake(CGRectGetMidX(self.frame), 30);
+    _okayButton.name = @"okay";
+    [self addChild:_okayButton];
+    
+    _clearButton = [[SKSpriteNode alloc] initWithColor:[UIColor pomegranateColor] size:CGSizeMake(64, 64)];
+    _clearButton.position = CGPointMake(CGRectGetMidX(self.frame) + 70, 30);
+    _clearButton.name = @"clear";
+    [self addChild:_clearButton];
+    
+    
 }
 
 -(void)addWalls {
@@ -140,7 +154,13 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     UITouch *touch = [touches anyObject];
     NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
     for (SKNode *node in nodes) {
-        if ([node.name isEqualToString:@"box"]) {
+        if ([node.name isEqualToString:@"okay"]) {
+            [self submitWord];
+        }
+        else if ([node.name isEqualToString:@"clear"]) {
+            [self clearWordWithWin:NO];
+        }
+        else if ([node.name isEqualToString:@"box"]) {
             SKLabelNode *nodeLetter = (SKLabelNode *)[node childNodeWithName:@"letter"];
             //NSLog(@"Clicked letter: %@", nodeLetter.text);
             _wordLabel.text = [NSString stringWithFormat:@"%@%@", _wordLabel.text, nodeLetter.text];
@@ -169,6 +189,42 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
      */
 }
 
+-(void)submitWord {
+    NSMutableArray *letters = [[NSMutableArray alloc] init];
+    for (LetterBox *n in _draftWord) {
+        //SKLabelNode *l = (SKLabelNode *)[n childNodeWithName:@"letter"];
+        [letters addObject:n.letterNode.text];
+    }
+    NSString *theWord = [letters componentsJoinedByString:@""];
+    NSLog(@"Word is: %@", theWord);
+    if ([WordsDatabase isWord:theWord]) {
+        [self updateScore:[WordsDatabase wordScore:theWord]];
+        //NSLog(@"This is a valid word and the score is: %d", score);
+        for (SKNode *b in _draftWord) {
+            SKAction *zoom = [SKAction scaleBy:8 duration:0.2];
+            SKAction *fade = [SKAction fadeOutWithDuration:0.2];
+            SKAction *group = [SKAction group:@[zoom, fade]];
+            SKAction *remove = [SKAction removeFromParent];
+            SKAction *seq = [SKAction sequence:@[group, remove]];
+            [b runAction:seq];
+        }
+        [self clearWordWithWin:YES];
+    } else {
+        NSLog(@"Invalid Word");
+        [self clearWordWithWin:NO];
+    }
+}
+
+-(void)clearWordWithWin:(BOOL)win {
+    if (!win) {
+        for (LetterBox *n in _draftWord) {
+            n.color = n.originalColor;
+        }
+    }
+    [_draftWord removeAllObjects];
+    _wordLabel.text = @"";
+}
+
 -(void)updateScore:(int)addScore {
     int newScore = [_score intValue] + addScore;
     _score = [NSNumber numberWithInt:newScore];
@@ -177,6 +233,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)addLetterToDraft:(SKNode *)node {
     [_draftWord addObject:node];
+    /*
     if ([_draftWord count] > 3) {
         NSMutableArray *letters = [[NSMutableArray alloc] init];
         for (LetterBox *n in _draftWord) {
@@ -204,8 +261,10 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         }
         [_draftWord removeAllObjects];
         _wordLabel.text = @"";
+     
         
     }
+     */
 }
 
 -(void)didSimulatePhysics
