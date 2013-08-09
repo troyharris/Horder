@@ -13,6 +13,9 @@
 @interface GameScene()
 @property BOOL contentCreated;
 @property (nonatomic, strong) NSMutableArray *draftWord;
+@property (nonatomic, strong) SKLabelNode *wordLabel;
+@property (nonatomic, strong) SKLabelNode *scoreLabel;
+@property (nonatomic, strong) NSNumber *score;
 @end
 
 @implementation GameScene
@@ -26,6 +29,7 @@
 
 -(void)createSceneContents {
     srand([[NSDate date] timeIntervalSince1970]);
+    _score = @0;
     _draftWord = [[NSMutableArray alloc] init];
     _motionManager = [[CMMotionManager alloc] init];
     _motionManager.deviceMotionUpdateInterval = 1/30.0;
@@ -55,24 +59,51 @@
     [self addChild:bg];
      */
     [self addWalls];
+    [self addHUD];
+    SKAction *makeBoxes = [SKAction sequence: @[
+                                                [SKAction performSelector:@selector(addBox) onTarget:self],
+                                                [SKAction waitForDuration:2.0 withRange:0.15]
+                                                ]];
+    [self runAction: [SKAction repeatActionForever:makeBoxes]];
+}
+
+-(void)addHUD {
+    _wordLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    _wordLabel.position = CGPointMake(30, 30);
+    _wordLabel.color = [UIColor whiteColor];
+    _wordLabel.fontSize = 60;
+    _wordLabel.text = @"Word: ";
+    _wordLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    _wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    [self addChild:_wordLabel];
+    
+    _scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    _scoreLabel.position = CGPointMake(CGRectGetMaxX(self.frame) - 30, 30);
+    _scoreLabel.color = [UIColor whiteColor];
+    _scoreLabel.fontSize = 60;
+    _scoreLabel.text = @"0";
+    _scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    _scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
+    [self addChild:_scoreLabel];
+    
 }
 
 -(void)addWalls {
-    CGFloat edge = CGRectGetWidth(self.frame) / 8;
-    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(CGRectGetWidth(self.frame) - (edge * 2), 10)];
+//    CGFloat edge = CGRectGetWidth(self.frame) / 8;
+    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(CGRectGetWidth(self.frame), 10)];
     floor.position = CGPointMake(CGRectGetMidX(self.frame), 205);
     floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
     floor.physicsBody.dynamic = NO;
     [self addChild:floor];
     
     SKSpriteNode *leftwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(10, CGRectGetHeight(self.frame) - 210)];
-    leftwall.position = CGPointMake(edge + 5, CGRectGetMidY(self.frame) + 105);
+    leftwall.position = CGPointMake(-5, CGRectGetMidY(self.frame) + 105);
     leftwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftwall.size];
     leftwall.physicsBody.dynamic = NO;
     [self addChild:leftwall];
     
     SKSpriteNode *rightwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(10, CGRectGetHeight(self.frame) - 210)];
-    rightwall.position = CGPointMake(CGRectGetMaxX(self.frame) - (edge + 5), CGRectGetMidY(self.frame) + 105);
+    rightwall.position = CGPointMake(CGRectGetMaxX(self.frame) + 5, CGRectGetMidY(self.frame) + 105);
     rightwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:rightwall.size];
     rightwall.physicsBody.dynamic = NO;
     [self addChild:rightwall];
@@ -111,7 +142,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     for (SKNode *node in nodes) {
         if ([node.name isEqualToString:@"box"]) {
             SKLabelNode *nodeLetter = (SKLabelNode *)[node childNodeWithName:@"letter"];
-            NSLog(@"Clicked letter: %@", nodeLetter.text);
+            //NSLog(@"Clicked letter: %@", nodeLetter.text);
+            _wordLabel.text = [NSString stringWithFormat:@"%@%@", _wordLabel.text, nodeLetter.text];
             [(SKSpriteNode *)node setColor:[UIColor blackColor]];
             [self addLetterToDraft:node];
             /*
@@ -137,6 +169,12 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
      */
 }
 
+-(void)updateScore:(int)addScore {
+    int newScore = [_score intValue] + addScore;
+    _score = [NSNumber numberWithInt:newScore];
+    _scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+}
+
 -(void)addLetterToDraft:(SKNode *)node {
     [_draftWord addObject:node];
     if ([_draftWord count] > 3) {
@@ -148,8 +186,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         NSString *theWord = [letters componentsJoinedByString:@""];
         NSLog(@"Word is: %@", theWord);
         if ([WordsDatabase isWord:theWord]) {
-            int score = [WordsDatabase wordScore:theWord];
-            NSLog(@"This is a valid word and the score is: %d", score);
+            [self updateScore:[WordsDatabase wordScore:theWord]];
+            //NSLog(@"This is a valid word and the score is: %d", score);
             for (SKNode *b in _draftWord) {
                 SKAction *zoom = [SKAction scaleBy:8 duration:0.2];
                 SKAction *fade = [SKAction fadeOutWithDuration:0.2];
@@ -165,6 +203,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             }
         }
         [_draftWord removeAllObjects];
+        _wordLabel.text = @"";
         
     }
 }
