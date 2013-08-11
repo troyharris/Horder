@@ -23,6 +23,7 @@
     BOOL lost;
     BOOL boxesOnscreen;
     BOOL ended;
+    int clock;
 }
 
 @property BOOL contentCreated;
@@ -34,7 +35,9 @@
 @property (nonatomic, strong) SKSpriteNode *clearButton;
 @property (nonatomic, strong) SKSpriteNode *foulLine;
 @property (nonatomic, strong) NSTimer *foulTimer;
+@property (nonatomic, strong) NSTimer *gameTimer;
 @property (nonatomic, strong) SKLabelNode *backgroundCounter;
+@property (nonatomic, strong) SKLabelNode *gameClock;
 @property (nonatomic, strong) InstructionBox *instruct;
 @property (nonatomic, strong) EndLevelBox *endBox;
 
@@ -54,6 +57,8 @@ static const uint32_t wallCategory    =  0x1 << 2;
 }
 
 -(void)createSceneContents {
+    clock = 20;
+    [self startGameTimer];
     foulSeconds = 0;
     boxWidth = CGRectGetWidth(self.frame) / 8;
     hudHeight = CGRectGetHeight(self.frame) / 8;
@@ -86,6 +91,29 @@ static const uint32_t wallCategory    =  0x1 << 2;
     //[self runAction: [SKAction repeatActionForever:makeBoxes]];
      */
     [self startFoulTimer];
+}
+
+-(void)startGameTimer {
+    _gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementClock) userInfo:nil repeats:YES];
+}
+
+-(void)incrementClock {
+    clock--;
+    if (clock <= 0) {
+        _gameClock.text = @"0:00";
+        [_gameTimer invalidate];
+        return;
+    }
+    int seconds = clock % 60;
+    int minutes = clock / 60;
+    NSString *secString;
+    if (seconds < 10) {
+        secString = [NSString stringWithFormat:@"0%d", seconds];
+    } else {
+        secString = [NSString stringWithFormat:@"%d", seconds];
+    }
+    NSLog(@"Clock: %d:%@", minutes, secString);
+    _gameClock.text = [NSString stringWithFormat:@"%d:%@", minutes, secString];
 }
 
 -(void)startFoulTimer {
