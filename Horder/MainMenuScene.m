@@ -26,6 +26,7 @@
 }
 
 -(void)createSceneContents {
+    NSLog(@"Screen Width is %f and Height is %f", self.frame.size.width, self.frame.size.height);
     _motionManager = [[CMMotionManager alloc] init];
     
     _motionManager.deviceMotionUpdateInterval = 1/30.0;

@@ -20,7 +20,7 @@
         self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
         self.originalColor = boxColor;
         _letterNode = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-UltraLight"];
-        _letterNode.fontSize = 44;
+        _letterNode.fontSize = size.width / 2;
         _letterNode.text = [self getRandomLetter];
         _letterNode.position = CGPointMake(0, 0);
         _letterNode.name = @"letter";
