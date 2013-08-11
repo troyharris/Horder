@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) SKLabelNode *letterNode;
 @property (nonatomic, strong) SKColor *originalColor;
+@property BOOL hasCollided;
 
 -(id)initWithSize:(CGSize)size;
 

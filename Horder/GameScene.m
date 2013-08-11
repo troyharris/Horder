@@ -8,6 +8,8 @@
 
 #import "GameScene.h"
 #import "LetterBox.h"
+#import "InstructionBox.h"
+#import "EndLevelBox.h"
 #import "WordsDatabase.h"
 #import "UIColor+FlatUI.h"
 
@@ -17,7 +19,12 @@
     CGFloat hudMargin;
     CGFloat hudFontSize;
     CGFloat hudButtonSize;
+    int foulSeconds;
+    BOOL lost;
+    BOOL boxesOnscreen;
+    BOOL ended;
 }
+
 @property BOOL contentCreated;
 @property (nonatomic, strong) NSMutableArray *draftWord;
 @property (nonatomic, strong) SKLabelNode *wordLabel;
@@ -27,19 +34,27 @@
 @property (nonatomic, strong) SKSpriteNode *clearButton;
 @property (nonatomic, strong) SKSpriteNode *foulLine;
 @property (nonatomic, strong) NSTimer *foulTimer;
+@property (nonatomic, strong) SKLabelNode *backgroundCounter;
+@property (nonatomic, strong) InstructionBox *instruct;
+@property (nonatomic, strong) EndLevelBox *endBox;
 
 @end
 
 @implementation GameScene
 
+static const uint32_t boxCategory        =  0x1 << 1;
+static const uint32_t wallCategory    =  0x1 << 2;
+
 -(void) didMoveToView:(SKView *)view {
     if (!self.contentCreated) {
+        self.physicsWorld.contactDelegate = self;
         [self createSceneContents];
         self.contentCreated = YES;
     }
 }
 
 -(void)createSceneContents {
+    foulSeconds = 0;
     boxWidth = CGRectGetWidth(self.frame) / 8;
     hudHeight = CGRectGetHeight(self.frame) / 8;
     hudMargin = CGRectGetHeight(self.frame) / 64;
@@ -61,11 +76,15 @@
     [self addWalls];
     [self addHUD];
     [self addHiddenFoulLine];
+    [self displayInstructions];
+    
+    /*
     SKAction *makeBoxes = [SKAction sequence: @[
                                                 [SKAction performSelector:@selector(addBox) onTarget:self],
                                                 [SKAction waitForDuration:2.0 withRange:0.15]
                                                 ]];
-    [self runAction: [SKAction repeatActionForever:makeBoxes]];
+    //[self runAction: [SKAction repeatActionForever:makeBoxes]];
+     */
     [self startFoulTimer];
 }
 
@@ -73,12 +92,56 @@
     _foulTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkForFoul) userInfo:nil repeats:YES];
 }
 
+-(void)displayInstructions {
+    _instruct = [[InstructionBox alloc] initWithSize:CGSizeMake(CGRectGetWidth(self.frame) / 2, CGRectGetWidth(self.frame) / 2) sceneWidth:CGRectGetWidth(self.frame)];
+    _instruct.instructions.text = @"Score at least 100 points";
+    _instruct.instructTime.text = @"In two minutes";
+    _instruct.wordLength.text = @"Words must be at least three letters";
+    
+    _instruct.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
+    [self addChild:_instruct];
+}
+
+-(void)startBoxes {
+    SKAction *makeBoxes = [SKAction sequence: @[
+                                                [SKAction performSelector:@selector(addBox) onTarget:self],
+                                                [SKAction waitForDuration:2.0 withRange:0.15]
+                                                ]];
+    [self runAction: [SKAction repeatActionForever:makeBoxes]];
+}
+
 -(void)checkForFoul {
+    BOOL didFoul = NO;
     for (SKNode *n in [self children]) {
         if ([n.name isEqualToString:@"box"]) {
-            if (CGRectGetMinY(n.frame) < CGRectGetMinY(_foulLine.frame)) {
-                NSLog(@"BOX IS TOO HIGH!! ARRHHHH!!!");
+            LetterBox *lb = (LetterBox *)n;
+            if (CGRectGetMaxY(lb.frame) > CGRectGetMaxY(_foulLine.frame) && lb.hasCollided == YES) {
+                didFoul = YES;
+                NSLog(@"BOX IS TOO HIGH!! ARRHHHH!!! For %d seconds", foulSeconds);
             }
+        }
+    }
+    if (didFoul == YES) {
+        foulSeconds++;
+        [self showFoulLine];
+    }
+    if (didFoul == YES && foulSeconds > 1) {
+        int countdown = 7 - foulSeconds;
+        if (countdown <= 0) {
+            countdown = 0;
+            [self removeAllActions];
+            lost = YES;
+            
+        }
+        _backgroundCounter.text = [NSString stringWithFormat:@"%d", countdown];
+        _backgroundCounter.fontColor = [SKColor whiteColor];
+    }
+    if (didFoul == NO) {
+        if (foulSeconds > 0) {
+            foulSeconds = 0;
+            _backgroundCounter.fontColor = [SKColor clearColor];
+            [self hideFoulLine];
+            NSLog(@"Out of Foul Trouble");
         }
     }
 }
@@ -92,9 +155,18 @@
 }
 
 -(void)addBackground {
-    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:@"background-level1-hud"];
+    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:@"bokehtest"];
     background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
     background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    _backgroundCounter = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    _backgroundCounter.fontSize = CGRectGetWidth(self.frame) - 20;
+    _backgroundCounter.text = @"5";
+    _backgroundCounter.position = CGPointMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame));
+    _backgroundCounter.fontColor = [SKColor clearColor];
+    _backgroundCounter.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    _backgroundCounter.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    [background addChild:_backgroundCounter];
     [self addChild:background];
 }
 
@@ -143,29 +215,36 @@
     floor.position = CGPointMake(CGRectGetMidX(self.frame), hudHeight + (thickness / 2));
     floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
     floor.physicsBody.dynamic = NO;
+    floor.physicsBody.categoryBitMask = wallCategory;
     [self addChild:floor];
     
     SKSpriteNode *leftwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - hudHeight + thickness)];
     leftwall.position = CGPointMake(-(thickness / 2), CGRectGetMidY(self.frame) + (hudHeight + thickness) / 2);
     leftwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftwall.size];
     leftwall.physicsBody.dynamic = NO;
+    leftwall.physicsBody.categoryBitMask = wallCategory;
     [self addChild:leftwall];
     
     SKSpriteNode *rightwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - 210)];
     rightwall.position = CGPointMake(CGRectGetMaxX(self.frame) + (thickness / 2), CGRectGetMidY(self.frame) + (hudHeight + thickness) / 2);
     rightwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:rightwall.size];
     rightwall.physicsBody.dynamic = NO;
+    rightwall.physicsBody.categoryBitMask = wallCategory;
     [self addChild:rightwall];
 }
 
 -(void)addHiddenFoulLine {
     _foulLine = [[SKSpriteNode alloc] initWithColor:[SKColor clearColor] size:CGSizeMake(CGRectGetWidth(self.frame), 1)];
-    _foulLine.position = CGPointMake(CGRectGetMaxX(self.frame), CGRectGetMaxY(self.frame) - boxWidth);
+    _foulLine.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - boxWidth);
     [self addChild:_foulLine];
 }
 
 -(void)showFoulLine {
-    
+    _foulLine.color = [SKColor sunflowerColor];
+}
+
+-(void)hideFoulLine {
+    _foulLine.color = [SKColor clearColor];
 }
 
 static inline CGFloat skRandf() {
@@ -180,6 +259,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 {
     LetterBox *box = [[LetterBox alloc] initWithSize:CGSizeMake(boxWidth,boxWidth)];
     box.position = CGPointMake(skRand(0, self.size.width), self.size.height-50);
+    box.physicsBody.categoryBitMask = boxCategory;
+    box.physicsBody.contactTestBitMask = boxCategory;
     [self addChild:box];
 }
 
@@ -188,6 +269,10 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     UITouch *touch = [touches anyObject];
     NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
     for (SKNode *node in nodes) {
+        if ([node.name isEqualToString:@"beginButton"]) {
+            [_instruct removeFromParent];
+            [self startBoxes];
+        }
         if ([node.name isEqualToString:@"okay"]) {
             [self submitWord];
         }
@@ -201,6 +286,15 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             [self addLetterToDraft:node];
         }
     }
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact {
+//    NSLog(@"Box collided with Box");
+    LetterBox *lb1, *lb2;
+    lb1 = (LetterBox *)contact.bodyA.node;
+    lb2 = (LetterBox *)contact.bodyB.node;
+    lb1.hasCollided = YES;
+    lb2.hasCollided = YES;
 }
 
 -(void)submitWord {
@@ -249,14 +343,41 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)didSimulatePhysics
 {
+    [self verifiedBoxes:NO];
     [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
-        if (node.position.y < 0)
+        [self verifiedBoxes:YES];
+        if (node.position.y > (CGRectGetHeight(self.frame) + boxWidth) && lost == YES) {
             [node removeFromParent];
+        }
     }];
 }
 
+-(void)verifiedBoxes:(BOOL)thereAreBoxes {
+    boxesOnscreen = thereAreBoxes;
+}
+
+-(void)displayEnd {
+    BOOL passFail;
+    if ([_score intValue] > 10) {
+        passFail = YES;
+    } else {
+        passFail = NO;
+    }
+    _endBox = [EndLevelBox endBoxWithPass:passFail score:[_score intValue] scoreNeeded:100 sceneWidth:CGRectGetWidth(self.frame)];
+    _endBox.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
+    [self addChild:_endBox];
+}
+
 -(void)update:(CFTimeInterval)currentTime {
-    self.physicsWorld.gravity=CGPointMake(verticalAxis*10, -9.8);
+    CGFloat xForce = -9.8;
+    if (lost == YES && boxesOnscreen == YES) {
+        xForce = 9.8;
+    }
+    self.physicsWorld.gravity=CGPointMake(verticalAxis*10, xForce);
+    if (lost == YES && boxesOnscreen == NO && ended == 0) {
+        [self displayEnd];
+        ended = 1;
+    }
 }
 
 @end

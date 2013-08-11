@@ -9,7 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import <CoreMotion/CoreMotion.h>
 
-@interface GameScene : SKScene {
+@interface GameScene : SKScene <SKPhysicsContactDelegate> {
     float verticalAxis, lateralAxis, longitudinalAxis;
 }
 

@@ -39,6 +39,10 @@
 		2A96618A17B17FA400289A70 /* HorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A96618917B17FA400289A70 /* HorderTests.m */; };
 		2AD1473F17B693C400DCD951 /* background-level1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD1473E17B693C400DCD951 /* background-level1@2x.png */; };
 		2AD1474117B69F2F00DCD951 /* background-level1-hud@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD1474017B69F2F00DCD951 /* background-level1-hud@2x.png */; };
+		2AD1474317B7E0DC00DCD951 /* background-level1-hudblur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD1474217B7E0D000DCD951 /* background-level1-hudblur@2x.png */; };
+		2AD1474617B835EA00DCD951 /* InstructionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD1474517B835EA00DCD951 /* InstructionBox.m */; };
+		2AD1474917B8457B00DCD951 /* EndLevelBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD1474817B8457B00DCD951 /* EndLevelBox.m */; };
+		2AD1474B17B84EA800DCD951 /* bokehtest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD1474A17B84EA800DCD951 /* bokehtest@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +99,12 @@
 		2A96618917B17FA400289A70 /* HorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HorderTests.m; sourceTree = "<group>"; };
 		2AD1473E17B693C400DCD951 /* background-level1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-level1@2x.png"; sourceTree = "<group>"; };
 		2AD1474017B69F2F00DCD951 /* background-level1-hud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-level1-hud@2x.png"; sourceTree = "<group>"; };
+		2AD1474217B7E0D000DCD951 /* background-level1-hudblur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-level1-hudblur@2x.png"; sourceTree = "<group>"; };
+		2AD1474417B835EA00DCD951 /* InstructionBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstructionBox.h; sourceTree = "<group>"; };
+		2AD1474517B835EA00DCD951 /* InstructionBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstructionBox.m; sourceTree = "<group>"; };
+		2AD1474717B8457B00DCD951 /* EndLevelBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EndLevelBox.h; sourceTree = "<group>"; };
+		2AD1474817B8457B00DCD951 /* EndLevelBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EndLevelBox.m; sourceTree = "<group>"; };
+		2AD1474A17B84EA800DCD951 /* bokehtest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bokehtest@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +163,8 @@
 		2A5ACCEC17B2BA190093817B /* BackgroundImages */ = {
 			isa = PBXGroup;
 			children = (
+				2AD1474A17B84EA800DCD951 /* bokehtest@2x.png */,
+				2AD1474217B7E0D000DCD951 /* background-level1-hudblur@2x.png */,
 				2AD1474017B69F2F00DCD951 /* background-level1-hud@2x.png */,
 				2AD1473E17B693C400DCD951 /* background-level1@2x.png */,
 				2A5ACCF517B2C0660093817B /* treetest-ipad-preblur@2x.png */,
@@ -259,6 +271,10 @@
 				2A31AFC017B1B96800E34B17 /* LetterBox.m */,
 				2A5ACCF717B2C0E70093817B /* Button.h */,
 				2A5ACCF817B2C0E70093817B /* Button.m */,
+				2AD1474417B835EA00DCD951 /* InstructionBox.h */,
+				2AD1474517B835EA00DCD951 /* InstructionBox.m */,
+				2AD1474717B8457B00DCD951 /* EndLevelBox.h */,
+				2AD1474817B8457B00DCD951 /* EndLevelBox.m */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -347,6 +363,8 @@
 				2AD1474117B69F2F00DCD951 /* background-level1-hud@2x.png in Resources */,
 				2A5ACCF617B2C0660093817B /* treetest-ipad-preblur@2x.png in Resources */,
 				2A96617717B17FA400289A70 /* Images.xcassets in Resources */,
+				2AD1474B17B84EA800DCD951 /* bokehtest@2x.png in Resources */,
+				2AD1474317B7E0DC00DCD951 /* background-level1-hudblur@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,9 +387,11 @@
 				2A5ACCE417B1D1F30093817B /* RootViewController.m in Sources */,
 				2A5ACD0117B2F95F0093817B /* GameScene.m in Sources */,
 				2A5ACCE917B29AC80093817B /* MainMenuScene.m in Sources */,
+				2AD1474917B8457B00DCD951 /* EndLevelBox.m in Sources */,
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
 				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
+				2AD1474617B835EA00DCD951 /* InstructionBox.m in Sources */,
 				2A5ACCF917B2C0E70093817B /* Button.m in Sources */,
 				2A31B45917B1C04600E34B17 /* WordsDatabase.m in Sources */,
 				2A96617117B17FA400289A70 /* main.m in Sources */,
