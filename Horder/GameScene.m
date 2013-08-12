@@ -224,7 +224,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
     _scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
     [self addChild:_scoreLabel];
     
-    _okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor sunflowerColor] size:CGSizeMake(hudButtonSize, hudButtonSize)];
+    _okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(hudButtonSize, hudButtonSize)];
     _okayButton.position = CGPointMake(CGRectGetMidX(self.frame), hudMargin + (CGRectGetHeight(_okayButton.frame) /2));
     _okayButton.name = @"okay";
     [self addChild:_okayButton];
@@ -357,6 +357,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         }
     }
     [_draftWord removeAllObjects];
+    _okayButton.color = [UIColor clearColor];
     _wordLabel.text = @"";
 }
 
@@ -368,6 +369,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)addLetterToDraft:(SKNode *)node {
     [_draftWord addObject:node];
+    if (_draftWord.count >= 3) {
+        _okayButton.color = [UIColor sunflowerColor];
+    }
 }
 
 -(void)didSimulatePhysics
