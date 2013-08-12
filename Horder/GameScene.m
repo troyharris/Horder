@@ -57,7 +57,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
 }
 
 -(void)createSceneContents {
-    clock = 20;
+    clock = 120;
     [self startGameTimer];
     foulSeconds = 0;
     boxWidth = CGRectGetWidth(self.frame) / 8;
@@ -102,6 +102,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
     if (clock <= 0) {
         _gameClock.text = @"0:00";
         [_gameTimer invalidate];
+        lost = YES;
         return;
     }
     int seconds = clock % 60;
@@ -122,7 +123,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
 
 -(void)displayInstructions {
     _instruct = [[InstructionBox alloc] initWithSize:CGSizeMake(CGRectGetWidth(self.frame) / 2, CGRectGetWidth(self.frame) / 2) sceneWidth:CGRectGetWidth(self.frame)];
-    _instruct.instructions.text = @"Score at least 100 points";
+    _instruct.instructions.text = @"Score at least 50 points";
     _instruct.instructTime.text = @"In two minutes";
     _instruct.wordLength.text = @"Words must be at least three letters";
     
@@ -157,7 +158,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
         int countdown = 7 - foulSeconds;
         if (countdown <= 0) {
             countdown = 0;
-            [self removeAllActions];
+           // [self removeAllActions];
             lost = YES;
             
         }
@@ -385,8 +386,11 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)displayEnd {
+    [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
     BOOL passFail;
-    if ([_score intValue] > 10) {
+    if ([_score intValue] > 50) {
         passFail = YES;
     } else {
         passFail = NO;
@@ -398,7 +402,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)update:(CFTimeInterval)currentTime {
     CGFloat xForce = -9.8;
-    if (lost == YES && boxesOnscreen == YES) {
+    if (lost == YES && boxesOnscreen == YES && ended == 0) {
+        [self removeAllActions];
         xForce = 9.8;
     }
     self.physicsWorld.gravity=CGPointMake(verticalAxis*10, xForce);
