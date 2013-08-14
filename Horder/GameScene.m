@@ -14,18 +14,19 @@
 #import "UIColor+FlatUI.h"
 
 @interface GameScene() {
-    CGFloat boxWidth;
-    CGFloat hudHeight;
-    CGFloat hudMargin;
-    CGFloat hudFontSize;
-    CGFloat hudButtonSize;
-    int foulSeconds;
-    BOOL lost;
-    BOOL boxesOnscreen;
-    BOOL ended;
-    int clock;
+    float verticalAxis, lateralAxis, longitudinalAxis;
 }
 
+@property (nonatomic) CGFloat boxWidth;
+@property (nonatomic) CGFloat hudHeight;
+@property (nonatomic) CGFloat hudMargin;
+@property (nonatomic) CGFloat hudFontSize;
+@property (nonatomic) CGFloat hudButtonSize;
+@property (nonatomic) int foulSeconds;
+@property (nonatomic) BOOL lost;
+@property (nonatomic) BOOL boxesOnscreen;
+@property (nonatomic) BOOL ended;
+@property (nonatomic) int clock;
 @property BOOL contentCreated;
 @property (nonatomic, strong) NSMutableArray *draftWord;
 @property (nonatomic, strong) SKLabelNode *wordLabel;
@@ -40,250 +41,17 @@
 @property (nonatomic, strong) SKLabelNode *gameClock;
 @property (nonatomic, strong) InstructionBox *instruct;
 @property (nonatomic, strong) EndLevelBox *endBox;
+@property (nonatomic, strong) AVAudioPlayer *musicPlayer;
+@property (nonatomic, strong) CMMotionManager *motionManager;
 
 @end
 
 @implementation GameScene
 
+#pragma mark - Statics
+
 static const uint32_t boxCategory        =  0x1 << 1;
 static const uint32_t wallCategory    =  0x1 << 2;
-
--(void) didMoveToView:(SKView *)view {
-    if (!self.contentCreated) {
-        self.physicsWorld.contactDelegate = self;
-        [self createSceneContents];
-        self.contentCreated = YES;
-    }
-}
-
--(void)createSceneContents {
-    clock = _settings.maxTime;
-    [self startGameTimer];
-    foulSeconds = 0;
-    boxWidth = CGRectGetWidth(self.frame) / 8;
-    hudHeight = CGRectGetHeight(self.frame) / 8;
-    hudMargin = CGRectGetHeight(self.frame) / 64;
-    hudFontSize = CGRectGetHeight(self.frame) / 32;
-    hudButtonSize = CGRectGetHeight(self.frame) / 16;
-    srand([[NSDate date] timeIntervalSince1970]);
-    _score = @0;
-    _draftWord = [[NSMutableArray alloc] init];
-    _motionManager = [[CMMotionManager alloc] init];
-    _motionManager.deviceMotionUpdateInterval = 1/30.0;
-    [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^ (CMDeviceMotion *devMotion, NSError *error){
-        CMAttitude *currentAttitude = devMotion.attitude;
-        verticalAxis = currentAttitude.roll;
-        lateralAxis = currentAttitude.pitch;
-        longitudinalAxis = currentAttitude.yaw;
-    }];
-    self.scaleMode = SKSceneScaleModeAspectFit;
-    [self addBackground];
-    [self addWalls];
-    [self addHUD];
-    [self addHiddenFoulLine];
-    [self displayInstructions];
-    
-    /*
-    SKAction *makeBoxes = [SKAction sequence: @[
-                                                [SKAction performSelector:@selector(addBox) onTarget:self],
-                                                [SKAction waitForDuration:2.0 withRange:0.15]
-                                                ]];
-    //[self runAction: [SKAction repeatActionForever:makeBoxes]];
-     */
-    [self startFoulTimer];
-    [self backgroundMusicSetup];
-}
-
--(void)backgroundMusicSetup {
-    NSString *bgMusicPath = [[NSBundle mainBundle] pathForResource:@"mygrimeydreams-horder" ofType:@"m4a"];
-    NSURL *fileURL = [NSURL URLWithString:bgMusicPath];
-    _musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
-    [_musicPlayer prepareToPlay];
-    _musicPlayer.delegate = self;
-}
-
--(void)startGameTimer {
-    _gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementClock) userInfo:nil repeats:YES];
-}
-
--(void)incrementClock {
-    clock--;
-    if (clock <= 0) {
-        _gameClock.text = @"0:00";
-        [_gameTimer invalidate];
-        lost = YES;
-        return;
-    }
-    int seconds = clock % 60;
-    int minutes = clock / 60;
-    NSString *secString;
-    if (seconds < 10) {
-        secString = [NSString stringWithFormat:@"0%d", seconds];
-    } else {
-        secString = [NSString stringWithFormat:@"%d", seconds];
-    }
-    NSLog(@"Clock: %d:%@", minutes, secString);
-    _gameClock.text = [NSString stringWithFormat:@"%d:%@", minutes, secString];
-}
-
--(void)startFoulTimer {
-    _foulTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkForFoul) userInfo:nil repeats:YES];
-}
-
--(void)displayInstructions {
-    _instruct = [[InstructionBox alloc] initWithSize:CGSizeMake(CGRectGetWidth(self.frame) / 2, CGRectGetWidth(self.frame) / 2) sceneWidth:CGRectGetWidth(self.frame)];
-    _instruct.instructions.text = @"Score at least 50 points";
-    _instruct.instructTime.text = @"In two minutes";
-    _instruct.wordLength.text = @"Words must be at least three letters";
-    
-    _instruct.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
-    [self addChild:_instruct];
-}
-
--(void)startBoxes {
-    SKAction *makeBoxes = [SKAction sequence: @[
-                                                [SKAction performSelector:@selector(addBox) onTarget:self],
-                                                [SKAction waitForDuration:2.0 withRange:0.15]
-                                                ]];
-    [self runAction: [SKAction repeatActionForever:makeBoxes]];
-}
-
--(void)checkForFoul {
-    BOOL didFoul = NO;
-    for (SKNode *n in [self children]) {
-        if ([n.name isEqualToString:@"box"]) {
-            LetterBox *lb = (LetterBox *)n;
-            if (CGRectGetMaxY(lb.frame) > CGRectGetMaxY(_foulLine.frame) && lb.hasCollided == YES) {
-                didFoul = YES;
-                NSLog(@"BOX IS TOO HIGH!! ARRHHHH!!! For %d seconds", foulSeconds);
-            }
-        }
-    }
-    if (didFoul == YES) {
-        foulSeconds++;
-        [self showFoulLine];
-    }
-    if (didFoul == YES && foulSeconds > 1) {
-        int countdown = 7 - foulSeconds;
-        if (countdown <= 0) {
-            countdown = 0;
-           // [self removeAllActions];
-            lost = YES;
-            
-        }
-        _backgroundCounter.text = [NSString stringWithFormat:@"%d", countdown];
-        _backgroundCounter.fontColor = [SKColor whiteColor];
-    }
-    if (didFoul == NO) {
-        if (foulSeconds > 0) {
-            foulSeconds = 0;
-            _backgroundCounter.fontColor = [SKColor clearColor];
-            [self hideFoulLine];
-            NSLog(@"Out of Foul Trouble");
-        }
-    }
-}
-
-- (void) stopFoulTimer {
-    //reset timer
-    if (_foulTimer != nil) {
-        [_foulTimer invalidate];
-        _foulTimer = nil;
-    }
-}
-
--(void)addBackground {
-    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:_settings.backgroundName];
-    background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    
-    _backgroundCounter = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
-    _backgroundCounter.fontSize = CGRectGetWidth(self.frame) - 20;
-    _backgroundCounter.text = @"5";
-    _backgroundCounter.position = CGPointMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame));
-    _backgroundCounter.fontColor = [SKColor clearColor];
-    _backgroundCounter.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    _backgroundCounter.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    [background addChild:_backgroundCounter];
-    [self addChild:background];
-}
-
--(void)addHUD {
-    /*
-    CGSize hudSize = CGSizeMake(CGRectGetWidth(self.frame), hudHeight);
-    CGPoint hudPosition = CGPointMake(CGRectGetMidX(self.frame), hudHeight / 2);
-    CGPoint hudViewPosition = CGPointMake(0, CGRectGetMaxY(self.frame) - hudHeight);
-     */
-    
-    _wordLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
-    _wordLabel.position = CGPointMake(hudMargin, hudMargin);
-    _wordLabel.color = [UIColor whiteColor];
-    _wordLabel.fontSize = hudFontSize;
-    _wordLabel.text = @" ";
-    _wordLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    _wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-    [self addChild:_wordLabel];
-    
-    _scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
-    _scoreLabel.position = CGPointMake(CGRectGetMaxX(self.frame) - hudMargin, hudMargin + (CGRectGetHeight(_scoreLabel.frame) /2));
-    _scoreLabel.color = [UIColor whiteColor];
-    _scoreLabel.fontSize = hudFontSize;
-    _scoreLabel.text = @"0";
-    _scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    _scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
-    [self addChild:_scoreLabel];
-    
-    _okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(hudButtonSize, hudButtonSize)];
-    _okayButton.position = CGPointMake(CGRectGetMidX(self.frame), hudMargin + (CGRectGetHeight(_okayButton.frame) /2));
-    _okayButton.name = @"okay";
-    [self addChild:_okayButton];
-    
-    _clearButton = [[SKSpriteNode alloc] initWithColor:[UIColor pomegranateColor] size:CGSizeMake(hudButtonSize, hudButtonSize)];
-    _clearButton.position = CGPointMake(CGRectGetMidX(self.frame) + 70, hudMargin + (CGRectGetHeight(_clearButton.frame) /2));
-    _clearButton.name = @"clear";
-    [self addChild:_clearButton];
-    
-    
-}
-
--(void)addWalls {
-    CGFloat thickness = 10.0;
-//    CGFloat edge = CGRectGetWidth(self.frame) / 8;
-    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor cloudsColor] size:CGSizeMake(CGRectGetWidth(self.frame), thickness)];
-    floor.position = CGPointMake(CGRectGetMidX(self.frame), hudHeight + (thickness / 2));
-    floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
-    floor.physicsBody.dynamic = NO;
-    floor.physicsBody.categoryBitMask = wallCategory;
-    [self addChild:floor];
-    
-    SKSpriteNode *leftwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - hudHeight + thickness)];
-    leftwall.position = CGPointMake(-(thickness / 2), CGRectGetMidY(self.frame) + (hudHeight + thickness) / 2);
-    leftwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftwall.size];
-    leftwall.physicsBody.dynamic = NO;
-    leftwall.physicsBody.categoryBitMask = wallCategory;
-    [self addChild:leftwall];
-    
-    SKSpriteNode *rightwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - 210)];
-    rightwall.position = CGPointMake(CGRectGetMaxX(self.frame) + (thickness / 2), CGRectGetMidY(self.frame) + (hudHeight + thickness) / 2);
-    rightwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:rightwall.size];
-    rightwall.physicsBody.dynamic = NO;
-    rightwall.physicsBody.categoryBitMask = wallCategory;
-    [self addChild:rightwall];
-}
-
--(void)addHiddenFoulLine {
-    _foulLine = [[SKSpriteNode alloc] initWithColor:[SKColor clearColor] size:CGSizeMake(CGRectGetWidth(self.frame), 1)];
-    _foulLine.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - boxWidth);
-    [self addChild:_foulLine];
-}
-
--(void)showFoulLine {
-    _foulLine.color = [SKColor sunflowerColor];
-}
-
--(void)hideFoulLine {
-    _foulLine.color = [SKColor clearColor];
-}
 
 static inline CGFloat skRandf() {
     return rand() / (CGFloat) RAND_MAX;
@@ -293,24 +61,280 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return skRandf() * (high - low) + low;
 }
 
+#pragma mark - SKView methods
+
+- (void) didMoveToView:(SKView *)view {
+    if (!self.contentCreated) {
+        self.physicsWorld.contactDelegate = self;
+        [self createSceneContents];
+        self.contentCreated = YES;
+    }
+}
+
+-(void)didSimulatePhysics
+{
+    [self verifiedBoxes:NO];
+    [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
+        [self verifiedBoxes:YES];
+        if (node.position.y > (CGRectGetHeight(self.frame) + self.boxWidth) && self.lost == YES) {
+            [node removeFromParent];
+        }
+    }];
+}
+
+#pragma mark - Scene Setup
+
+- (void)setupVars {
+    self.clock = self.settings.maxTime;
+    self.foulSeconds = 0;
+    self.boxWidth = CGRectGetWidth(self.frame) / 8;
+    self.hudHeight = CGRectGetHeight(self.frame) / 8;
+    self.hudMargin = CGRectGetHeight(self.frame) / 64;
+    self.hudFontSize = CGRectGetHeight(self.frame) / 32;
+    self.hudButtonSize = CGRectGetHeight(self.frame) / 16;
+    self.score = @0;
+    self.draftWord = [[NSMutableArray alloc] init];
+    self.score = @0;
+    self.draftWord = [[NSMutableArray alloc] init];
+
+
+}
+
+-(void)setupMotionManager {
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionManager.deviceMotionUpdateInterval = 1/30.0;
+    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^ (CMDeviceMotion *devMotion, NSError *error){
+        CMAttitude *currentAttitude = devMotion.attitude;
+        verticalAxis = currentAttitude.roll;
+        lateralAxis = currentAttitude.pitch;
+        longitudinalAxis = currentAttitude.yaw;
+    }];
+}
+
+-(void)setupBackgroundMusic {
+    NSString *bgMusicPath = [[NSBundle mainBundle] pathForResource:@"mygrimeydreams-horder" ofType:@"m4a"];
+    NSURL *fileURL = [NSURL URLWithString:bgMusicPath];
+    self.musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+    [self.musicPlayer prepareToPlay];
+    self.musicPlayer.delegate = self;
+}
+
+-(void)addBackground {
+    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:self.settings.backgroundName];
+    background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    self.backgroundCounter = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    self.backgroundCounter.fontSize = CGRectGetWidth(self.frame) - 20;
+    self.backgroundCounter.text = @"5";
+    self.backgroundCounter.position = CGPointMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame));
+    self.backgroundCounter.fontColor = [SKColor clearColor];
+    self.backgroundCounter.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    self.backgroundCounter.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    [background addChild:self.backgroundCounter];
+    [self addChild:background];
+}
+
+-(void)addWalls {
+    CGFloat thickness = 10.0;
+    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor cloudsColor] size:CGSizeMake(CGRectGetWidth(self.frame), thickness)];
+    floor.position = CGPointMake(CGRectGetMidX(self.frame), self.hudHeight + (thickness / 2));
+    floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
+    floor.physicsBody.dynamic = NO;
+    floor.physicsBody.categoryBitMask = wallCategory;
+    [self addChild:floor];
+    
+    SKSpriteNode *leftwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - self.hudHeight + thickness)];
+    leftwall.position = CGPointMake(-(thickness / 2), CGRectGetMidY(self.frame) + (self.hudHeight + thickness) / 2);
+    leftwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:leftwall.size];
+    leftwall.physicsBody.dynamic = NO;
+    leftwall.physicsBody.categoryBitMask = wallCategory;
+    [self addChild:leftwall];
+    
+    SKSpriteNode *rightwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - 210)];
+    rightwall.position = CGPointMake(CGRectGetMaxX(self.frame) + (thickness / 2), CGRectGetMidY(self.frame) + (self.hudHeight + thickness) / 2);
+    rightwall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:rightwall.size];
+    rightwall.physicsBody.dynamic = NO;
+    rightwall.physicsBody.categoryBitMask = wallCategory;
+    [self addChild:rightwall];
+}
+
+-(void)addHUD {
+    self.wordLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    self.wordLabel.position = CGPointMake(self.hudMargin, self.hudMargin);
+    self.wordLabel.color = [UIColor whiteColor];
+    self.wordLabel.fontSize = self.hudFontSize;
+    self.wordLabel.text = @" ";
+    self.wordLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    self.wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    [self addChild:self.wordLabel];
+    
+    self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    self.scoreLabel.position = CGPointMake(CGRectGetMaxX(self.frame) - self.hudMargin, self.hudMargin + (CGRectGetHeight(self.scoreLabel.frame) /2));
+    self.scoreLabel.color = [UIColor whiteColor];
+    self.scoreLabel.fontSize = self.hudFontSize;
+    self.scoreLabel.text = @"0";
+    self.scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
+    [self addChild:self.scoreLabel];
+    
+    self.okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
+    self.okayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.hudMargin + (CGRectGetHeight(self.okayButton.frame) /2));
+    self.okayButton.name = @"okay";
+    [self addChild:self.okayButton];
+    
+    self.clearButton = [[SKSpriteNode alloc] initWithColor:[UIColor pomegranateColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
+    self.clearButton.position = CGPointMake(CGRectGetMidX(self.frame) + 70, self.hudMargin + (CGRectGetHeight(self.clearButton.frame) /2));
+    self.clearButton.name = @"clear";
+    [self addChild:self.clearButton];
+}
+
+-(void)addHiddenFoulLine {
+    self.foulLine = [[SKSpriteNode alloc] initWithColor:[SKColor clearColor] size:CGSizeMake(CGRectGetWidth(self.frame), 1)];
+    self.foulLine.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - self.boxWidth);
+    [self addChild:self.foulLine];
+}
+
+-(void)displayInstructions {
+    self.instruct = [[InstructionBox alloc] initWithSize:CGSizeMake(CGRectGetWidth(self.frame) / 2, CGRectGetWidth(self.frame) / 2) sceneWidth:CGRectGetWidth(self.frame)];
+    self.instruct.instructions.text = [NSString stringWithFormat:@"Score at least %d points", self.settings.minScore];
+    self.instruct.instructTime.text = @"In two minutes";
+    self.instruct.wordLength.text = @"Words must be at least three letters";
+    self.instruct.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
+    [self addChild:self.instruct];
+}
+
+-(void)createSceneContents {
+    self.scaleMode = SKSceneScaleModeAspectFit;
+    [self setupVars];
+    [self setupMotionManager];
+    [self setupBackgroundMusic];
+    [self addBackground];
+    [self addWalls];
+    [self addHUD];
+    [self addHiddenFoulLine];
+    [self displayInstructions];
+    [self startFoulTimer];
+}
+
+#pragma mark - Game Timer
+
+-(void)startGameTimer {
+    self.gameTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementClock) userInfo:nil repeats:YES];
+}
+
+-(void)incrementClock {
+    self.clock--;
+    if (clock <= 0) {
+        self.gameClock.text = @"0:00";
+        [self.gameTimer invalidate];
+        self.lost = YES;
+        return;
+    }
+    int seconds = self.clock % 60;
+    int minutes = self.clock / 60;
+    NSString *secString;
+    if (seconds < 10) {
+        secString = [NSString stringWithFormat:@"0%d", seconds];
+    } else {
+        secString = [NSString stringWithFormat:@"%d", seconds];
+    }
+    NSLog(@"Clock: %d:%@", minutes, secString);
+    self.gameClock.text = [NSString stringWithFormat:@"%d:%@", minutes, secString];
+}
+
+#pragma mark - Foul line
+
+-(void)startFoulTimer {
+    self.foulTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkForFoul) userInfo:nil repeats:YES];
+}
+
+-(void)checkForFoul {
+    BOOL didFoul = NO;
+    for (SKNode *n in [self children]) {
+        if ([n.name isEqualToString:@"box"]) {
+            LetterBox *lb = (LetterBox *)n;
+            if (CGRectGetMaxY(lb.frame) > CGRectGetMaxY(self.foulLine.frame) && lb.hasCollided == YES) {
+                didFoul = YES;
+                NSLog(@"BOX IS TOO HIGH!! ARRHHHH!!! For %d seconds", self.foulSeconds);
+            }
+        }
+    }
+    if (didFoul == YES) {
+        self.foulSeconds++;
+        [self showFoulLine];
+    }
+    if (didFoul == YES && self.foulSeconds > 1) {
+        int countdown = 7 - self.foulSeconds;
+        if (countdown <= 0) {
+            countdown = 0;
+           // [self removeAllActions];
+            self.lost = YES;
+            
+        }
+        self.backgroundCounter.text = [NSString stringWithFormat:@"%d", countdown];
+        self.backgroundCounter.fontColor = [SKColor whiteColor];
+    }
+    if (didFoul == NO) {
+        if (self.foulSeconds > 0) {
+            self.foulSeconds = 0;
+            self.backgroundCounter.fontColor = [SKColor clearColor];
+            [self hideFoulLine];
+            NSLog(@"Out of Foul Trouble");
+        }
+    }
+}
+
+- (void) stopFoulTimer {
+    //reset timer
+    if (self.foulTimer != nil) {
+        [self.foulTimer invalidate];
+        self.foulTimer = nil;
+    }
+}
+
+-(void)showFoulLine {
+    self.foulLine.color = [SKColor sunflowerColor];
+}
+
+-(void)hideFoulLine {
+    self.foulLine.color = [SKColor clearColor];
+}
+
+# pragma mark - Letter Box Management
+
+-(void)startBoxes {
+    SKAction *makeBoxes = [SKAction sequence: @[
+                                                [SKAction performSelector:@selector(addBox) onTarget:self],
+                                                [SKAction waitForDuration:2.0 withRange:0.15]
+                                                ]];
+    [self runAction: [SKAction repeatActionForever:makeBoxes]];
+}
+
 - (void)addBox
 {
-    LetterBox *box = [[LetterBox alloc] initWithSize:CGSizeMake(boxWidth,boxWidth)];
+    LetterBox *box = [[LetterBox alloc] initWithSize:CGSizeMake(self.boxWidth,self.boxWidth)];
     box.position = CGPointMake(skRand(0, self.size.width), self.size.height-50);
     box.physicsBody.categoryBitMask = boxCategory;
     box.physicsBody.contactTestBitMask = boxCategory;
     [self addChild:box];
 }
 
+-(void)verifiedBoxes:(BOOL)thereAreBoxes {
+    self.boxesOnscreen = thereAreBoxes;
+}
+
+
+#pragma mark - Physics, Touches & Collisions
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
     for (SKNode *node in nodes) {
         if ([node.name isEqualToString:@"beginButton"]) {
-            [_instruct removeFromParent];
+            [self.instruct removeFromParent];
             [self startBoxes];
-            [_musicPlayer play];
+            [self startGameTimer];
+            [self.musicPlayer play];
         }
         if ([node.name isEqualToString:@"okay"]) {
             [self submitWord];
@@ -320,7 +344,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         }
         else if ([node.name isEqualToString:@"box"]) {
             SKLabelNode *nodeLetter = (SKLabelNode *)[node childNodeWithName:@"letter"];
-            _wordLabel.text = [NSString stringWithFormat:@"%@%@", _wordLabel.text, nodeLetter.text];
+            self.wordLabel.text = [NSString stringWithFormat:@"%@%@", self.wordLabel.text, nodeLetter.text];
             [(SKSpriteNode *)node setColor:[UIColor blackColor]];
             [self addLetterToDraft:node];
         }
@@ -336,16 +360,31 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     lb2.hasCollided = YES;
 }
 
+-(void)update:(CFTimeInterval)currentTime {
+    CGFloat xForce = -9.8;
+    if (self.lost == YES && self.boxesOnscreen == YES && self.ended == 0) {
+        [self removeAllActions];
+        xForce = 9.8;
+    }
+    self.physicsWorld.gravity=CGPointMake(verticalAxis*10, xForce);
+    if (self.lost == YES && self.boxesOnscreen == NO && self.ended == 0) {
+        [self displayEnd];
+        self.ended = 1;
+    }
+}
+
+#pragma mark - Word Management
+
 -(void)submitWord {
     NSMutableArray *letters = [[NSMutableArray alloc] init];
-    for (LetterBox *n in _draftWord) {
+    for (LetterBox *n in self.draftWord) {
         [letters addObject:n.letterNode.text];
     }
     NSString *theWord = [letters componentsJoinedByString:@""];
     NSLog(@"Word is: %@", theWord);
     if ([WordsDatabase isWord:theWord]) {
         [self updateScore:[WordsDatabase wordScore:theWord]];
-        for (SKNode *b in _draftWord) {
+        for (SKNode *b in self.draftWord) {
             SKAction *zoom = [SKAction scaleBy:8 duration:0.2];
             SKAction *fade = [SKAction fadeOutWithDuration:0.2];
             SKAction *group = [SKAction group:@[zoom, fade]];
@@ -362,71 +401,47 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)clearWordWithWin:(BOOL)win {
     if (!win) {
-        for (LetterBox *n in _draftWord) {
+        for (LetterBox *n in self.draftWord) {
             n.color = n.originalColor;
         }
     }
-    [_draftWord removeAllObjects];
-    _okayButton.color = [UIColor clearColor];
-    _wordLabel.text = @"";
+    [self.draftWord removeAllObjects];
+    self.okayButton.color = [UIColor clearColor];
+    self.wordLabel.text = @"";
 }
 
 -(void)updateScore:(int)addScore {
-    int newScore = [_score intValue] + addScore;
-    _score = [NSNumber numberWithInt:newScore];
-    _scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+    int newScore = [self.score intValue] + addScore;
+    self.score = [NSNumber numberWithInt:newScore];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
 }
 
 -(void)addLetterToDraft:(SKNode *)node {
-    [_draftWord addObject:node];
-    if (_draftWord.count >= _settings.minLetters) {
-        _okayButton.color = [UIColor sunflowerColor];
+    [self.draftWord addObject:node];
+    if (self.draftWord.count >= self.settings.minLetters) {
+        self.okayButton.color = [UIColor sunflowerColor];
     }
 }
 
--(void)didSimulatePhysics
-{
-    [self verifiedBoxes:NO];
-    [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
-        [self verifiedBoxes:YES];
-        if (node.position.y > (CGRectGetHeight(self.frame) + boxWidth) && lost == YES) {
-            [node removeFromParent];
-        }
-    }];
-}
-
--(void)verifiedBoxes:(BOOL)thereAreBoxes {
-    boxesOnscreen = thereAreBoxes;
-}
+#pragma - Game Flow
 
 -(void)displayEnd {
-        [_musicPlayer stop];
+        [self.musicPlayer stop];
     [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
     BOOL passFail;
-    if ([_score intValue] >= _settings.minScore) {
+    if ([self.score intValue] >= self.settings.minScore) {
         passFail = YES;
     } else {
         passFail = NO;
     }
-    _endBox = [EndLevelBox endBoxWithPass:passFail score:[_score intValue] scoreNeeded:100 sceneWidth:CGRectGetWidth(self.frame)];
-    _endBox.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
-    [self addChild:_endBox];
+    self.endBox = [EndLevelBox endBoxWithPass:passFail score:[self.score intValue] scoreNeeded:100 sceneWidth:CGRectGetWidth(self.frame)];
+    self.endBox.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
+    [self addChild:self.endBox];
 }
 
--(void)update:(CFTimeInterval)currentTime {
-    CGFloat xForce = -9.8;
-    if (lost == YES && boxesOnscreen == YES && ended == 0) {
-        [self removeAllActions];
-        xForce = 9.8;
-    }
-    self.physicsWorld.gravity=CGPointMake(verticalAxis*10, xForce);
-    if (lost == YES && boxesOnscreen == NO && ended == 0) {
-        [self displayEnd];
-        ended = 1;
-    }
-}
+#pragma - Class Methods
 
 +(GameScene *)sceneWithLevelSetup:(LevelSettings *)levelSettings size:(CGSize)size {
     GameScene *gs = [[GameScene alloc] initWithSize:size];

@@ -17,6 +17,7 @@
 		2A52223417BB09E600D2A7DD /* LevelSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A52223317BB09E600D2A7DD /* LevelSettings.m */; };
 		2A52223617BB22A700D2A7DD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A52223517BB22A700D2A7DD /* AVFoundation.framework */; };
 		2A52223917BB245300D2A7DD /* mygrimeydreams-horder.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2A52223817BB245300D2A7DD /* mygrimeydreams-horder.m4a */; };
+		2A52223F17BBDEF500D2A7DD /* NSString+THUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A52223E17BBDEF500D2A7DD /* NSString+THUtil.m */; };
 		2A5ACCE117B1D16A0093817B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5ACCE017B1D16A0093817B /* libsqlite3.dylib */; };
 		2A5ACCE417B1D1F30093817B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACCE317B1D1F30093817B /* RootViewController.m */; };
 		2A5ACCE517B1D1F30093817B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACCE317B1D1F30093817B /* RootViewController.m */; };
@@ -74,6 +75,8 @@
 		2A52223317BB09E600D2A7DD /* LevelSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelSettings.m; sourceTree = "<group>"; };
 		2A52223517BB22A700D2A7DD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2A52223817BB245300D2A7DD /* mygrimeydreams-horder.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mygrimeydreams-horder.m4a"; sourceTree = "<group>"; };
+		2A52223D17BBDEF500D2A7DD /* NSString+THUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+THUtil.h"; sourceTree = "<group>"; };
+		2A52223E17BBDEF500D2A7DD /* NSString+THUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+THUtil.m"; sourceTree = "<group>"; };
 		2A5ACCE017B1D16A0093817B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		2A5ACCE217B1D1F30093817B /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		2A5ACCE317B1D1F30093817B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 				2A31B45017B1BB9400E34B17 /* THUtil.m */,
 				2A52223217BB09E600D2A7DD /* LevelSettings.h */,
 				2A52223317BB09E600D2A7DD /* LevelSettings.m */,
+				2A52223D17BBDEF500D2A7DD /* NSString+THUtil.h */,
+				2A52223E17BBDEF500D2A7DD /* NSString+THUtil.m */,
 			);
 			name = UtilityClasses;
 			sourceTree = "<group>";
@@ -411,6 +416,7 @@
 				2A5ACCE917B29AC80093817B /* MainMenuScene.m in Sources */,
 				2AD1474917B8457B00DCD951 /* EndLevelBox.m in Sources */,
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
+				2A52223F17BBDEF500D2A7DD /* NSString+THUtil.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
 				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
 				2AD1474617B835EA00DCD951 /* InstructionBox.m in Sources */,

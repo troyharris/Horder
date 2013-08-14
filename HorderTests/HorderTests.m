@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "LetterBox.h"
 #import "WordsDatabase.h"
+#import "NSString+THUtil.h"
 
 @interface HorderTests : XCTestCase
 
@@ -26,6 +27,10 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+}
+
+- (void)testString {
+    NSLog(@"Test string %@", [NSString numberToWord:25]);
 }
 
 - (void)testExample
