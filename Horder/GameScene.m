@@ -91,6 +91,15 @@ static const uint32_t wallCategory    =  0x1 << 2;
     //[self runAction: [SKAction repeatActionForever:makeBoxes]];
      */
     [self startFoulTimer];
+    [self backgroundMusicSetup];
+}
+
+-(void)backgroundMusicSetup {
+    NSString *bgMusicPath = [[NSBundle mainBundle] pathForResource:@"mygrimeydreams-horder" ofType:@"m4a"];
+    NSURL *fileURL = [NSURL URLWithString:bgMusicPath];
+    _musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+    [_musicPlayer prepareToPlay];
+    _musicPlayer.delegate = self;
 }
 
 -(void)startGameTimer {
@@ -301,6 +310,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         if ([node.name isEqualToString:@"beginButton"]) {
             [_instruct removeFromParent];
             [self startBoxes];
+            [_musicPlayer play];
         }
         if ([node.name isEqualToString:@"okay"]) {
             [self submitWord];
@@ -390,6 +400,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)displayEnd {
+        [_musicPlayer stop];
     [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];

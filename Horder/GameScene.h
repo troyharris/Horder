@@ -9,14 +9,15 @@
 #import <SpriteKit/SpriteKit.h>
 #import <CoreMotion/CoreMotion.h>
 #import "LevelSettings.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface GameScene : SKScene <SKPhysicsContactDelegate> {
+@interface GameScene : SKScene <SKPhysicsContactDelegate, AVAudioPlayerDelegate> {
     float verticalAxis, lateralAxis, longitudinalAxis;
 }
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) LevelSettings *settings;
-
+@property (nonatomic, strong) AVAudioPlayer *musicPlayer;
 
 +(GameScene *)sceneWithLevelSetup:(LevelSettings *)levelSettings size:(CGSize)size;
 

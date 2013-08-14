@@ -57,7 +57,8 @@ static inline CGFloat skArcRandi(NSInteger low, NSInteger high) {
                           [UIColor sunflowerColor],
                           [UIColor pumpkinColor]
                           ];
-    return (UIColor *)[colorArr objectAtIndex:skArcRandi(0, (colorArr.count - 1))];
+    //return (UIColor *)[colorArr objectAtIndex:skArcRandi(0, (colorArr.count - 1))];
+    return (UIColor *)[colorArr objectAtIndex:arc4random_uniform([colorArr count])];
 }
 
 -(NSArray *)getAlphabet {
@@ -81,8 +82,10 @@ static inline CGFloat skArcRandi(NSInteger low, NSInteger high) {
             [weightedLetters addObject:letter];
         }
     }
+    [weightedLetters addObjectsFromArray:@[@"A", @"E", @"I", @"O", @"U"]];
     //NSLog(@"Weighted Letters are: %d", [weightedLetters count]);
-    return (NSString *)[weightedLetters objectAtIndex:skArcRandi(0, (weightedLetters.count - 1))];
+    //return (NSString *)[weightedLetters objectAtIndex:skArcRandi(0, (weightedLetters.count - 1))];
+    return (NSString *)[weightedLetters objectAtIndex:arc4random_uniform([weightedLetters count])];
 }
 
 @end
