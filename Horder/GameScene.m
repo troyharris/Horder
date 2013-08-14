@@ -57,7 +57,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
 }
 
 -(void)createSceneContents {
-    clock = 120;
+    clock = _settings.maxTime;
     [self startGameTimer];
     foulSeconds = 0;
     boxWidth = CGRectGetWidth(self.frame) / 8;
@@ -184,7 +184,7 @@ static const uint32_t wallCategory    =  0x1 << 2;
 }
 
 -(void)addBackground {
-    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:@"bokehtest"];
+    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:_settings.backgroundName];
     background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
     background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
@@ -369,7 +369,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)addLetterToDraft:(SKNode *)node {
     [_draftWord addObject:node];
-    if (_draftWord.count >= 3) {
+    if (_draftWord.count >= _settings.minLetters) {
         _okayButton.color = [UIColor sunflowerColor];
     }
 }
@@ -394,7 +394,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         [node removeFromParent];
     }];
     BOOL passFail;
-    if ([_score intValue] > 50) {
+    if ([_score intValue] >= _settings.minScore) {
         passFail = YES;
     } else {
         passFail = NO;
@@ -415,6 +415,12 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         [self displayEnd];
         ended = 1;
     }
+}
+
++(GameScene *)sceneWithLevelSetup:(LevelSettings *)levelSettings size:(CGSize)size {
+    GameScene *gs = [[GameScene alloc] initWithSize:size];
+    gs.settings = levelSettings;
+    return gs;
 }
 
 @end

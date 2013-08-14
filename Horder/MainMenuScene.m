@@ -11,6 +11,7 @@
 #import "LetterBox.h"
 #import <CoreImage/CoreImage.h>
 #import "GameScene.h"
+#import "LevelSettings.h"
 
 @interface MainMenuScene ()
 @property BOOL contentCreated;
@@ -28,22 +29,13 @@
 -(void)createSceneContents {
     NSLog(@"Screen Width is %f and Height is %f", self.frame.size.width, self.frame.size.height);
     _motionManager = [[CMMotionManager alloc] init];
-    
     _motionManager.deviceMotionUpdateInterval = 1/30.0;
-    
     [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^ (CMDeviceMotion *devMotion, NSError *error){
-        
         CMAttitude *currentAttitude = devMotion.attitude;
-        
         verticalAxis = currentAttitude.roll;
-        
         lateralAxis = currentAttitude.pitch;
-        
         longitudinalAxis = currentAttitude.yaw;
-        
     }];
-    //UIImage *bgImage = [UIImage imageNamed:@"treetestret-ipad"];
-    //self.backgroundColor = [UIColor colorWithPatternImage:bgImage];
     self.scaleMode = SKSceneScaleModeAspectFit;
     [self createBackground];
     [self createAnchor];
@@ -55,22 +47,6 @@
     SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:@"treetest-ipad-preblur"];
     background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
     background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    /*
-    SKEffectNode *effect = [[SKEffectNode alloc] init];
-    effect.filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [effect.filter setDefaults];
-    effect.shouldEnableEffects = YES;
-    [effect addChild:background];
-     */
-    /*
-    [self setFilter:[CIFilter filterWithName:@"CIGloom"]];
-    [self.filter setDefaults];
-    [self.filter setValue:@50.0 forKey:@"inputRadius"];
-    [self.filter setValue:@1.0 forKey:@"inputIntensity"];
-    self.shouldEnableEffects = YES;
-     */
-    //[background setXScale:1.5];
-    //[background setYScale:1.5];
     [self addChild:background];
 }
 
@@ -118,7 +94,12 @@
     NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
     for (SKNode *node in nodes) {
         if ([node.name isEqualToString:@"button"]) {
-            SKScene *game = [[GameScene alloc] initWithSize:self.size];
+            LevelSettings *settings = [[LevelSettings alloc] init];
+            settings.maxTime = 120;
+            settings.minLetters = 3;
+            settings.minScore = 50;
+            settings.backgroundName = @"bokehtest";
+            SKScene *game = [GameScene sceneWithLevelSetup:settings size:self.size];
             CIFilter *blurTrans = [CIFilter filterWithName:@"CIModTransition"];
             [blurTrans setDefaults];
             self.shouldEnableEffects = YES;

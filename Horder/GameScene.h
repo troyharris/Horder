@@ -8,12 +8,19 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import <CoreMotion/CoreMotion.h>
+#import "LevelSettings.h"
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate> {
     float verticalAxis, lateralAxis, longitudinalAxis;
 }
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
+@property (nonatomic, strong) LevelSettings *settings;
+
+
++(GameScene *)sceneWithLevelSetup:(LevelSettings *)levelSettings size:(CGSize)size;
+
+
 
 
 
