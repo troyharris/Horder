@@ -31,6 +31,12 @@
 
 - (void)testString {
     NSLog(@"Test string %@", [NSString numberToWord:25]);
+    NSLog(@"Test time string %@", [NSString secondsToString:120]);
+    NSLog(@"Test time string %@", [NSString secondsToString:60]);
+    NSLog(@"Test time string %@", [NSString secondsToString:90]);
+    NSLog(@"Test time string %@", [NSString secondsToString:147]);
+    NSLog(@"Test time string %@", [NSString secondsToString:13]);
+    NSLog(@"Test time string %@", [NSString secondsToString:59]);
 }
 
 - (void)testExample

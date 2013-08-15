@@ -10,6 +10,7 @@
 
 @interface LevelSettings : NSObject
 
+@property (nonatomic, strong) NSNumber *levelNumber;
 @property (nonatomic, strong) NSArray *hinderSprites;
 @property (nonatomic, strong) NSString *backgroundName;
 @property (nonatomic) int maxTime;
@@ -19,6 +20,10 @@
 @property (nonatomic) BOOL wideBoxes;
 @property (nonatomic) BOOL moonGravity;
 @property (nonatomic) BOOL wildCard;
+
++ (LevelSettings *)levelWithNumber:(NSNumber *)levelNumber;
+
++ (LevelSettings *)levelOne;
 
 
 @end

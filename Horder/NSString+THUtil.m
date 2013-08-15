@@ -10,7 +10,7 @@
 
 @implementation NSString (THUtil)
 
-+(NSString *)numberToWord:(int)number {
++ (NSString *)numberToWord:(int)number {
     NSDictionary *baseNumbers = @{
                                   @1:@"one",
                                   @2:@"two",
@@ -76,6 +76,25 @@
     }
     
     return nil;
+}
+
++ (NSString *)secondsToString:(int)seconds {
+    int minutes = seconds / 60;
+    int remainingSeconds = seconds % 60;
+    NSString *plural = minutes > 1 ? @"s" : @"";
+    NSString *minuteString = @"";
+    NSString *secondsString = @"";
+    NSString *andString = @"";
+    if (minutes > 0) {
+        minuteString = [NSString stringWithFormat:@"%@ minute%@", [NSString numberToWord:minutes], plural];
+    }
+    if (remainingSeconds > 0) {
+        secondsString = [NSString stringWithFormat:@"%@ seconds", [NSString numberToWord:remainingSeconds]];
+    }
+    if (minutes > 0 && remainingSeconds > 0) {
+        andString = @" and ";
+    }
+    return [NSString stringWithFormat:@"%@%@%@", minuteString, andString, secondsString];
 }
 
 @end

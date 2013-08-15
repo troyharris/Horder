@@ -10,6 +10,7 @@
 
 @interface NSString (THUtil)
 
-+(NSString *)numberToWord:(int)number;
++ (NSString *)numberToWord:(int)number;
++ (NSString *)secondsToString:(int)seconds;
 
 @end

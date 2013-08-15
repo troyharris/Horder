@@ -12,6 +12,7 @@
 #import "EndLevelBox.h"
 #import "WordsDatabase.h"
 #import "UIColor+FlatUI.h"
+#import "NSString+THUtil.h"
 
 @interface GameScene() {
     float verticalAxis, lateralAxis, longitudinalAxis;
@@ -50,8 +51,8 @@
 
 #pragma mark - Statics
 
-static const uint32_t boxCategory        =  0x1 << 1;
-static const uint32_t wallCategory    =  0x1 << 2;
+static const uint32_t boxCategory   =  0x1 << 1;
+static const uint32_t wallCategory  =  0x1 << 2;
 
 static inline CGFloat skRandf() {
     return rand() / (CGFloat) RAND_MAX;
@@ -94,10 +95,6 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.hudButtonSize = CGRectGetHeight(self.frame) / 16;
     self.score = @0;
     self.draftWord = [[NSMutableArray alloc] init];
-    self.score = @0;
-    self.draftWord = [[NSMutableArray alloc] init];
-
-
 }
 
 -(void)setupMotionManager {
@@ -197,8 +194,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 -(void)displayInstructions {
     self.instruct = [[InstructionBox alloc] initWithSize:CGSizeMake(CGRectGetWidth(self.frame) / 2, CGRectGetWidth(self.frame) / 2) sceneWidth:CGRectGetWidth(self.frame)];
     self.instruct.instructions.text = [NSString stringWithFormat:@"Score at least %d points", self.settings.minScore];
-    self.instruct.instructTime.text = @"In two minutes";
-    self.instruct.wordLength.text = @"Words must be at least three letters";
+    self.instruct.instructTime.text = [NSString stringWithFormat:@"In %@", [NSString secondsToString:self.settings.maxTime]];
+    self.instruct.wordLength.text = [NSString stringWithFormat:@"Words must be at least %@ letters", [NSString numberToWord:self.settings.minLetters]];
     self.instruct.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
     [self addChild:self.instruct];
 }
@@ -224,10 +221,11 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)incrementClock {
     self.clock--;
-    if (clock <= 0) {
+    if (self.clock <= 0) {
         self.gameClock.text = @"0:00";
         [self.gameTimer invalidate];
         self.lost = YES;
+        NSLog(@"You lost and the timer should be stopped here.");
         return;
     }
     int seconds = self.clock % 60;

@@ -94,11 +94,7 @@
     NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
     for (SKNode *node in nodes) {
         if ([node.name isEqualToString:@"button"]) {
-            LevelSettings *settings = [[LevelSettings alloc] init];
-            settings.maxTime = 120;
-            settings.minLetters = 3;
-            settings.minScore = 50;
-            settings.backgroundName = @"bokehtest";
+            LevelSettings *settings = [LevelSettings levelWithNumber:@1];
             SKScene *game = [GameScene sceneWithLevelSetup:settings size:self.size];
             CIFilter *blurTrans = [CIFilter filterWithName:@"CIModTransition"];
             [blurTrans setDefaults];
