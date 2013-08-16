@@ -19,6 +19,9 @@
         case 1:
             return [LevelSettings levelOne];
             break;
+        case 2:
+            return [LevelSettings levelTwo];
+            break;
         default:
             return [LevelSettings levelOne];
             break;
@@ -33,7 +36,52 @@
     ls.hinderSprites = nil;
     ls.maxTime = 120;
     ls.minLetters = 3;
+    ls.minScore = 30;
+    ls.explodingBoxes = NO;
+    ls.wideBoxes = NO;
+    ls.moonGravity = NO;
+    ls.wildCard = NO;
+    return ls;
+}
+
++ (LevelSettings *)levelTwo {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @2;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 120;
+    ls.minLetters = 3;
     ls.minScore = 50;
+    ls.explodingBoxes = NO;
+    ls.wideBoxes = NO;
+    ls.moonGravity = NO;
+    ls.wildCard = NO;
+    return ls;
+}
+
++ (LevelSettings *)levelThree {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @3;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 90;
+    ls.minLetters = 3;
+    ls.minScore = 35;
+    ls.explodingBoxes = NO;
+    ls.wideBoxes = NO;
+    ls.moonGravity = NO;
+    ls.wildCard = NO;
+    return ls;
+}
+
++ (LevelSettings *)levelFour {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @4;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 150;
+    ls.minLetters = 3;
+    ls.minScore = 100;
     ls.explodingBoxes = NO;
     ls.wideBoxes = NO;
     ls.moonGravity = NO;

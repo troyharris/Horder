@@ -22,6 +22,32 @@
         _passFail.fontSize = 50;
         _passFail.position = CGPointMake(CGRectGetMidX(self.frame), 100);
         [self addChild:_passFail];
+        
+        _score = [[SKLabelNode alloc] initWithFontNamed:fontName];
+        _score.fontSize = 30;
+        _score.position = CGPointMake(CGRectGetMidX(self.frame), 50);
+        _score.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+        [self addChild:_score];
+        
+        _scoreNeeded = [[SKLabelNode alloc] initWithFontNamed:fontName];
+        _scoreNeeded.fontSize = 20;
+        _scoreNeeded.position = CGPointMake(CGRectGetMidX(self.frame), 0);
+        _scoreNeeded.verticalAlignmentMode = SKLabelVerticalAlignmentModeBottom;
+        [self addChild:_scoreNeeded];
+        
+        SKColor *buttonColor = [SKColor orangeColor];
+        
+        _okayButton = [[SKSpriteNode alloc] initWithColor:buttonColor size:CGSizeMake(size.width / 2, 75)];
+        _okayButton.position = CGPointMake(CGRectGetMidX(self.frame), -100);
+        _okayButton.name = @"beginButton";
+        
+        _okayText = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-UltraLight"];
+        _okayText.fontSize = 30;
+        _okayText.text = @"Next >";
+        _okayText.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+        _okayText.position = CGPointMake(CGRectGetMidX(_okayText.frame), CGRectGetMidY(_okayText.frame));
+        [_okayButton addChild:_okayText];
+        [self addChild:_okayButton];
 
     }
     return self;
@@ -32,10 +58,16 @@
     if (pass == YES) {
         elb.passFail.text = @"PASS";
         elb.passFail.fontColor = [SKColor sunflowerColor];
+        elb.okayText.text = @"Next >";
+        elb.okayButton.name = @"nextButton";
     } else {
         elb.passFail.text = @"FAIL";
         elb.passFail.fontColor = [SKColor pomegranateColor];
+        elb.okayText.text = @"Try Again";
+        elb.okayButton.name = @"retryButton";
     }
+    elb.score.text = [NSString stringWithFormat:@"Score: %d", score];
+    elb.scoreNeeded.text = [NSString stringWithFormat:@"Score Needed: %d", scoreNeeded];
     return elb;
 }
 

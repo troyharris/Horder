@@ -13,7 +13,8 @@
 @property (nonatomic, strong) SKLabelNode *passFail;
 @property (nonatomic, strong) SKLabelNode *score;
 @property (nonatomic, strong) SKLabelNode *scoreNeeded;
-@property (nonatomic, strong) SKLabelNode *okayButton;
+@property (nonatomic, strong) SKSpriteNode *okayButton;
+@property (nonatomic, strong) SKLabelNode *okayText;
 
 -(id)initWithSize:(CGSize)size sceneWidth:(CGFloat)width;
 

@@ -333,6 +333,13 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             [self startBoxes];
             [self startGameTimer];
             [self.musicPlayer play];
+        } else if ([node.name isEqualToString:@"nextButton"]) {
+            [self.endBox removeFromParent];
+            NSNumber *nextLevel = @([self.settings.levelNumber intValue] + 1);
+            [self goToLevel:nextLevel];
+        } else if ([node.name isEqualToString:@"retryButton"]) {
+            [self.endBox removeFromParent];
+            [self goToLevel:self.settings.levelNumber];
         }
         if ([node.name isEqualToString:@"okay"]) {
             [self submitWord];
@@ -434,9 +441,19 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     } else {
         passFail = NO;
     }
-    self.endBox = [EndLevelBox endBoxWithPass:passFail score:[self.score intValue] scoreNeeded:100 sceneWidth:CGRectGetWidth(self.frame)];
+    self.endBox = [EndLevelBox endBoxWithPass:passFail score:[self.score intValue] scoreNeeded:self.settings.minScore sceneWidth:CGRectGetWidth(self.frame)];
     self.endBox.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
     [self addChild:self.endBox];
+}
+
+-(void)goToLevel:(NSNumber *)levelNum {
+    LevelSettings *settings = [LevelSettings levelWithNumber:levelNum];
+    SKScene *game = [GameScene sceneWithLevelSetup:settings size:self.size];
+    CIFilter *blurTrans = [CIFilter filterWithName:@"CIModTransition"];
+    [blurTrans setDefaults];
+    self.shouldEnableEffects = YES;
+    SKTransition *trans = [SKTransition transitionWithCIFilter:blurTrans duration:1.0];
+    [self.view presentScene:game transition:trans];
 }
 
 #pragma - Class Methods
