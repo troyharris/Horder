@@ -10,6 +10,10 @@
 
 @implementation LevelSettings
 
++ (NSString *)levelBackgroundNameWithNumber:(NSNumber *)levelNumber {
+    return [NSString stringWithFormat:@"ipad-level%d", [levelNumber intValue]];
+}
+
 + (LevelSettings *)levelWithNumber:(NSNumber *)levelNumber {
     switch ([levelNumber intValue]) {
         case 1:
@@ -25,7 +29,7 @@
 + (LevelSettings *)levelOne {
     LevelSettings *ls = [[LevelSettings alloc] init];
     ls.levelNumber = @1;
-    ls.backgroundName = @"bokehtest";
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
     ls.hinderSprites = nil;
     ls.maxTime = 120;
     ls.minLetters = 3;
