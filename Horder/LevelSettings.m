@@ -40,7 +40,7 @@
     ls.explodingBoxes = NO;
     ls.wideBoxes = YES;
     ls.moonGravity = NO;
-    ls.wildCard = NO;
+    ls.wildCard = YES;
     return ls;
 }
 

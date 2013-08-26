@@ -20,7 +20,7 @@
     }
     
     int goodID = -1;
-    NSString *select = [NSString stringWithFormat:@"SELECT id FROM words WHERE word = '%@'", word];
+    NSString *select = [NSString stringWithFormat:@"SELECT id FROM words WHERE word LIKE '%@'", word];
     sqlite3_stmt *statement;
     if (sqlite3_prepare_v2(database, [select UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -95,7 +95,8 @@
              @"W": @4,
              @"X": @5,
              @"Y": @3,
-             @"Z": @6
+             @"Z": @6,
+             @"_": @0
              };
 }
 
