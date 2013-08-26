@@ -14,7 +14,12 @@
 @property (nonatomic, strong) SKLabelNode *letterNode;
 @property (nonatomic, strong) SKColor *originalColor;
 @property BOOL hasCollided;
+@property BOOL bigBoxes;
+@property BOOL explodingBoxes;
+@property BOOL wildCard;
 
 -(id)initWithSize:(CGSize)size;
+
++ (LetterBox *)letterBoxWithSize:(CGSize)size bigBoxes:(BOOL)big explodingBoxes:(BOOL)exploding wildCardBoxes:(BOOL)wildCard;
 
 @end

@@ -308,9 +308,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     [self runAction: [SKAction repeatActionForever:makeBoxes]];
 }
 
-- (void)addBox
-{
-    LetterBox *box = [[LetterBox alloc] initWithSize:CGSizeMake(self.boxWidth,self.boxWidth)];
+- (void)addBox {
+    LetterBox *box = [LetterBox letterBoxWithSize:CGSizeMake(self.boxWidth, self.boxWidth) bigBoxes:self.settings.wideBoxes explodingBoxes:self.settings.explodingBoxes wildCardBoxes:self.settings.wildCard];
     box.position = CGPointMake(skRand(0, self.size.width), self.size.height-50);
     box.physicsBody.categoryBitMask = boxCategory;
     box.physicsBody.contactTestBitMask = boxCategory;

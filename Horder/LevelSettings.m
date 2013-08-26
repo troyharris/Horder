@@ -38,7 +38,7 @@
     ls.minLetters = 3;
     ls.minScore = 30;
     ls.explodingBoxes = NO;
-    ls.wideBoxes = NO;
+    ls.wideBoxes = YES;
     ls.moonGravity = NO;
     ls.wildCard = NO;
     return ls;
@@ -51,7 +51,7 @@
     ls.hinderSprites = nil;
     ls.maxTime = 120;
     ls.minLetters = 3;
-    ls.minScore = 50;
+    ls.minScore = 40;
     ls.explodingBoxes = NO;
     ls.wideBoxes = NO;
     ls.moonGravity = NO;
@@ -64,9 +64,9 @@
     ls.levelNumber = @3;
     ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
     ls.hinderSprites = nil;
-    ls.maxTime = 90;
-    ls.minLetters = 3;
-    ls.minScore = 35;
+    ls.maxTime = 120;
+    ls.minLetters = 4;
+    ls.minScore = 30;
     ls.explodingBoxes = NO;
     ls.wideBoxes = NO;
     ls.moonGravity = NO;
@@ -80,8 +80,8 @@
     ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
     ls.hinderSprites = nil;
     ls.maxTime = 150;
-    ls.minLetters = 3;
-    ls.minScore = 100;
+    ls.minLetters = 4;
+    ls.minScore = 50;
     ls.explodingBoxes = NO;
     ls.wideBoxes = NO;
     ls.moonGravity = NO;

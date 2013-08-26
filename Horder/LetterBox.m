@@ -21,7 +21,7 @@
         self.originalColor = boxColor;
         self.hasCollided = NO;
         _letterNode = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-UltraLight"];
-        _letterNode.fontSize = size.width / 2;
+        _letterNode.fontSize = size.height / 2;
         _letterNode.text = [self getRandomLetter];
         _letterNode.position = CGPointMake(0, 0);
         _letterNode.name = @"letter";
@@ -33,6 +33,14 @@
 static inline CGFloat skArcRandi(NSInteger low, NSInteger high) {
     int interval = high - low;
     return (arc4random() % interval) + low;
+}
+
+static inline BOOL skSpecialRoll() {
+    CGFloat roll = skArcRandi(1, 100);
+    if (roll > 90) {
+        return YES;
+    }
+    return NO;
 }
 
 -(UIColor *)getRandomColor {
@@ -86,6 +94,16 @@ static inline CGFloat skArcRandi(NSInteger low, NSInteger high) {
     //NSLog(@"Weighted Letters are: %d", [weightedLetters count]);
     //return (NSString *)[weightedLetters objectAtIndex:skArcRandi(0, (weightedLetters.count - 1))];
     return (NSString *)[weightedLetters objectAtIndex:arc4random_uniform([weightedLetters count])];
+}
+
++ (LetterBox *)letterBoxWithSize:(CGSize)size bigBoxes:(BOOL)big explodingBoxes:(BOOL)exploding wildCardBoxes:(BOOL)wildCard {
+    if (big) {
+        if (skSpecialRoll()) {
+            size.width = size.width * 2;
+        }
+    }
+    LetterBox *box = [[LetterBox alloc] initWithSize:size];
+    return box;
 }
 
 @end
