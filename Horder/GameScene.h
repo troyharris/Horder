@@ -8,10 +8,12 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import <CoreMotion/CoreMotion.h>
-#import "LevelSettings.h"
 #import <AVFoundation/AVFoundation.h>
+#import "LetterBox.h"
 
-@interface GameScene : SKScene <SKPhysicsContactDelegate, AVAudioPlayerDelegate>
+@class LevelSettings;
+
+@interface GameScene : SKScene <SKPhysicsContactDelegate, AVAudioPlayerDelegate, LetterBoxDelegate>
 
 @property (nonatomic, strong) LevelSettings *settings;
 

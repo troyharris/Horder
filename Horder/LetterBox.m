@@ -96,6 +96,22 @@ static inline BOOL skSpecialRoll() {
     return (NSString *)[weightedLetters objectAtIndex:arc4random_uniform([weightedLetters count])];
 }
 
+-(void)hitByExploder {
+    // Boy is this embarassingly ugly code. Fix!
+    SKAction *blinkOn = [SKAction colorizeWithColor:[UIColor whiteColor] colorBlendFactor:1.0 duration:0.25];
+    SKAction *blinkOff = [SKAction colorizeWithColor:self.originalColor colorBlendFactor:1.0 duration:0.25];
+    SKAction *blinkOnQuick = [SKAction colorizeWithColor:[UIColor whiteColor] colorBlendFactor:1.0 duration:0.125];
+    SKAction *blinkOffQuick = [SKAction colorizeWithColor:[UIColor whiteColor] colorBlendFactor:1.0 duration:0.125];
+    SKAction *zoom = [SKAction scaleBy:8 duration:0.2];
+    SKAction *fade = [SKAction fadeOutWithDuration:0.2];
+    SKAction *group = [SKAction group:@[zoom, fade]];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *seq = [SKAction sequence:@[blinkOn, blinkOff, blinkOnQuick, blinkOffQuick, group, remove]];
+    [self runAction:seq completion:^(void){
+        [self.delegate removedLetterBoxFromParent:self];
+    }];
+}
+
 + (LetterBox *)letterBoxWithSize:(CGSize)size bigBoxes:(BOOL)big explodingBoxes:(BOOL)exploding wildCardBoxes:(BOOL)wildCard {
     if (big) {
         if (skSpecialRoll()) {
@@ -106,6 +122,11 @@ static inline BOOL skSpecialRoll() {
     if (wildCard) {
         if (skSpecialRoll()) {
             box.letterNode.text = @"_";
+            return box;
+        }
+    } if (exploding) {
+        if (skSpecialRoll()) {
+            box.letterNode.text = @"*";
         }
     }
     return box;

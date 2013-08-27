@@ -37,7 +37,7 @@
     ls.maxTime = 120;
     ls.minLetters = 3;
     ls.minScore = 30;
-    ls.explodingBoxes = NO;
+    ls.explodingBoxes = YES;
     ls.wideBoxes = YES;
     ls.moonGravity = NO;
     ls.wildCard = YES;

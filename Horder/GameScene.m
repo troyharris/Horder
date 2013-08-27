@@ -7,7 +7,7 @@
 //
 
 #import "GameScene.h"
-#import "LetterBox.h"
+#import "LevelSettings.h"
 #import "InstructionBox.h"
 #import "EndLevelBox.h"
 #import "WordsDatabase.h"
@@ -313,11 +313,19 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     box.position = CGPointMake(skRand(0, self.size.width), self.size.height-50);
     box.physicsBody.categoryBitMask = boxCategory;
     box.physicsBody.contactTestBitMask = boxCategory;
+    box.delegate = self;
     [self addChild:box];
 }
 
 -(void)verifiedBoxes:(BOOL)thereAreBoxes {
     self.boxesOnscreen = thereAreBoxes;
+}
+
+-(void)removedLetterBoxFromParent:(LetterBox *)letterBox {
+    if (letterBox.inWord) {
+        [self.draftWord removeObjectIdenticalTo:letterBox];
+        [self updateWordLabel];
+    }
 }
 
 
@@ -347,10 +355,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             [self clearWordWithWin:NO];
         }
         else if ([node.name isEqualToString:@"box"]) {
-            SKLabelNode *nodeLetter = (SKLabelNode *)[node childNodeWithName:@"letter"];
-            self.wordLabel.text = [NSString stringWithFormat:@"%@%@", self.wordLabel.text, nodeLetter.text];
-            [(SKSpriteNode *)node setColor:[UIColor blackColor]];
-            [self addLetterToDraft:node];
+            LetterBox *selectBox = (LetterBox *)node;
+            [self addLetterToDraft:selectBox];
         }
     }
 }
@@ -362,6 +368,10 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     lb2 = (LetterBox *)contact.bodyB.node;
     lb1.hasCollided = YES;
     lb2.hasCollided = YES;
+    if ([lb1.letterNode.text isEqualToString:@"*"] || [lb2.letterNode.text isEqualToString:@"*"]) {
+        [lb2 hitByExploder];
+        [lb1 hitByExploder];
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -407,6 +417,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     if (!win) {
         for (LetterBox *n in self.draftWord) {
             n.color = n.originalColor;
+            n.inWord = NO;
         }
     }
     [self.draftWord removeAllObjects];
@@ -420,11 +431,24 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
 }
 
--(void)addLetterToDraft:(SKNode *)node {
-    [self.draftWord addObject:node];
+-(void)addLetterToDraft:(LetterBox *)node {
+    if (!node.inWord) {
+        self.wordLabel.text = [NSString stringWithFormat:@"%@%@", self.wordLabel.text, node.letterNode.text];
+        node.color = [UIColor blackColor];
+        [self.draftWord addObject:node];
+        node.inWord = YES;
+    }
     if (self.draftWord.count >= self.settings.minLetters) {
         self.okayButton.color = [UIColor sunflowerColor];
     }
+}
+
+-(void)updateWordLabel {
+    NSMutableArray *letters = [[NSMutableArray alloc] init];
+    for (LetterBox *lb in self.draftWord) {
+        [letters addObject:lb.letterNode.text];
+    }
+    self.wordLabel.text = [letters componentsJoinedByString:@""];
 }
 
 #pragma - Game Flow
