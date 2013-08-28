@@ -11,7 +11,7 @@
 @implementation LevelSettings
 
 + (NSString *)levelBackgroundNameWithNumber:(NSNumber *)levelNumber {
-    return [NSString stringWithFormat:@"ipad-level%d", [levelNumber intValue]];
+    return [NSString stringWithFormat:@"ipad-lvl%d", [levelNumber intValue]];
 }
 
 + (LevelSettings *)levelWithNumber:(NSNumber *)levelNumber {
@@ -37,10 +37,10 @@
     ls.maxTime = 120;
     ls.minLetters = 3;
     ls.minScore = 30;
-    ls.explodingBoxes = YES;
-    ls.wideBoxes = YES;
+    ls.explodingBoxes = NO;
+    ls.wideBoxes = NO;
     ls.moonGravity = NO;
-    ls.wildCard = YES;
+    ls.wildCard = NO;
     return ls;
 }
 
@@ -68,7 +68,7 @@
     ls.minLetters = 4;
     ls.minScore = 30;
     ls.explodingBoxes = NO;
-    ls.wideBoxes = NO;
+    ls.wideBoxes = YES;
     ls.moonGravity = NO;
     ls.wildCard = NO;
     return ls;
@@ -83,7 +83,7 @@
     ls.minLetters = 4;
     ls.minScore = 50;
     ls.explodingBoxes = NO;
-    ls.wideBoxes = NO;
+    ls.wideBoxes = YES;
     ls.moonGravity = NO;
     ls.wildCard = NO;
     return ls;
