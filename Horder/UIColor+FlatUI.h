@@ -31,6 +31,7 @@
 + (UIColor *) silverColor;
 + (UIColor *) concreteColor;
 + (UIColor *) asbestosColor;
++ (UIColor *)hudColor;
 
 + (UIColor *) blendedColorWithForegroundColor:(UIColor *)foregroundColor
                               backgroundColor:(UIColor *)backgroundColor

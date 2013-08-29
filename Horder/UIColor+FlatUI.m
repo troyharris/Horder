@@ -114,6 +114,10 @@
     return [UIColor colorFromHexCode:@"7F8C8D"];
 }
 
++ (UIColor *)hudColor {
+    return [[UIColor cloudsColor] colorWithAlphaComponent:0.7];
+}
+
 + (UIColor *) blendedColorWithForegroundColor:(UIColor *)foregroundColor
                               backgroundColor:(UIColor *)backgroundColor
                                  percentBlend:(CGFloat) percentBlend {

@@ -30,6 +30,7 @@
 @property (nonatomic) int clock;
 @property BOOL contentCreated;
 @property (nonatomic, strong) NSMutableArray *draftWord;
+@property (nonatomic, strong) SKSpriteNode *background;
 @property (nonatomic, strong) SKLabelNode *wordLabel;
 @property (nonatomic, strong) SKLabelNode *scoreLabel;
 @property (nonatomic, strong) NSNumber *score;
@@ -74,6 +75,17 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)didSimulatePhysics
 {
+    verticalAxis = self.motionManager.deviceMotion.attitude.roll;
+    CGFloat xForce = -9.8;
+    if (self.lost == YES && self.boxesOnscreen == YES && self.ended == 0) {
+        [self removeAllActions];
+        xForce = 9.8;
+    }
+    self.physicsWorld.gravity=CGPointMake(verticalAxis*10, xForce);
+    if (self.lost == YES && self.boxesOnscreen == NO && self.ended == 0) {
+        [self displayEnd];
+        self.ended = 1;
+    }
     [self verifiedBoxes:NO];
     [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
         [self verifiedBoxes:YES];
@@ -90,8 +102,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.foulSeconds = 0;
     self.boxWidth = CGRectGetWidth(self.frame) / 8;
     self.hudHeight = CGRectGetHeight(self.frame) / 8;
-    self.hudMargin = CGRectGetHeight(self.frame) / 64;
-    self.hudFontSize = CGRectGetHeight(self.frame) / 32;
+    self.hudMargin = self.hudHeight / 4;
+    self.hudFontSize = self.hudHeight / 2;
     self.hudButtonSize = CGRectGetHeight(self.frame) / 16;
     self.score = @0;
     self.draftWord = [[NSMutableArray alloc] init];
@@ -99,6 +111,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)setupMotionManager {
     self.motionManager = [[CMMotionManager alloc] init];
+/*
     self.motionManager.deviceMotionUpdateInterval = 1/30.0;
     [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^ (CMDeviceMotion *devMotion, NSError *error){
         CMAttitude *currentAttitude = devMotion.attitude;
@@ -106,6 +119,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         lateralAxis = currentAttitude.pitch;
         longitudinalAxis = currentAttitude.yaw;
     }];
+ */
+    [self.motionManager startDeviceMotionUpdates];
 }
 
 -(void)setupBackgroundMusic {
@@ -117,9 +132,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)addBackground {
-    SKSpriteNode *background = [[SKSpriteNode alloc] initWithImageNamed:self.settings.backgroundName];
-    background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    self.background = [[SKSpriteNode alloc] initWithImageNamed:self.settings.backgroundName];
+    self.background.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    self.background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     self.backgroundCounter = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
     self.backgroundCounter.fontSize = CGRectGetWidth(self.frame) - 20;
     self.backgroundCounter.text = @"5";
@@ -127,14 +142,14 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.backgroundCounter.fontColor = [SKColor clearColor];
     self.backgroundCounter.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     self.backgroundCounter.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    [background addChild:self.backgroundCounter];
-    [self addChild:background];
+    [self.background addChild:self.backgroundCounter];
+    [self addChild:self.background];
 }
 
 -(void)addWalls {
     CGFloat thickness = 10.0;
-    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor cloudsColor] size:CGSizeMake(CGRectGetWidth(self.frame), thickness)];
-    floor.position = CGPointMake(CGRectGetMidX(self.frame), self.hudHeight + (thickness / 2));
+    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor hudColor] size:CGSizeMake(CGRectGetWidth(self.frame), self.hudHeight)];
+    floor.position = CGPointMake(CGRectGetMidX(self.frame), self.hudHeight / 2);
     floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
     floor.physicsBody.dynamic = NO;
     floor.physicsBody.categoryBitMask = wallCategory;
@@ -156,9 +171,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)addHUD {
-    self.wordLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    self.wordLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Light"];
     self.wordLabel.position = CGPointMake(self.hudMargin, self.hudMargin);
-    self.wordLabel.color = [UIColor whiteColor];
+    self.wordLabel.color = [UIColor asbestosColor];
     self.wordLabel.fontSize = self.hudFontSize;
     self.wordLabel.text = @" ";
     self.wordLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
@@ -291,11 +306,16 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)showFoulLine {
-    self.foulLine.color = [SKColor sunflowerColor];
+    //self.foulLine.color = [SKColor sunflowerColor];
+    SKAction *colorChange = [SKAction colorizeWithColor:[UIColor sunflowerColor] colorBlendFactor:0.9 duration:0.5];
+    SKAction *colorChangeWhite = [SKAction colorizeWithColor:[UIColor whiteColor] colorBlendFactor:0.9 duration:0.5];
+    SKAction *seq = [SKAction sequence:@[colorChange, colorChangeWhite]];
+    [self.background runAction:[SKAction repeatActionForever:seq]];
 }
 
 -(void)hideFoulLine {
-    self.foulLine.color = [SKColor clearColor];
+    //self.foulLine.color = [SKColor clearColor];
+    [self.background removeAllActions];
 }
 
 # pragma mark - Letter Box Management
@@ -376,6 +396,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)update:(CFTimeInterval)currentTime {
+    /*
     CGFloat xForce = -9.8;
     if (self.lost == YES && self.boxesOnscreen == YES && self.ended == 0) {
         [self removeAllActions];
@@ -386,7 +407,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         [self displayEnd];
         self.ended = 1;
     }
+     */
 }
+     
 
 #pragma mark - Word Management
 
