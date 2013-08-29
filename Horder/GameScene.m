@@ -343,6 +343,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         } else if ([node.name isEqualToString:@"nextButton"]) {
             [self.endBox removeFromParent];
             NSNumber *nextLevel = @([self.settings.levelNumber intValue] + 1);
+            NSLog(@"Going to Level %d", [nextLevel intValue]);
             [self goToLevel:nextLevel];
         } else if ([node.name isEqualToString:@"retryButton"]) {
             [self.endBox removeFromParent];
@@ -471,11 +472,12 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)goToLevel:(NSNumber *)levelNum {
     LevelSettings *settings = [LevelSettings levelWithNumber:levelNum];
-    SKScene *game = [GameScene sceneWithLevelSetup:settings size:self.size];
+    GameScene *game = [GameScene sceneWithLevelSetup:settings size:self.size];
     CIFilter *blurTrans = [CIFilter filterWithName:@"CIModTransition"];
     [blurTrans setDefaults];
     self.shouldEnableEffects = YES;
     SKTransition *trans = [SKTransition transitionWithCIFilter:blurTrans duration:1.0];
+    NSLog(@"GOING TO LEVEL %d NOW", [game.settings.levelNumber intValue]);
     [self.view presentScene:game transition:trans];
 }
 

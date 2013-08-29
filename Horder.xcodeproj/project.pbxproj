@@ -74,6 +74,8 @@
 		2AD1474617B835EA00DCD951 /* InstructionBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD1474517B835EA00DCD951 /* InstructionBox.m */; };
 		2AD1474917B8457B00DCD951 /* EndLevelBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD1474817B8457B00DCD951 /* EndLevelBox.m */; };
 		2AD1474B17B84EA800DCD951 /* bokehtest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD1474A17B84EA800DCD951 /* bokehtest@2x.png */; };
+		2ADA874117CECFE5006860FB /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 2ADA873F17CECFE5006860FB /* fishhook.c */; };
+		2ADA874317CED039006860FB /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 2ADA874217CED039006860FB /* QuietAssertMacros.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +171,9 @@
 		2AD1474717B8457B00DCD951 /* EndLevelBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EndLevelBox.h; sourceTree = "<group>"; };
 		2AD1474817B8457B00DCD951 /* EndLevelBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EndLevelBox.m; sourceTree = "<group>"; };
 		2AD1474A17B84EA800DCD951 /* bokehtest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bokehtest@2x.png"; sourceTree = "<group>"; };
+		2ADA873F17CECFE5006860FB /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
+		2ADA874017CECFE5006860FB /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
+		2ADA874217CED039006860FB /* QuietAssertMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuietAssertMacros.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +209,8 @@
 		2A31AFC217B1B9E600E34B17 /* UtilityClasses */ = {
 			isa = PBXGroup;
 			children = (
+				2ADA873F17CECFE5006860FB /* fishhook.c */,
+				2ADA874017CECFE5006860FB /* fishhook.h */,
 				2A31B45617B1C04600E34B17 /* WordsDatabase.h */,
 				2A31B45717B1C04600E34B17 /* WordsDatabase.m */,
 				2A31B45217B1BBE700E34B17 /* UIColor+FlatUI.h */,
@@ -214,6 +221,7 @@
 				2A52223317BB09E600D2A7DD /* LevelSettings.m */,
 				2A52223D17BBDEF500D2A7DD /* NSString+THUtil.h */,
 				2A52223E17BBDEF500D2A7DD /* NSString+THUtil.m */,
+				2ADA874217CED039006860FB /* QuietAssertMacros.c */,
 			);
 			name = UtilityClasses;
 			sourceTree = "<group>";
@@ -518,7 +526,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A31B45417B1BBE700E34B17 /* UIColor+FlatUI.m in Sources */,
+				2ADA874117CECFE5006860FB /* fishhook.c in Sources */,
 				2A5ACCE417B1D1F30093817B /* RootViewController.m in Sources */,
+				2ADA874317CED039006860FB /* QuietAssertMacros.c in Sources */,
 				2A5ACD0117B2F95F0093817B /* GameScene.m in Sources */,
 				2A52223417BB09E600D2A7DD /* LevelSettings.m in Sources */,
 				2A5ACCE917B29AC80093817B /* MainMenuScene.m in Sources */,
