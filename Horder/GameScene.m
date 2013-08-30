@@ -11,6 +11,7 @@
 #import "InstructionBox.h"
 #import "EndLevelBox.h"
 #import "WordsDatabase.h"
+#import "HORSong.h"
 #import "UIColor+FlatUI.h"
 #import "NSString+THUtil.h"
 
@@ -124,7 +125,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)setupBackgroundMusic {
-    NSString *bgMusicPath = [[NSBundle mainBundle] pathForResource:@"mygrimeydreams-horder" ofType:@"m4a"];
+    HORSong *song = [HORSong randomSong];
+    NSString *bgMusicPath = [[NSBundle mainBundle] pathForResource:song.filename ofType:song.extension];
     NSURL *fileURL = [NSURL URLWithString:bgMusicPath];
     self.musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
     [self.musicPlayer prepareToPlay];

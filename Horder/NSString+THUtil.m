@@ -45,10 +45,12 @@
                                  @8:@"eighty",
                                  @9:@"ninety"
                                  };
+    /*
     NSDictionary *powerNumbers = @{
                                    @1:@"hundred",
                                    @2:@"thousand"
                                    };
+     */
     NSNumber *numObject = [NSNumber numberWithInt:number];
     
     NSString *baseString = (NSString *)[baseNumbers objectForKey:numObject];

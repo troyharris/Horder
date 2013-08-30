@@ -13,7 +13,7 @@
 
 -(id)initWithSize:(CGSize)size sceneWidth:(CGFloat)width {
     NSString *fontName = @"HelveticaNeue-UltraLight";
-    CGFloat rowHeight = size.height / 8;
+    //CGFloat rowHeight = size.height / 8;
     UIColor *boxColor = [UIColor colorWithWhite:0 alpha:0.6];
     self = [super initWithColor:boxColor size:size];
     if (self) {

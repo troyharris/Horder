@@ -29,6 +29,13 @@
 		2A5ACCFB17B2C1CA0093817B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5ACCFA17B2C1CA0093817B /* QuartzCore.framework */; };
 		2A5ACCFE17B2C3B10093817B /* button-sunflower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A5ACCFD17B2C3B10093817B /* button-sunflower@2x.png */; };
 		2A5ACD0117B2F95F0093817B /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5ACD0017B2F95F0093817B /* GameScene.m */; };
+		2A6383F917D0551300D7AE71 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6383F817D0551300D7AE71 /* GameKit.framework */; };
+		2A6383FB17D1582B00D7AE71 /* longtooth-horder.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2A6383FA17D1582B00D7AE71 /* longtooth-horder.m4a */; };
+		2A6383FD17D15C1300D7AE71 /* bitsandgods-horder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A6383FC17D15C1300D7AE71 /* bitsandgods-horder.mp3 */; };
+		2A63840117D15C3300D7AE71 /* twilight-horder.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2A6383FF17D15C3300D7AE71 /* twilight-horder.m4a */; };
+		2A63840317D15C5800D7AE71 /* animous-horder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840217D15C5800D7AE71 /* animous-horder.mp3 */; };
+		2A63840517D15C8A00D7AE71 /* mirage-horder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840417D15C8A00D7AE71 /* mirage-horder.mp3 */; };
+		2A63840817D15D2200D7AE71 /* HORSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A63840717D15D2200D7AE71 /* HORSong.m */; };
 		2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616417B17FA400289A70 /* Foundation.framework */; };
 		2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616617B17FA400289A70 /* CoreGraphics.framework */; };
 		2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616817B17FA400289A70 /* UIKit.framework */; };
@@ -120,6 +127,14 @@
 		2A5ACCFD17B2C3B10093817B /* button-sunflower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-sunflower@2x.png"; sourceTree = "<group>"; };
 		2A5ACCFF17B2F95F0093817B /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		2A5ACD0017B2F95F0093817B /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
+		2A6383F817D0551300D7AE71 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		2A6383FA17D1582B00D7AE71 /* longtooth-horder.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "longtooth-horder.m4a"; sourceTree = "<group>"; };
+		2A6383FC17D15C1300D7AE71 /* bitsandgods-horder.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bitsandgods-horder.mp3"; sourceTree = "<group>"; };
+		2A6383FF17D15C3300D7AE71 /* twilight-horder.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "twilight-horder.m4a"; sourceTree = "<group>"; };
+		2A63840217D15C5800D7AE71 /* animous-horder.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "animous-horder.mp3"; sourceTree = "<group>"; };
+		2A63840417D15C8A00D7AE71 /* mirage-horder.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "mirage-horder.mp3"; sourceTree = "<group>"; };
+		2A63840617D15D2200D7AE71 /* HORSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HORSong.h; sourceTree = "<group>"; };
+		2A63840717D15D2200D7AE71 /* HORSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HORSong.m; sourceTree = "<group>"; };
 		2A96616117B17FA400289A70 /* Horder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A96616417B17FA400289A70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A96616617B17FA400289A70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -181,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A6383F917D0551300D7AE71 /* GameKit.framework in Frameworks */,
 				2A52223617BB22A700D2A7DD /* AVFoundation.framework in Frameworks */,
 				2A5ACCFB17B2C1CA0093817B /* QuartzCore.framework in Frameworks */,
 				2A5ACCF417B2BEDB0093817B /* CoreImage.framework in Frameworks */,
@@ -229,7 +245,14 @@
 		2A52223717BB243A00D2A7DD /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				2A63840417D15C8A00D7AE71 /* mirage-horder.mp3 */,
+				2A63840217D15C5800D7AE71 /* animous-horder.mp3 */,
+				2A6383FF17D15C3300D7AE71 /* twilight-horder.m4a */,
+				2A6383FC17D15C1300D7AE71 /* bitsandgods-horder.mp3 */,
+				2A6383FA17D1582B00D7AE71 /* longtooth-horder.m4a */,
 				2A52223817BB245300D2A7DD /* mygrimeydreams-horder.m4a */,
+				2A63840617D15D2200D7AE71 /* HORSong.h */,
+				2A63840717D15D2200D7AE71 /* HORSong.m */,
 			);
 			name = Music;
 			sourceTree = "<group>";
@@ -315,6 +338,7 @@
 		2A96616317B17FA400289A70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A6383F817D0551300D7AE71 /* GameKit.framework */,
 				2A52223517BB22A700D2A7DD /* AVFoundation.framework */,
 				2A5ACCFA17B2C1CA0093817B /* QuartzCore.framework */,
 				2A5ACCF317B2BEDB0093817B /* CoreImage.framework */,
@@ -470,6 +494,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AD1473F17B693C400DCD951 /* background-level1@2x.png in Resources */,
+				2A6383FD17D15C1300D7AE71 /* bitsandgods-horder.mp3 in Resources */,
 				2AAE2E6617CEC06800EB2D2A /* ipad-lvl3@2x.png in Resources */,
 				2A96616F17B17FA400289A70 /* InfoPlist.strings in Resources */,
 				2A52223917BB245300D2A7DD /* mygrimeydreams-horder.m4a in Resources */,
@@ -486,6 +511,7 @@
 				2AAE2E6917CEC06800EB2D2A /* ipad-lvl6@2x.png in Resources */,
 				2AAE2E6A17CEC06800EB2D2A /* ipad-lvl7@2x.png in Resources */,
 				2A9BCD5117BEA0AF003396F0 /* ipad-level10@2x.png in Resources */,
+				2A63840317D15C5800D7AE71 /* animous-horder.mp3 in Resources */,
 				2AAE2E7117CEC06800EB2D2A /* ipad-lvl14@2x.png in Resources */,
 				2A9BCD4C17BEA0AF003396F0 /* ipad-level5@2x.png in Resources */,
 				2AAE2E6B17CEC06800EB2D2A /* ipad-lvl8@2x.png in Resources */,
@@ -500,10 +526,12 @@
 				2AAE2E6517CEC06800EB2D2A /* ipad-lvl2@2x.png in Resources */,
 				2AAE2E6C17CEC06800EB2D2A /* ipad-lvl9@2x.png in Resources */,
 				2A96617717B17FA400289A70 /* Images.xcassets in Resources */,
+				2A6383FB17D1582B00D7AE71 /* longtooth-horder.m4a in Resources */,
 				2A9BCD4917BEA0AF003396F0 /* ipad-level2@2x.png in Resources */,
 				2AAE2E6717CEC06800EB2D2A /* ipad-lvl4@2x.png in Resources */,
 				2AD1474B17B84EA800DCD951 /* bokehtest@2x.png in Resources */,
 				2A9BCD5217BEA0AF003396F0 /* ipad-level11@2x.png in Resources */,
+				2A63840517D15C8A00D7AE71 /* mirage-horder.mp3 in Resources */,
 				2AD1474317B7E0DC00DCD951 /* background-level1-hudblur@2x.png in Resources */,
 				2AAE2E6417CEC06800EB2D2A /* ipad-lvl1@2x.png in Resources */,
 				2A9BCD4E17BEA0AF003396F0 /* ipad-level7@2x.png in Resources */,
@@ -514,6 +542,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A63840117D15C3300D7AE71 /* twilight-horder.m4a in Resources */,
 				2A96618817B17FA400289A70 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -534,6 +563,7 @@
 				2A5ACCE917B29AC80093817B /* MainMenuScene.m in Sources */,
 				2AD1474917B8457B00DCD951 /* EndLevelBox.m in Sources */,
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
+				2A63840817D15D2200D7AE71 /* HORSong.m in Sources */,
 				2A52223F17BBDEF500D2A7DD /* NSString+THUtil.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
 				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
