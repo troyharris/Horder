@@ -20,7 +20,7 @@
 + (NSArray *)arrayOfSongs {
     return @[[HORSong songFromFilename:@"mygrimeydreams-horder" extension:@"m4a"],
              [HORSong songFromFilename:@"longtooth-horder" extension:@"m4a"],
-             [HORSong songFromFilename:@"bitsandgots-horder" extension:@"mp3"],
+             [HORSong songFromFilename:@"bitsandgods-horder" extension:@"mp3"],
              [HORSong songFromFilename:@"twilight-horder" extension:@"m4a"],
              [HORSong songFromFilename:@"animous-horder" extension:@"mp3"],
              [HORSong songFromFilename:@"mirage-horder" extension:@"mp3"]

@@ -121,7 +121,7 @@ static inline BOOL skSpecialRoll() {
     LetterBox *box = [[LetterBox alloc] initWithSize:size];
     if (wildCard) {
         if (skSpecialRoll()) {
-            box.letterNode.text = @"_";
+            box.letterNode.text = @" ";
             return box;
         }
     } if (exploding) {

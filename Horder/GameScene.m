@@ -191,15 +191,19 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
     [self addChild:self.scoreLabel];
     
-    self.okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
-    self.okayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.hudMargin + (CGRectGetHeight(self.okayButton.frame) /2));
-    self.okayButton.name = @"okay";
-    [self addChild:self.okayButton];
-    
     self.clearButton = [[SKSpriteNode alloc] initWithColor:[UIColor pomegranateColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
     self.clearButton.position = CGPointMake(CGRectGetMidX(self.frame) + 70, self.hudMargin + (CGRectGetHeight(self.clearButton.frame) /2));
     self.clearButton.name = @"clear";
     [self addChild:self.clearButton];
+    
+    [self addOkayButton];
+}
+
+-(void)addOkayButton {
+    self.okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor sunflowerColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
+    self.okayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.hudMargin + (CGRectGetHeight(self.okayButton.frame) /2));
+    self.okayButton.name = @"notOkay";
+    //[self addChild:self.okayButton];
 }
 
 -(void)addHiddenFoulLine {
@@ -447,7 +451,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         }
     }
     [self.draftWord removeAllObjects];
-    self.okayButton.color = [UIColor clearColor];
+    [self.okayButton removeFromParent];
+    self.okayButton.name = @"notOkay";
     self.wordLabel.text = @"";
 }
 
@@ -464,8 +469,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         [self.draftWord addObject:node];
         node.inWord = YES;
     }
-    if (self.draftWord.count >= self.settings.minLetters) {
-        self.okayButton.color = [UIColor sunflowerColor];
+    if (self.draftWord.count >= self.settings.minLetters && [self.okayButton.name isEqualToString:@"notOkay"]) {
+        [self addChild:self.okayButton];
+        self.okayButton.name = @"okay";
     }
 }
 

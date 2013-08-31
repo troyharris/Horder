@@ -11,6 +11,7 @@
 @implementation WordsDatabase
 
 +(BOOL)isWord:(NSString *)word {
+    NSString *wordWithWild = [word stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     NSString *sqLiteDb = [[NSBundle mainBundle] pathForResource:@"words"
                                                          ofType:@"sqlite3"];
     sqlite3 *database;
@@ -20,7 +21,7 @@
     }
     
     int goodID = -1;
-    NSString *select = [NSString stringWithFormat:@"SELECT id FROM words WHERE word LIKE '%@'", word];
+    NSString *select = [NSString stringWithFormat:@"SELECT id FROM words WHERE word LIKE '%@'", wordWithWild];
     sqlite3_stmt *statement;
     if (sqlite3_prepare_v2(database, [select UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -96,7 +97,9 @@
              @"X": @5,
              @"Y": @3,
              @"Z": @6,
-             @"_": @0
+             @"_": @0,
+             @" ": @0,
+             @"*": @0
              };
 }
 
