@@ -11,9 +11,11 @@
 #import "InstructionBox.h"
 #import "EndLevelBox.h"
 #import "WordsDatabase.h"
+#import "GlobalScore.h"
 #import "HORSong.h"
 #import "UIColor+FlatUI.h"
 #import "NSString+THUtil.h"
+#import "FISoundEngine.h"
 
 @interface GameScene() {
     float verticalAxis, lateralAxis, longitudinalAxis;
@@ -46,6 +48,8 @@
 @property (nonatomic, strong) EndLevelBox *endBox;
 @property (nonatomic, strong) AVAudioPlayer *musicPlayer;
 @property (nonatomic, strong) CMMotionManager *motionManager;
+@property (nonatomic, strong) FISoundEngine *soundEngine;
+@property (nonatomic, strong) FISound *boxHitSound;
 
 @end
 
@@ -55,6 +59,7 @@
 
 static const uint32_t boxCategory   =  0x1 << 1;
 static const uint32_t wallCategory  =  0x1 << 2;
+static const uint32_t floorCategory =  0x1 << 3;
 
 static inline CGFloat skRandf() {
     return rand() / (CGFloat) RAND_MAX;
@@ -108,6 +113,12 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.hudButtonSize = CGRectGetHeight(self.frame) / 16;
     self.score = @0;
     self.draftWord = [[NSMutableArray alloc] init];
+    self.globalScore = [GlobalScore sharedScore];
+}
+
+- (void)setupSoundEngine {
+    self.soundEngine = [FISoundEngine sharedEngine];
+    self.boxHitSound = [self.soundEngine soundNamed:@"HORBoxClick0.wav" maxPolyphony:16 error:nil];
 }
 
 -(void)setupMotionManager {
@@ -154,7 +165,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     floor.position = CGPointMake(CGRectGetMidX(self.frame), self.hudHeight / 2);
     floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
     floor.physicsBody.dynamic = NO;
-    floor.physicsBody.categoryBitMask = wallCategory;
+    floor.physicsBody.categoryBitMask = floorCategory;
     [self addChild:floor];
     
     SKSpriteNode *leftwall = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(thickness, CGRectGetHeight(self.frame) - self.hudHeight + thickness)];
@@ -224,6 +235,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 -(void)createSceneContents {
     self.scaleMode = SKSceneScaleModeAspectFit;
     [self setupVars];
+    [self setupSoundEngine];
     [self setupMotionManager];
     [self setupBackgroundMusic];
     [self addBackground];
@@ -257,7 +269,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     } else {
         secString = [NSString stringWithFormat:@"%d", seconds];
     }
-    NSLog(@"Clock: %d:%@", minutes, secString);
+    //NSLog(@"Clock: %d:%@", minutes, secString);
     self.gameClock.text = [NSString stringWithFormat:@"%d:%@", minutes, secString];
 }
 
@@ -338,7 +350,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     LetterBox *box = [LetterBox letterBoxWithSize:CGSizeMake(self.boxWidth, self.boxWidth) bigBoxes:self.settings.wideBoxes explodingBoxes:self.settings.explodingBoxes wildCardBoxes:self.settings.wildCard];
     box.position = CGPointMake(skRand(0, self.size.width), self.size.height-50);
     box.physicsBody.categoryBitMask = boxCategory;
-    box.physicsBody.contactTestBitMask = boxCategory;
+    box.physicsBody.contactTestBitMask = boxCategory | floorCategory;
     box.delegate = self;
     [self addChild:box];
 }
@@ -370,6 +382,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             [self.endBox removeFromParent];
             NSNumber *nextLevel = @([self.settings.levelNumber intValue] + 1);
             NSLog(@"Going to Level %d", [nextLevel intValue]);
+            self.globalScore.currentScore = @([self.globalScore.currentScore intValue] + [self.score intValue]);
+            NSLog(@"Global Score is now %d", [self.globalScore.currentScore intValue]);
             [self goToLevel:nextLevel];
         } else if ([node.name isEqualToString:@"retryButton"]) {
             [self.endBox removeFromParent];
@@ -390,14 +404,27 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
 //    NSLog(@"Box collided with Box");
-    LetterBox *lb1, *lb2;
-    lb1 = (LetterBox *)contact.bodyA.node;
-    lb2 = (LetterBox *)contact.bodyB.node;
-    lb1.hasCollided = YES;
-    lb2.hasCollided = YES;
-    if ([lb1.letterNode.text isEqualToString:@"*"] || [lb2.letterNode.text isEqualToString:@"*"]) {
-        [lb2 hitByExploder];
-        [lb1 hitByExploder];
+//    NSLog(@"contact impulse: %f", contact.collisionImpulse);
+    if (contact.bodyA.categoryBitMask == floorCategory || contact.bodyB.categoryBitMask == floorCategory) {
+        if (contact.collisionImpulse > 40) {
+            //[self runAction:[SKAction playSoundFileNamed:[self clickSound] waitForCompletion:YES]];
+            [self clickSoundWithImpulse:contact.collisionImpulse];
+        }
+    }
+    if (contact.bodyA.categoryBitMask == boxCategory && contact.bodyB.categoryBitMask == boxCategory) {
+        if (contact.collisionImpulse > 40) {
+            //[self runAction:[SKAction playSoundFileNamed:[self clickSound] waitForCompletion:YES]];
+            [self clickSoundWithImpulse:contact.collisionImpulse];
+        }
+        LetterBox *lb1, *lb2;
+        lb1 = (LetterBox *)contact.bodyA.node;
+        lb2 = (LetterBox *)contact.bodyB.node;
+        lb1.hasCollided = YES;
+        lb2.hasCollided = YES;
+        if ([lb1.letterNode.text isEqualToString:@"*"] || [lb2.letterNode.text isEqualToString:@"*"]) {
+            [lb2 hitByExploder];
+            [lb1 hitByExploder];
+        }
     }
 }
 
@@ -473,6 +500,15 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         [self addChild:self.okayButton];
         self.okayButton.name = @"okay";
     }
+}
+
+- (void)clickSoundWithImpulse:(CGFloat)impulse {
+    CGFloat volume = (impulse - 60) / 100;
+    volume = volume > 1 ? 1.0 : volume;
+    volume = volume < 0 ? 0.0 : volume;
+    volume = volume * 0.6;
+//    NSLog(@"Volume is: %f", volume);
+    [self.boxHitSound playWithGain:volume];
 }
 
 -(void)updateWordLabel {

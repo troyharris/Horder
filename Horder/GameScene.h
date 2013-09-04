@@ -12,10 +12,13 @@
 #import "LetterBox.h"
 
 @class LevelSettings;
+@class GlobalScore;
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate, AVAudioPlayerDelegate, LetterBoxDelegate>
 
 @property (nonatomic, strong) LevelSettings *settings;
+@property (nonatomic, strong) GlobalScore *globalScore;
+
 
 +(GameScene *)sceneWithLevelSetup:(LevelSettings *)levelSettings size:(CGSize)size;
 

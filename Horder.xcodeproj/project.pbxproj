@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A08E74C17D6CD5F0090F86D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A08E74B17D6CD5F0090F86D /* OpenAL.framework */; };
+		2A08E75017D6D36A0090F86D /* GlobalScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A08E74F17D6D36A0090F86D /* GlobalScore.m */; };
 		2A31AFBC17B1B88100E34B17 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */; };
 		2A31AFBE17B1B8FD00E34B17 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */; };
 		2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31AFC017B1B96800E34B17 /* LetterBox.m */; };
@@ -36,6 +38,11 @@
 		2A63840317D15C5800D7AE71 /* animous-horder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840217D15C5800D7AE71 /* animous-horder.mp3 */; };
 		2A63840517D15C8A00D7AE71 /* mirage-horder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840417D15C8A00D7AE71 /* mirage-horder.mp3 */; };
 		2A63840817D15D2200D7AE71 /* HORSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A63840717D15D2200D7AE71 /* HORSong.m */; };
+		2A63840917D1717A00D7AE71 /* twilight-horder.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2A6383FF17D15C3300D7AE71 /* twilight-horder.m4a */; };
+		2A63840E17D1758500D7AE71 /* HORBoxClick0.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840B17D1758500D7AE71 /* HORBoxClick0.wav */; };
+		2A63840F17D1758500D7AE71 /* HORBoxClick1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840C17D1758500D7AE71 /* HORBoxClick1.wav */; };
+		2A63841017D1758500D7AE71 /* HORBoxClick2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840D17D1758500D7AE71 /* HORBoxClick2.wav */; };
+		2A89658317D6BEC4006206F8 /* libFinch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89658217D6BEC4006206F8 /* libFinch.a */; };
 		2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616417B17FA400289A70 /* Foundation.framework */; };
 		2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616617B17FA400289A70 /* CoreGraphics.framework */; };
 		2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616817B17FA400289A70 /* UIKit.framework */; };
@@ -96,6 +103,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A08E72C17D6C40A0090F86D /* FIError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FIError.h; path = Finch/FIError.h; sourceTree = "<group>"; };
+		2A08E72D17D6C40A0090F86D /* FIError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FIError.m; path = Finch/FIError.m; sourceTree = "<group>"; };
+		2A08E72E17D6C40A0090F86D /* FITestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FITestCase.h; path = Finch/FITestCase.h; sourceTree = "<group>"; };
+		2A08E72F17D6C40A0090F86D /* FITestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FITestCase.m; path = Finch/FITestCase.m; sourceTree = "<group>"; };
+		2A08E73017D6C40A0090F86D /* FISoundDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundDevice.h; path = Finch/FISoundDevice.h; sourceTree = "<group>"; };
+		2A08E73117D6C40A0090F86D /* FISoundDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundDevice.m; path = Finch/FISoundDevice.m; sourceTree = "<group>"; };
+		2A08E73217D6C40A0090F86D /* FISoundDeviceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundDeviceTests.m; path = Finch/FISoundDeviceTests.m; sourceTree = "<group>"; };
+		2A08E73317D6C40A0090F86D /* FISoundContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundContext.h; path = Finch/FISoundContext.h; sourceTree = "<group>"; };
+		2A08E73417D6C40A0090F86D /* FISoundContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundContext.m; path = Finch/FISoundContext.m; sourceTree = "<group>"; };
+		2A08E73517D6C40A0090F86D /* FISoundContextTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundContextTests.m; path = Finch/FISoundContextTests.m; sourceTree = "<group>"; };
+		2A08E73617D6C40A0090F86D /* FISampleFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleFormat.h; path = Finch/FISampleFormat.h; sourceTree = "<group>"; };
+		2A08E73717D6C40A0090F86D /* FISampleFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleFormat.m; path = Finch/FISampleFormat.m; sourceTree = "<group>"; };
+		2A08E73817D6C40A0090F86D /* FISampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleBuffer.h; path = Finch/FISampleBuffer.h; sourceTree = "<group>"; };
+		2A08E73917D6C40A0090F86D /* FISampleBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleBuffer.m; path = Finch/FISampleBuffer.m; sourceTree = "<group>"; };
+		2A08E73A17D6C40A0090F86D /* FISampleBufferTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleBufferTests.m; path = Finch/FISampleBufferTests.m; sourceTree = "<group>"; };
+		2A08E73B17D6C40A0090F86D /* FISampleDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleDecoder.h; path = Finch/FISampleDecoder.h; sourceTree = "<group>"; };
+		2A08E73C17D6C40A0090F86D /* FISampleDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleDecoder.m; path = Finch/FISampleDecoder.m; sourceTree = "<group>"; };
+		2A08E73D17D6C40A0090F86D /* FISampleDecoderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleDecoderTests.m; path = Finch/FISampleDecoderTests.m; sourceTree = "<group>"; };
+		2A08E73E17D6C40A0090F86D /* FISoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSource.h; path = Finch/FISoundSource.h; sourceTree = "<group>"; };
+		2A08E73F17D6C40A0090F86D /* FISoundSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSource.m; path = Finch/FISoundSource.m; sourceTree = "<group>"; };
+		2A08E74017D6C40A0090F86D /* FISoundSourceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSourceTests.h; path = Finch/FISoundSourceTests.h; sourceTree = "<group>"; };
+		2A08E74117D6C40A0090F86D /* FISoundSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSourceTests.m; path = Finch/FISoundSourceTests.m; sourceTree = "<group>"; };
+		2A08E74317D6C4120090F86D /* FISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISound.h; path = Finch/FISound.h; sourceTree = "<group>"; };
+		2A08E74417D6C4120090F86D /* FISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISound.m; path = Finch/FISound.m; sourceTree = "<group>"; };
+		2A08E74517D6C4120090F86D /* FISoundTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundTests.m; path = Finch/FISoundTests.m; sourceTree = "<group>"; };
+		2A08E74617D6C4120090F86D /* FISoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundEngine.h; path = Finch/FISoundEngine.h; sourceTree = "<group>"; };
+		2A08E74717D6C4120090F86D /* FISoundEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundEngine.m; path = Finch/FISoundEngine.m; sourceTree = "<group>"; };
+		2A08E74817D6C4120090F86D /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Tests-Prefix.pch"; path = "Finch/Tests-Prefix.pch"; sourceTree = "<group>"; };
+		2A08E74917D6C4120090F86D /* Lib-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = "Lib-Prefix.pch"; path = "Finch/Lib-Prefix.pch"; sourceTree = "<group>"; };
+		2A08E74B17D6CD5F0090F86D /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		2A08E74E17D6D36A0090F86D /* GlobalScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalScore.h; sourceTree = "<group>"; };
+		2A08E74F17D6D36A0090F86D /* GlobalScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalScore.m; sourceTree = "<group>"; };
 		2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2A31AFBF17B1B96800E34B17 /* LetterBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LetterBox.h; sourceTree = "<group>"; };
@@ -135,6 +174,10 @@
 		2A63840417D15C8A00D7AE71 /* mirage-horder.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "mirage-horder.mp3"; sourceTree = "<group>"; };
 		2A63840617D15D2200D7AE71 /* HORSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HORSong.h; sourceTree = "<group>"; };
 		2A63840717D15D2200D7AE71 /* HORSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HORSong.m; sourceTree = "<group>"; };
+		2A63840B17D1758500D7AE71 /* HORBoxClick0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HORBoxClick0.wav; sourceTree = "<group>"; };
+		2A63840C17D1758500D7AE71 /* HORBoxClick1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HORBoxClick1.wav; sourceTree = "<group>"; };
+		2A63840D17D1758500D7AE71 /* HORBoxClick2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HORBoxClick2.wav; sourceTree = "<group>"; };
+		2A89658217D6BEC4006206F8 /* libFinch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFinch.a; path = "../../Finch/build/Debug-iphoneos/libFinch.a"; sourceTree = "<group>"; };
 		2A96616117B17FA400289A70 /* Horder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A96616417B17FA400289A70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A96616617B17FA400289A70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -196,6 +239,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A08E74C17D6CD5F0090F86D /* OpenAL.framework in Frameworks */,
+				2A89658317D6BEC4006206F8 /* libFinch.a in Frameworks */,
 				2A6383F917D0551300D7AE71 /* GameKit.framework in Frameworks */,
 				2A52223617BB22A700D2A7DD /* AVFoundation.framework in Frameworks */,
 				2A5ACCFB17B2C1CA0093817B /* QuartzCore.framework in Frameworks */,
@@ -222,6 +267,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A08E74217D6C40A0090F86D /* Plumbing */ = {
+			isa = PBXGroup;
+			children = (
+				2A08E72C17D6C40A0090F86D /* FIError.h */,
+				2A08E72D17D6C40A0090F86D /* FIError.m */,
+				2A08E72E17D6C40A0090F86D /* FITestCase.h */,
+				2A08E72F17D6C40A0090F86D /* FITestCase.m */,
+				2A08E73017D6C40A0090F86D /* FISoundDevice.h */,
+				2A08E73117D6C40A0090F86D /* FISoundDevice.m */,
+				2A08E73217D6C40A0090F86D /* FISoundDeviceTests.m */,
+				2A08E73317D6C40A0090F86D /* FISoundContext.h */,
+				2A08E73417D6C40A0090F86D /* FISoundContext.m */,
+				2A08E73517D6C40A0090F86D /* FISoundContextTests.m */,
+				2A08E73617D6C40A0090F86D /* FISampleFormat.h */,
+				2A08E73717D6C40A0090F86D /* FISampleFormat.m */,
+				2A08E73817D6C40A0090F86D /* FISampleBuffer.h */,
+				2A08E73917D6C40A0090F86D /* FISampleBuffer.m */,
+				2A08E73A17D6C40A0090F86D /* FISampleBufferTests.m */,
+				2A08E73B17D6C40A0090F86D /* FISampleDecoder.h */,
+				2A08E73C17D6C40A0090F86D /* FISampleDecoder.m */,
+				2A08E73D17D6C40A0090F86D /* FISampleDecoderTests.m */,
+				2A08E73E17D6C40A0090F86D /* FISoundSource.h */,
+				2A08E73F17D6C40A0090F86D /* FISoundSource.m */,
+				2A08E74017D6C40A0090F86D /* FISoundSourceTests.h */,
+				2A08E74117D6C40A0090F86D /* FISoundSourceTests.m */,
+			);
+			name = Plumbing;
+			path = ../../../Finch;
+			sourceTree = "<group>";
+		};
+		2A08E74A17D6C4120090F86D /* High-Level Interface */ = {
+			isa = PBXGroup;
+			children = (
+				2A08E74317D6C4120090F86D /* FISound.h */,
+				2A08E74417D6C4120090F86D /* FISound.m */,
+				2A08E74517D6C4120090F86D /* FISoundTests.m */,
+				2A08E74617D6C4120090F86D /* FISoundEngine.h */,
+				2A08E74717D6C4120090F86D /* FISoundEngine.m */,
+				2A08E74817D6C4120090F86D /* Tests-Prefix.pch */,
+				2A08E74917D6C4120090F86D /* Lib-Prefix.pch */,
+			);
+			name = "High-Level Interface";
+			path = ../../../Finch;
+			sourceTree = "<group>";
+		};
+		2A08E74D17D6D3340090F86D /* Score */ = {
+			isa = PBXGroup;
+			children = (
+				2A08E74E17D6D36A0090F86D /* GlobalScore.h */,
+				2A08E74F17D6D36A0090F86D /* GlobalScore.m */,
+			);
+			name = Score;
+			sourceTree = "<group>";
+		};
 		2A31AFC217B1B9E600E34B17 /* UtilityClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +415,25 @@
 			name = Sprites;
 			sourceTree = "<group>";
 		};
+		2A63840A17D1757100D7AE71 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				2A63840B17D1758500D7AE71 /* HORBoxClick0.wav */,
+				2A63840C17D1758500D7AE71 /* HORBoxClick1.wav */,
+				2A63840D17D1758500D7AE71 /* HORBoxClick2.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		2A89658417D6C27A006206F8 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				2A08E74A17D6C4120090F86D /* High-Level Interface */,
+				2A08E74217D6C40A0090F86D /* Plumbing */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
 		2A96615817B17FA400289A70 = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +456,8 @@
 		2A96616317B17FA400289A70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A08E74B17D6CD5F0090F86D /* OpenAL.framework */,
+				2A89658217D6BEC4006206F8 /* libFinch.a */,
 				2A6383F817D0551300D7AE71 /* GameKit.framework */,
 				2A52223517BB22A700D2A7DD /* AVFoundation.framework */,
 				2A5ACCFA17B2C1CA0093817B /* QuartzCore.framework */,
@@ -356,6 +476,9 @@
 		2A96616A17B17FA400289A70 /* Horder */ = {
 			isa = PBXGroup;
 			children = (
+				2A08E74D17D6D3340090F86D /* Score */,
+				2A89658417D6C27A006206F8 /* Support */,
+				2A63840A17D1757100D7AE71 /* Sounds */,
 				2A52223717BB243A00D2A7DD /* Music */,
 				2A5ACCFC17B2C3980093817B /* Sprites */,
 				2A5ACCEC17B2BA190093817B /* BackgroundImages */,
@@ -494,11 +617,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AD1473F17B693C400DCD951 /* background-level1@2x.png in Resources */,
+				2A63841017D1758500D7AE71 /* HORBoxClick2.wav in Resources */,
 				2A6383FD17D15C1300D7AE71 /* bitsandgods-horder.mp3 in Resources */,
 				2AAE2E6617CEC06800EB2D2A /* ipad-lvl3@2x.png in Resources */,
 				2A96616F17B17FA400289A70 /* InfoPlist.strings in Resources */,
 				2A52223917BB245300D2A7DD /* mygrimeydreams-horder.m4a in Resources */,
+				2A63840E17D1758500D7AE71 /* HORBoxClick0.wav in Resources */,
 				2AAE2E6817CEC06800EB2D2A /* ipad-lvl5@2x.png in Resources */,
+				2A63840917D1717A00D7AE71 /* twilight-horder.m4a in Resources */,
 				2A9BCD4F17BEA0AF003396F0 /* ipad-level8@2x.png in Resources */,
 				2A9BCD3E17BEA093003396F0 /* ipad-level1@2x.png in Resources */,
 				2A5ACCF217B2BD430093817B /* treetest-ipadret@2x.png in Resources */,
@@ -529,6 +655,7 @@
 				2A6383FB17D1582B00D7AE71 /* longtooth-horder.m4a in Resources */,
 				2A9BCD4917BEA0AF003396F0 /* ipad-level2@2x.png in Resources */,
 				2AAE2E6717CEC06800EB2D2A /* ipad-lvl4@2x.png in Resources */,
+				2A63840F17D1758500D7AE71 /* HORBoxClick1.wav in Resources */,
 				2AD1474B17B84EA800DCD951 /* bokehtest@2x.png in Resources */,
 				2A9BCD5217BEA0AF003396F0 /* ipad-level11@2x.png in Resources */,
 				2A63840517D15C8A00D7AE71 /* mirage-horder.mp3 in Resources */,
@@ -565,6 +692,7 @@
 				2A96617517B17FA400289A70 /* AppDelegate.m in Sources */,
 				2A63840817D15D2200D7AE71 /* HORSong.m in Sources */,
 				2A52223F17BBDEF500D2A7DD /* NSString+THUtil.m in Sources */,
+				2A08E75017D6D36A0090F86D /* GlobalScore.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
 				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
 				2AD1474617B835EA00DCD951 /* InstructionBox.m in Sources */,
@@ -648,6 +776,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 			};
 			name = Debug;
 		};
@@ -679,6 +808,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -692,6 +822,7 @@
 				GCC_PREFIX_HEADER = "Horder/Horder-Prefix.pch";
 				INFOPLIST_FILE = "Horder/Horder-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "$(BUILT_PRODUCTS_DIR)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -705,6 +836,7 @@
 				GCC_PREFIX_HEADER = "Horder/Horder-Prefix.pch";
 				INFOPLIST_FILE = "Horder/Horder-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
