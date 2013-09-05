@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "HORGameCenterManager.h"
 
 @implementation AppDelegate
 
@@ -19,6 +20,7 @@
     self.window.rootViewController = rootVC;
     //self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    [[HORGameCenterManager sharedInstance] authenticateUser];
     return YES;
 }
 

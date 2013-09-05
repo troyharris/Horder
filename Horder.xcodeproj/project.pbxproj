@@ -43,6 +43,7 @@
 		2A63840F17D1758500D7AE71 /* HORBoxClick1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840C17D1758500D7AE71 /* HORBoxClick1.wav */; };
 		2A63841017D1758500D7AE71 /* HORBoxClick2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2A63840D17D1758500D7AE71 /* HORBoxClick2.wav */; };
 		2A89658317D6BEC4006206F8 /* libFinch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89658217D6BEC4006206F8 /* libFinch.a */; };
+		2A8C4BCD17D8238200572847 /* HORGameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8C4BCC17D8238200572847 /* HORGameCenterManager.m */; };
 		2A96616517B17FA400289A70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616417B17FA400289A70 /* Foundation.framework */; };
 		2A96616717B17FA400289A70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616617B17FA400289A70 /* CoreGraphics.framework */; };
 		2A96616917B17FA400289A70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A96616817B17FA400289A70 /* UIKit.framework */; };
@@ -103,35 +104,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2A08E72C17D6C40A0090F86D /* FIError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FIError.h; path = Finch/FIError.h; sourceTree = "<group>"; };
-		2A08E72D17D6C40A0090F86D /* FIError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FIError.m; path = Finch/FIError.m; sourceTree = "<group>"; };
-		2A08E72E17D6C40A0090F86D /* FITestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FITestCase.h; path = Finch/FITestCase.h; sourceTree = "<group>"; };
-		2A08E72F17D6C40A0090F86D /* FITestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FITestCase.m; path = Finch/FITestCase.m; sourceTree = "<group>"; };
-		2A08E73017D6C40A0090F86D /* FISoundDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundDevice.h; path = Finch/FISoundDevice.h; sourceTree = "<group>"; };
-		2A08E73117D6C40A0090F86D /* FISoundDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundDevice.m; path = Finch/FISoundDevice.m; sourceTree = "<group>"; };
-		2A08E73217D6C40A0090F86D /* FISoundDeviceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundDeviceTests.m; path = Finch/FISoundDeviceTests.m; sourceTree = "<group>"; };
-		2A08E73317D6C40A0090F86D /* FISoundContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundContext.h; path = Finch/FISoundContext.h; sourceTree = "<group>"; };
-		2A08E73417D6C40A0090F86D /* FISoundContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundContext.m; path = Finch/FISoundContext.m; sourceTree = "<group>"; };
-		2A08E73517D6C40A0090F86D /* FISoundContextTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundContextTests.m; path = Finch/FISoundContextTests.m; sourceTree = "<group>"; };
-		2A08E73617D6C40A0090F86D /* FISampleFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleFormat.h; path = Finch/FISampleFormat.h; sourceTree = "<group>"; };
-		2A08E73717D6C40A0090F86D /* FISampleFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleFormat.m; path = Finch/FISampleFormat.m; sourceTree = "<group>"; };
-		2A08E73817D6C40A0090F86D /* FISampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleBuffer.h; path = Finch/FISampleBuffer.h; sourceTree = "<group>"; };
-		2A08E73917D6C40A0090F86D /* FISampleBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleBuffer.m; path = Finch/FISampleBuffer.m; sourceTree = "<group>"; };
-		2A08E73A17D6C40A0090F86D /* FISampleBufferTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleBufferTests.m; path = Finch/FISampleBufferTests.m; sourceTree = "<group>"; };
-		2A08E73B17D6C40A0090F86D /* FISampleDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleDecoder.h; path = Finch/FISampleDecoder.h; sourceTree = "<group>"; };
-		2A08E73C17D6C40A0090F86D /* FISampleDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleDecoder.m; path = Finch/FISampleDecoder.m; sourceTree = "<group>"; };
-		2A08E73D17D6C40A0090F86D /* FISampleDecoderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISampleDecoderTests.m; path = Finch/FISampleDecoderTests.m; sourceTree = "<group>"; };
-		2A08E73E17D6C40A0090F86D /* FISoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSource.h; path = Finch/FISoundSource.h; sourceTree = "<group>"; };
-		2A08E73F17D6C40A0090F86D /* FISoundSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSource.m; path = Finch/FISoundSource.m; sourceTree = "<group>"; };
-		2A08E74017D6C40A0090F86D /* FISoundSourceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSourceTests.h; path = Finch/FISoundSourceTests.h; sourceTree = "<group>"; };
-		2A08E74117D6C40A0090F86D /* FISoundSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundSourceTests.m; path = Finch/FISoundSourceTests.m; sourceTree = "<group>"; };
-		2A08E74317D6C4120090F86D /* FISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISound.h; path = Finch/FISound.h; sourceTree = "<group>"; };
-		2A08E74417D6C4120090F86D /* FISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISound.m; path = Finch/FISound.m; sourceTree = "<group>"; };
-		2A08E74517D6C4120090F86D /* FISoundTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundTests.m; path = Finch/FISoundTests.m; sourceTree = "<group>"; };
-		2A08E74617D6C4120090F86D /* FISoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundEngine.h; path = Finch/FISoundEngine.h; sourceTree = "<group>"; };
-		2A08E74717D6C4120090F86D /* FISoundEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = FISoundEngine.m; path = Finch/FISoundEngine.m; sourceTree = "<group>"; };
-		2A08E74817D6C4120090F86D /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Tests-Prefix.pch"; path = "Finch/Tests-Prefix.pch"; sourceTree = "<group>"; };
-		2A08E74917D6C4120090F86D /* Lib-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = "Lib-Prefix.pch"; path = "Finch/Lib-Prefix.pch"; sourceTree = "<group>"; };
+		2A08E72C17D6C40A0090F86D /* FIError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FIError.h; path = Finch/FIError.h; sourceTree = "<group>"; };
+		2A08E72D17D6C40A0090F86D /* FIError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FIError.m; path = Finch/FIError.m; sourceTree = "<group>"; };
+		2A08E72E17D6C40A0090F86D /* FITestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FITestCase.h; path = Finch/FITestCase.h; sourceTree = "<group>"; };
+		2A08E72F17D6C40A0090F86D /* FITestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FITestCase.m; path = Finch/FITestCase.m; sourceTree = "<group>"; };
+		2A08E73017D6C40A0090F86D /* FISoundDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISoundDevice.h; path = Finch/FISoundDevice.h; sourceTree = "<group>"; };
+		2A08E73117D6C40A0090F86D /* FISoundDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundDevice.m; path = Finch/FISoundDevice.m; sourceTree = "<group>"; };
+		2A08E73217D6C40A0090F86D /* FISoundDeviceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundDeviceTests.m; path = Finch/FISoundDeviceTests.m; sourceTree = "<group>"; };
+		2A08E73317D6C40A0090F86D /* FISoundContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISoundContext.h; path = Finch/FISoundContext.h; sourceTree = "<group>"; };
+		2A08E73417D6C40A0090F86D /* FISoundContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundContext.m; path = Finch/FISoundContext.m; sourceTree = "<group>"; };
+		2A08E73517D6C40A0090F86D /* FISoundContextTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundContextTests.m; path = Finch/FISoundContextTests.m; sourceTree = "<group>"; };
+		2A08E73617D6C40A0090F86D /* FISampleFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISampleFormat.h; path = Finch/FISampleFormat.h; sourceTree = "<group>"; };
+		2A08E73717D6C40A0090F86D /* FISampleFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISampleFormat.m; path = Finch/FISampleFormat.m; sourceTree = "<group>"; };
+		2A08E73817D6C40A0090F86D /* FISampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISampleBuffer.h; path = Finch/FISampleBuffer.h; sourceTree = "<group>"; };
+		2A08E73917D6C40A0090F86D /* FISampleBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISampleBuffer.m; path = Finch/FISampleBuffer.m; sourceTree = "<group>"; };
+		2A08E73A17D6C40A0090F86D /* FISampleBufferTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISampleBufferTests.m; path = Finch/FISampleBufferTests.m; sourceTree = "<group>"; };
+		2A08E73B17D6C40A0090F86D /* FISampleDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISampleDecoder.h; path = Finch/FISampleDecoder.h; sourceTree = "<group>"; };
+		2A08E73C17D6C40A0090F86D /* FISampleDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISampleDecoder.m; path = Finch/FISampleDecoder.m; sourceTree = "<group>"; };
+		2A08E73D17D6C40A0090F86D /* FISampleDecoderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISampleDecoderTests.m; path = Finch/FISampleDecoderTests.m; sourceTree = "<group>"; };
+		2A08E73E17D6C40A0090F86D /* FISoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISoundSource.h; path = Finch/FISoundSource.h; sourceTree = "<group>"; };
+		2A08E73F17D6C40A0090F86D /* FISoundSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundSource.m; path = Finch/FISoundSource.m; sourceTree = "<group>"; };
+		2A08E74017D6C40A0090F86D /* FISoundSourceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISoundSourceTests.h; path = Finch/FISoundSourceTests.h; sourceTree = "<group>"; };
+		2A08E74117D6C40A0090F86D /* FISoundSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundSourceTests.m; path = Finch/FISoundSourceTests.m; sourceTree = "<group>"; };
+		2A08E74317D6C4120090F86D /* FISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISound.h; path = Finch/FISound.h; sourceTree = "<group>"; };
+		2A08E74417D6C4120090F86D /* FISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISound.m; path = Finch/FISound.m; sourceTree = "<group>"; };
+		2A08E74517D6C4120090F86D /* FISoundTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundTests.m; path = Finch/FISoundTests.m; sourceTree = "<group>"; };
+		2A08E74617D6C4120090F86D /* FISoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FISoundEngine.h; path = Finch/FISoundEngine.h; sourceTree = "<group>"; };
+		2A08E74717D6C4120090F86D /* FISoundEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FISoundEngine.m; path = Finch/FISoundEngine.m; sourceTree = "<group>"; };
+		2A08E74817D6C4120090F86D /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Tests-Prefix.pch"; path = "Finch/Tests-Prefix.pch"; sourceTree = "<group>"; };
+		2A08E74917D6C4120090F86D /* Lib-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Lib-Prefix.pch"; path = "Finch/Lib-Prefix.pch"; sourceTree = "<group>"; };
 		2A08E74B17D6CD5F0090F86D /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		2A08E74E17D6D36A0090F86D /* GlobalScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalScore.h; sourceTree = "<group>"; };
 		2A08E74F17D6D36A0090F86D /* GlobalScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalScore.m; sourceTree = "<group>"; };
@@ -178,6 +179,8 @@
 		2A63840C17D1758500D7AE71 /* HORBoxClick1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HORBoxClick1.wav; sourceTree = "<group>"; };
 		2A63840D17D1758500D7AE71 /* HORBoxClick2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HORBoxClick2.wav; sourceTree = "<group>"; };
 		2A89658217D6BEC4006206F8 /* libFinch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFinch.a; path = "../../Finch/build/Debug-iphoneos/libFinch.a"; sourceTree = "<group>"; };
+		2A8C4BCB17D8238200572847 /* HORGameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HORGameCenterManager.h; sourceTree = "<group>"; };
+		2A8C4BCC17D8238200572847 /* HORGameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HORGameCenterManager.m; sourceTree = "<group>"; };
 		2A96616117B17FA400289A70 /* Horder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A96616417B17FA400289A70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A96616617B17FA400289A70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -317,6 +320,8 @@
 			children = (
 				2A08E74E17D6D36A0090F86D /* GlobalScore.h */,
 				2A08E74F17D6D36A0090F86D /* GlobalScore.m */,
+				2A8C4BCB17D8238200572847 /* HORGameCenterManager.h */,
+				2A8C4BCC17D8238200572847 /* HORGameCenterManager.m */,
 			);
 			name = Score;
 			sourceTree = "<group>";
@@ -695,6 +700,7 @@
 				2A08E75017D6D36A0090F86D /* GlobalScore.m in Sources */,
 				2A31B45117B1BB9400E34B17 /* THUtil.m in Sources */,
 				2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */,
+				2A8C4BCD17D8238200572847 /* HORGameCenterManager.m in Sources */,
 				2AD1474617B835EA00DCD951 /* InstructionBox.m in Sources */,
 				2A5ACCF917B2C0E70093817B /* Button.m in Sources */,
 				2A31B45917B1C04600E34B17 /* WordsDatabase.m in Sources */,
