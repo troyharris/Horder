@@ -73,6 +73,7 @@
     ls.maxTime = 120;
     ls.minLetters = 3;
     ls.minScore = 40;
+    ls.blackClock = YES;
     ls.explodingBoxes = NO;
     ls.wideBoxes = NO;
     ls.moonGravity = NO;

@@ -21,9 +21,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _spriteView = [[SKView alloc] initWithFrame:CGRectMake(0, 0, [THUtil getRealDeviceWidth], [THUtil getRealDeviceHeight])];
-        _spriteView.showsNodeCount = YES;
-        _spriteView.showsDrawCount = YES;
-        _spriteView.showsFPS = YES;
+        //_spriteView.showsNodeCount = YES;
+        //_spriteView.showsDrawCount = YES;
+        //_spriteView.showsFPS = YES;
         self.view = _spriteView;
     }
     return self;

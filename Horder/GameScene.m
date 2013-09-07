@@ -26,6 +26,7 @@
 @property (nonatomic) CGFloat hudMargin;
 @property (nonatomic) CGFloat hudFontSize;
 @property (nonatomic) CGFloat hudButtonSize;
+@property (nonatomic) CGFloat hudScoreWidth;
 @property (nonatomic) int foulSeconds;
 @property (nonatomic) BOOL lost;
 @property (nonatomic) BOOL boxesOnscreen;
@@ -34,8 +35,9 @@
 @property BOOL contentCreated;
 @property (nonatomic, strong) NSMutableArray *draftWord;
 @property (nonatomic, strong) SKSpriteNode *background;
-@property (nonatomic, strong) SKLabelNode *wordLabel;
-@property (nonatomic, strong) SKLabelNode *scoreLabel;
+@property (nonatomic, strong) UILabel *wordLabel;
+@property (nonatomic, strong) UILabel *scoreLabel;
+@property (nonatomic, strong) UILabel *totalScoreLabel;
 @property (nonatomic, strong) NSNumber *score;
 @property (nonatomic, strong) SKSpriteNode *okayButton;
 @property (nonatomic, strong) SKSpriteNode *clearButton;
@@ -43,7 +45,7 @@
 @property (nonatomic, strong) NSTimer *foulTimer;
 @property (nonatomic, strong) NSTimer *gameTimer;
 @property (nonatomic, strong) SKLabelNode *backgroundCounter;
-@property (nonatomic, strong) SKLabelNode *gameClock;
+@property (nonatomic, strong) UILabel *gameClock;
 @property (nonatomic, strong) InstructionBox *instruct;
 @property (nonatomic, strong) EndLevelBox *endBox;
 @property (nonatomic, strong) AVAudioPlayer *musicPlayer;
@@ -108,9 +110,10 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.foulSeconds = 0;
     self.boxWidth = CGRectGetWidth(self.frame) / 8;
     self.hudHeight = CGRectGetHeight(self.frame) / 8;
-    self.hudMargin = self.hudHeight / 4;
+    self.hudMargin = self.hudHeight / 16;
     self.hudFontSize = self.hudHeight / 2;
     self.hudButtonSize = CGRectGetHeight(self.frame) / 16;
+    self.hudScoreWidth = CGRectGetWidth(self.frame) / 4;
     self.score = @0;
     self.draftWord = [[NSMutableArray alloc] init];
     self.globalScore = [GlobalScore sharedScore];
@@ -184,16 +187,38 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)addHUD {
-    self.wordLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Light"];
-    self.wordLabel.position = CGPointMake(self.hudMargin, self.hudMargin);
-    self.wordLabel.color = [UIColor asbestosColor];
-    self.wordLabel.fontSize = self.hudFontSize;
+    CGFloat yOrigin = (CGRectGetHeight(self.frame) - self.hudHeight) + self.hudMargin;
+    CGFloat width = 400;
+    CGFloat xOrigin = (CGRectGetWidth(self.frame) / 2) - (width / 2);
+    CGRect wordFrame = CGRectMake(xOrigin, yOrigin, width, 60);
+    self.wordLabel = [[UILabel alloc] initWithFrame:wordFrame];
+    //self.wordLabel.position = CGPointMake(self.hudMargin, self.hudMargin);
+    //self.wordLabel.color = [UIColor asbestosColor];
+    self.wordLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:60];
+    self.wordLabel.textColor = [UIColor whiteColor];
+    //self.wordLabel.fontSize = self.hudFontSize;
     self.wordLabel.text = @" ";
-    self.wordLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    self.wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-    [self addChild:self.wordLabel];
+    //self.wordLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    //self.wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    self.wordLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.wordLabel];
+    CGRect scoreTitleFrame = CGRectMake(CGRectGetMaxX(self.frame) - self.hudScoreWidth - self.hudMargin, yOrigin, self.hudScoreWidth, 40);
+    UILabel *scoreTitle = [[UILabel alloc] initWithFrame:scoreTitleFrame];
+    scoreTitle.textColor = [UIColor whiteColor];
+    scoreTitle.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:32];
+    scoreTitle.text = @"Level Score";
+    scoreTitle.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:scoreTitle];
+    //self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
     
-    self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"HelveticaNeue-Black"];
+    CGRect scoreFrame = CGRectMake(CGRectGetMinX(scoreTitle.frame), CGRectGetMaxY(self.frame) - self.hudMargin - 50, self.hudScoreWidth, 50);
+    self.scoreLabel = [[UILabel alloc] initWithFrame:scoreFrame];
+    self.scoreLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    self.scoreLabel.textAlignment = NSTextAlignmentCenter;
+    self.scoreLabel.textColor = [UIColor whiteColor];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d / %d", 0, self.settings.minScore];
+    [self.view addSubview:self.scoreLabel];
+    /*
     self.scoreLabel.position = CGPointMake(CGRectGetMaxX(self.frame) - self.hudMargin, self.hudMargin + (CGRectGetHeight(self.scoreLabel.frame) /2));
     self.scoreLabel.color = [UIColor whiteColor];
     self.scoreLabel.fontSize = self.hudFontSize;
@@ -201,18 +226,46 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
     [self addChild:self.scoreLabel];
+     */
     
-    self.clearButton = [[SKSpriteNode alloc] initWithColor:[UIColor pomegranateColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
-    self.clearButton.position = CGPointMake(CGRectGetMidX(self.frame) + 70, self.hudMargin + (CGRectGetHeight(self.clearButton.frame) /2));
+    CGRect globalTitleFrame = CGRectMake(self.hudMargin, yOrigin, self.hudScoreWidth, 40);
+    UILabel *globalTitle = [[UILabel alloc] initWithFrame:globalTitleFrame];
+    globalTitle.textColor = [UIColor whiteColor];
+    globalTitle.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:32];
+    globalTitle.text = @"Total Score";
+    globalTitle.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:globalTitle];
+    
+    CGRect totalScoreFrame = CGRectMake(self.hudMargin, CGRectGetMaxY(self.frame) - self.hudMargin - 50, self.hudScoreWidth, 50);
+    self.totalScoreLabel = [[UILabel alloc] initWithFrame:totalScoreFrame];
+    self.totalScoreLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    self.totalScoreLabel.textAlignment = NSTextAlignmentCenter;
+    self.totalScoreLabel.textColor = [UIColor whiteColor];
+    self.totalScoreLabel.text = [NSString stringWithFormat:@"%d", [self.globalScore.currentScore intValue]];
+    [self.view addSubview:self.totalScoreLabel];
+    
+    self.clearButton = [[SKSpriteNode alloc] initWithImageNamed:@"cancel"];
+    //self.clearButton = [[SKSpriteNode alloc] initWithColor:[UIColor pomegranateColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
+    self.clearButton.position = CGPointMake(CGRectGetMidX(self.frame) + 35, self.hudMargin + (CGRectGetHeight(self.clearButton.frame) /2));
     self.clearButton.name = @"clear";
     [self addChild:self.clearButton];
     
     [self addOkayButton];
+    
+    //CGRect clockFrame = CGRectMake(self.hudMargin, CGRectGetMaxY(self.frame) - ((self.hudHeight / 2) + 30), self.hudScoreWidth, 60);
+    CGRect clockFrame = CGRectMake(self.hudMargin, self.hudMargin, self.hudScoreWidth / 2, 60);
+    self.gameClock = [[UILabel alloc] initWithFrame:clockFrame];
+    self.gameClock.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:32];;
+    self.gameClock.textColor = self.settings.blackClock ? [UIColor asbestosColor] : [UIColor whiteColor];
+    self.gameClock.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.gameClock];
+    
 }
 
 -(void)addOkayButton {
-    self.okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor sunflowerColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
-    self.okayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.hudMargin + (CGRectGetHeight(self.okayButton.frame) /2));
+    self.okayButton = [[SKSpriteNode alloc] initWithImageNamed:@"check"];
+    //self.okayButton = [[SKSpriteNode alloc] initWithColor:[UIColor sunflowerColor] size:CGSizeMake(self.hudButtonSize, self.hudButtonSize)];
+    self.okayButton.position = CGPointMake(CGRectGetMidX(self.frame) - 35, self.hudMargin + (CGRectGetHeight(self.okayButton.frame) /2));
     self.okayButton.name = @"notOkay";
     //[self addChild:self.okayButton];
 }
@@ -233,6 +286,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 }
 
 -(void)createSceneContents {
+    [[self.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     self.scaleMode = SKSceneScaleModeAspectFit;
     [self setupVars];
     [self setupSoundEngine];
@@ -486,7 +540,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 -(void)updateScore:(int)addScore {
     int newScore = [self.score intValue] + addScore;
     self.score = [NSNumber numberWithInt:newScore];
-    self.scoreLabel.text = [NSString stringWithFormat:@"%d", newScore];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d / %d", newScore, self.settings.minScore];
 }
 
 -(void)addLetterToDraft:(LetterBox *)node {

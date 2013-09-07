@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2A08E74C17D6CD5F0090F86D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A08E74B17D6CD5F0090F86D /* OpenAL.framework */; };
 		2A08E75017D6D36A0090F86D /* GlobalScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A08E74F17D6D36A0090F86D /* GlobalScore.m */; };
+		2A09F52117DA9BB600795713 /* cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A09F52017DA9BB600795713 /* cancel@2x.png */; };
+		2A09F52317DA9D3400795713 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A09F52217DA9D3400795713 /* check@2x.png */; };
 		2A31AFBC17B1B88100E34B17 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */; };
 		2A31AFBE17B1B8FD00E34B17 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */; };
 		2A31AFC117B1B96800E34B17 /* LetterBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A31AFC017B1B96800E34B17 /* LetterBox.m */; };
@@ -136,6 +138,8 @@
 		2A08E74B17D6CD5F0090F86D /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		2A08E74E17D6D36A0090F86D /* GlobalScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalScore.h; sourceTree = "<group>"; };
 		2A08E74F17D6D36A0090F86D /* GlobalScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalScore.m; sourceTree = "<group>"; };
+		2A09F52017DA9BB600795713 /* cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel@2x.png"; sourceTree = "<group>"; };
+		2A09F52217DA9D3400795713 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
 		2A31AFBB17B1B88100E34B17 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		2A31AFBD17B1B8FD00E34B17 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2A31AFBF17B1B96800E34B17 /* LetterBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LetterBox.h; sourceTree = "<group>"; };
@@ -415,6 +419,8 @@
 		2A5ACCFC17B2C3980093817B /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
+				2A09F52217DA9D3400795713 /* check@2x.png */,
+				2A09F52017DA9BB600795713 /* cancel@2x.png */,
 				2A5ACCFD17B2C3B10093817B /* button-sunflower@2x.png */,
 			);
 			name = Sprites;
@@ -644,6 +650,7 @@
 				2A9BCD5117BEA0AF003396F0 /* ipad-level10@2x.png in Resources */,
 				2A63840317D15C5800D7AE71 /* animous-horder.mp3 in Resources */,
 				2AAE2E7117CEC06800EB2D2A /* ipad-lvl14@2x.png in Resources */,
+				2A09F52317DA9D3400795713 /* check@2x.png in Resources */,
 				2A9BCD4C17BEA0AF003396F0 /* ipad-level5@2x.png in Resources */,
 				2AAE2E6B17CEC06800EB2D2A /* ipad-lvl8@2x.png in Resources */,
 				2A9BCD4A17BEA0AF003396F0 /* ipad-level3@2x.png in Resources */,
@@ -666,6 +673,7 @@
 				2A63840517D15C8A00D7AE71 /* mirage-horder.mp3 in Resources */,
 				2AD1474317B7E0DC00DCD951 /* background-level1-hudblur@2x.png in Resources */,
 				2AAE2E6417CEC06800EB2D2A /* ipad-lvl1@2x.png in Resources */,
+				2A09F52117DA9BB600795713 /* cancel@2x.png in Resources */,
 				2A9BCD4E17BEA0AF003396F0 /* ipad-level7@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
