@@ -80,6 +80,12 @@
     })];
 }
 
++ (void)updateScore:(NSInteger)score {
+    GKScore *globalScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"HorderTopScore"];
+    globalScore.value = score;
+    [GKScore reportScores:@[globalScore] withCompletionHandler:nil];
+}
+
 -(UIViewController*) getRootViewController {
     return [UIApplication
             sharedApplication].keyWindow.rootViewController;

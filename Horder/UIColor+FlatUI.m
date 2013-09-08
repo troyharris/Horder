@@ -118,6 +118,10 @@
     return [[UIColor cloudsColor] colorWithAlphaComponent:0.7];
 }
 
++ (UIColor *)hudDarkColor {
+    return [[UIColor midnightBlueColor] colorWithAlphaComponent:0.7];
+}
+
 + (UIColor *) blendedColorWithForegroundColor:(UIColor *)foregroundColor
                               backgroundColor:(UIColor *)backgroundColor
                                  percentBlend:(CGFloat) percentBlend {

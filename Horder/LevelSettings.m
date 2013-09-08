@@ -43,6 +43,9 @@
         case 9:
             return [LevelSettings levelNine];
             break;
+        case 10:
+            return [LevelSettings levelTen];
+            break;
         default:
             return [LevelSettings levelOne];
             break;
@@ -104,6 +107,7 @@
     ls.maxTime = 120;
     ls.minLetters = 4;
     ls.minScore = 40;
+    ls.darkHUD = YES;
     ls.explodingBoxes = NO;
     ls.wideBoxes = YES;
     ls.moonGravity = NO;
@@ -148,7 +152,7 @@
     ls.hinderSprites = nil;
     ls.maxTime = 90;
     ls.minLetters = 3;
-    ls.minScore = 30;
+    ls.minScore = 40;
     ls.explodingBoxes = YES;
     ls.wideBoxes = YES;
     ls.moonGravity = NO;
@@ -158,7 +162,7 @@
 
 + (LevelSettings *)levelEight {
     LevelSettings *ls = [[LevelSettings alloc] init];
-    ls.levelNumber = @7;
+    ls.levelNumber = @8;
     ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
     ls.hinderSprites = nil;
     ls.maxTime = 120;
@@ -173,12 +177,27 @@
 
 + (LevelSettings *)levelNine {
     LevelSettings *ls = [[LevelSettings alloc] init];
-    ls.levelNumber = @7;
+    ls.levelNumber = @9;
     ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
     ls.hinderSprites = nil;
     ls.maxTime = 180;
     ls.minLetters = 4;
-    ls.minScore = 80;
+    ls.minScore = 75;
+    ls.explodingBoxes = YES;
+    ls.wideBoxes = YES;
+    ls.moonGravity = NO;
+    ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelTen {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @10;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 120;
+    ls.minLetters = 4;
+    ls.minScore = 60;
     ls.explodingBoxes = YES;
     ls.wideBoxes = YES;
     ls.moonGravity = NO;

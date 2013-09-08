@@ -26,7 +26,7 @@
         [self addChild:_instructions];
         
         _instructTime = [[SKLabelNode alloc] initWithFontNamed:fontName];
-        _instructTime.fontSize = 30;
+        _instructTime.fontSize = 24;
         _instructTime.position = CGPointMake(CGRectGetMidX(self.frame), 50);
         _instructions.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
         [self addChild:_instructTime];

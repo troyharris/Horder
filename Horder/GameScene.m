@@ -13,6 +13,7 @@
 #import "WordsDatabase.h"
 #import "GlobalScore.h"
 #import "HORSong.h"
+#import "HORGameCenterManager.h"
 #import "UIColor+FlatUI.h"
 #import "NSString+THUtil.h"
 #import "FISoundEngine.h"
@@ -164,7 +165,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)addWalls {
     CGFloat thickness = 10.0;
-    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:[SKColor hudColor] size:CGSizeMake(CGRectGetWidth(self.frame), self.hudHeight)];
+    SKColor *hudColor = self.settings.darkHUD ? [SKColor hudDarkColor] : [SKColor hudColor];
+    SKSpriteNode *floor = [[SKSpriteNode alloc] initWithColor:hudColor size:CGSizeMake(CGRectGetWidth(self.frame), self.hudHeight)];
     floor.position = CGPointMake(CGRectGetMidX(self.frame), self.hudHeight / 2);
     floor.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:floor.size];
     floor.physicsBody.dynamic = NO;
@@ -440,8 +442,11 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             NSLog(@"Global Score is now %d", [self.globalScore.currentScore intValue]);
             [self goToLevel:nextLevel];
         } else if ([node.name isEqualToString:@"retryButton"]) {
+            [HORGameCenterManager updateScore:[self.globalScore.currentScore integerValue]];
             [self.endBox removeFromParent];
-            [self goToLevel:self.settings.levelNumber];
+            self.globalScore.currentScore = @0;
+            //[self goToLevel:self.settings.levelNumber];
+            [self goToLevel:@1];
         }
         if ([node.name isEqualToString:@"okay"]) {
             [self submitWord];

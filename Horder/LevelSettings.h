@@ -17,6 +17,7 @@
 @property (nonatomic) int minScore;
 @property (nonatomic) int minLetters;
 @property (nonatomic) BOOL blackClock;
+@property (nonatomic) BOOL darkHUD;
 @property (nonatomic) BOOL explodingBoxes;
 @property (nonatomic) BOOL wideBoxes;
 @property (nonatomic) BOOL moonGravity;

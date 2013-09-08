@@ -14,6 +14,8 @@
 @property (getter = isUserAuthenticated) BOOL userAuthenticated;
 
 + (instancetype)sharedInstance;
++ (void)updateScore:(NSInteger)score;
+
 - (void)authenticateUser;
 
 @end

@@ -63,7 +63,7 @@
     } else {
         elb.passFail.text = @"FAIL";
         elb.passFail.fontColor = [SKColor pomegranateColor];
-        elb.okayText.text = @"Try Again";
+        elb.okayText.text = @"Restart";
         elb.okayButton.name = @"retryButton";
     }
     elb.score.text = [NSString stringWithFormat:@"Score: %d", score];

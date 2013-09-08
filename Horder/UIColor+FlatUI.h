@@ -32,6 +32,7 @@
 + (UIColor *) concreteColor;
 + (UIColor *) asbestosColor;
 + (UIColor *)hudColor;
++ (UIColor *)hudDarkColor;
 
 + (UIColor *) blendedColorWithForegroundColor:(UIColor *)foregroundColor
                               backgroundColor:(UIColor *)backgroundColor
