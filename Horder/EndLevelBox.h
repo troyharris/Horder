@@ -19,5 +19,6 @@
 -(id)initWithSize:(CGSize)size sceneWidth:(CGFloat)width;
 
 +(EndLevelBox *)endBoxWithPass:(BOOL)pass score:(int)score scoreNeeded:(int)scoreNeeded sceneWidth:(CGFloat)sceneWidth;
++(EndLevelBox *)finalLevelEndBoxWithScore:(int)score sceneWidth:(CGFloat)sceneWidth;
 
 @end

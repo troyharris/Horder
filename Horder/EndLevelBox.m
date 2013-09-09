@@ -71,4 +71,14 @@
     return elb;
 }
 
++(EndLevelBox *)finalLevelEndBoxWithScore:(int)score sceneWidth:(CGFloat)sceneWidth {
+    EndLevelBox *elb = [[EndLevelBox alloc] initWithSize:CGSizeMake(sceneWidth - 10, sceneWidth / 2) sceneWidth:sceneWidth];
+    elb.passFail.text = @"THE END";
+    elb.okayText.text = @"New Game >";
+    elb.okayButton.name = @"retryButton";
+    elb.score.text = @"Congratulations, you won!";
+    elb.scoreNeeded.text = [NSString stringWithFormat:@"Final Score: %d", score];
+    return elb;
+}
+
 @end

@@ -28,6 +28,7 @@
 @property (nonatomic) CGFloat hudFontSize;
 @property (nonatomic) CGFloat hudButtonSize;
 @property (nonatomic) CGFloat hudScoreWidth;
+@property (nonatomic) CGFloat boxRate;
 @property (nonatomic) int foulSeconds;
 @property (nonatomic) BOOL lost;
 @property (nonatomic) BOOL boxesOnscreen;
@@ -85,7 +86,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 -(void)didSimulatePhysics
 {
     verticalAxis = self.motionManager.deviceMotion.attitude.roll;
-    CGFloat xForce = -9.8;
+    CGFloat xForce = self.settings.moonGravity ? -1 : -9.8;
     if (self.lost == YES && self.boxesOnscreen == YES && self.ended == 0) {
         [self removeAllActions];
         xForce = 9.8;
@@ -118,6 +119,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.score = @0;
     self.draftWord = [[NSMutableArray alloc] init];
     self.globalScore = [GlobalScore sharedScore];
+    self.boxRate = self.settings.finalLevel ? 1.3 : 2.0;
 }
 
 - (void)setupSoundEngine {
@@ -280,9 +282,15 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)displayInstructions {
     self.instruct = [[InstructionBox alloc] initWithSize:CGSizeMake(CGRectGetWidth(self.frame) / 2, CGRectGetWidth(self.frame) / 2) sceneWidth:CGRectGetWidth(self.frame)];
-    self.instruct.instructions.text = [NSString stringWithFormat:@"Score at least %d points", self.settings.minScore];
-    self.instruct.instructTime.text = [NSString stringWithFormat:@"In %@", [NSString secondsToString:self.settings.maxTime]];
-    self.instruct.wordLength.text = [NSString stringWithFormat:@"Words must be at least %@ letters", [NSString numberToWord:self.settings.minLetters]];
+    if (!self.settings.finalLevel) {
+        self.instruct.instructions.text = [NSString stringWithFormat:@"Score at least %d points", self.settings.minScore];
+        self.instruct.instructTime.text = [NSString stringWithFormat:@"In %@", [NSString secondsToString:self.settings.maxTime]];
+        self.instruct.wordLength.text = [NSString stringWithFormat:@"Words must be at least %@ letters", [NSString numberToWord:self.settings.minLetters]];
+    } else {
+        self.instruct.instructions.text = @"Final Level";
+        self.instruct.instructTime.text = @"There is no time limit";
+        self.instruct.wordLength.text = @"Score as many points as you can";
+    }
     self.instruct.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
     [self addChild:self.instruct];
 }
@@ -397,7 +405,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 -(void)startBoxes {
     SKAction *makeBoxes = [SKAction sequence: @[
                                                 [SKAction performSelector:@selector(addBox) onTarget:self],
-                                                [SKAction waitForDuration:2.0 withRange:0.15]
+                                                [SKAction waitForDuration:self.boxRate withRange:0.15]
                                                 ]];
     [self runAction: [SKAction repeatActionForever:makeBoxes]];
 }
@@ -432,7 +440,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         if ([node.name isEqualToString:@"beginButton"]) {
             [self.instruct removeFromParent];
             [self startBoxes];
-            [self startGameTimer];
+            if (self.settings.maxTime > 0) {
+                [self startGameTimer];
+            }
             [self.musicPlayer play];
         } else if ([node.name isEqualToString:@"nextButton"]) {
             [self.endBox removeFromParent];
@@ -591,7 +601,11 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     } else {
         passFail = NO;
     }
-    self.endBox = [EndLevelBox endBoxWithPass:passFail score:[self.score intValue] scoreNeeded:self.settings.minScore sceneWidth:CGRectGetWidth(self.frame)];
+    if (!self.settings.finalLevel) {
+        self.endBox = [EndLevelBox endBoxWithPass:passFail score:[self.score intValue] scoreNeeded:self.settings.minScore sceneWidth:CGRectGetWidth(self.frame)];
+    } else {
+        self.endBox = [EndLevelBox finalLevelEndBoxWithScore:[self.globalScore.currentScore intValue] + [self.score intValue] sceneWidth:CGRectGetWidth(self.frame)];
+    }
     self.endBox.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame));
     [self addChild:self.endBox];
 }

@@ -22,6 +22,7 @@
 @property (nonatomic) BOOL wideBoxes;
 @property (nonatomic) BOOL moonGravity;
 @property (nonatomic) BOOL wildCard;
+@property (nonatomic) BOOL finalLevel;
 
 + (LevelSettings *)levelWithNumber:(NSNumber *)levelNumber;
 

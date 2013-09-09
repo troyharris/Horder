@@ -46,8 +46,26 @@
         case 10:
             return [LevelSettings levelTen];
             break;
+        case 11:
+            return [LevelSettings levelEleven];
+            break;
+        case 12:
+            return [LevelSettings levelTwelve];
+            break;
+        case 13:
+            return [LevelSettings levelThirteen];
+            break;
+        case 14:
+            return [LevelSettings levelFourteen];
+            break;
+        case 15:
+            return [LevelSettings levelFifteen];
+            break;
+        case 16:
+            return [LevelSettings levelSixteen];
+            break;
         default:
-            return [LevelSettings levelOne];
+            return [LevelSettings levelSixteen];
             break;
     }
     return [LevelSettings levelOne];
@@ -110,7 +128,7 @@
     ls.darkHUD = YES;
     ls.explodingBoxes = NO;
     ls.wideBoxes = YES;
-    ls.moonGravity = NO;
+    ls.moonGravity = YES;
     ls.wildCard = NO;
     return ls;
 }
@@ -194,14 +212,107 @@
     LevelSettings *ls = [[LevelSettings alloc] init];
     ls.levelNumber = @10;
     ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.darkHUD = YES;
     ls.hinderSprites = nil;
     ls.maxTime = 120;
     ls.minLetters = 4;
     ls.minScore = 60;
     ls.explodingBoxes = YES;
     ls.wideBoxes = YES;
+    ls.moonGravity = YES;
+    ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelEleven {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @11;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 120;
+    ls.minLetters = 3;
+    ls.minScore = 70;
+    ls.explodingBoxes = YES;
+    ls.wideBoxes = NO;
     ls.moonGravity = NO;
     ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelTwelve {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @12;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 180;
+    ls.minLetters = 3;
+    ls.minScore = 100;
+    ls.explodingBoxes = YES;
+    ls.wideBoxes = YES;
+    ls.moonGravity = NO;
+    ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelThirteen {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @13;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.darkHUD = YES;
+    ls.hinderSprites = nil;
+    ls.maxTime = 150;
+    ls.minLetters = 3;
+    ls.minScore = 100;
+    ls.explodingBoxes = YES;
+    ls.wideBoxes = YES;
+    ls.moonGravity = YES;
+    ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelFourteen {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @14;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 120;
+    ls.minLetters = 3;
+    ls.minScore = 80;
+    ls.explodingBoxes = YES;
+    ls.wideBoxes = YES;
+    ls.moonGravity = NO;
+    ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelFifteen {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @15;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 240;
+    ls.minLetters = 4;
+    ls.minScore = 250;
+    ls.explodingBoxes = YES;
+    ls.wideBoxes = YES;
+    ls.moonGravity = NO;
+    ls.wildCard = YES;
+    return ls;
+}
+
++ (LevelSettings *)levelSixteen {
+    LevelSettings *ls = [[LevelSettings alloc] init];
+    ls.levelNumber = @16;
+    ls.backgroundName = [LevelSettings levelBackgroundNameWithNumber:ls.levelNumber];
+    ls.hinderSprites = nil;
+    ls.maxTime = 0;
+    ls.minLetters = 3;
+    ls.minScore = 0;
+    ls.explodingBoxes = NO;
+    ls.wideBoxes = YES;
+    ls.moonGravity = NO;
+    ls.wildCard = NO;
+    ls.finalLevel = YES;
     return ls;
 }
 
