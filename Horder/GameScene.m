@@ -51,9 +51,12 @@
 @property (nonatomic, strong) InstructionBox *instruct;
 @property (nonatomic, strong) EndLevelBox *endBox;
 @property (nonatomic, strong) AVAudioPlayer *musicPlayer;
+@property (nonatomic, strong) AVAudioPlayer *endMusic;
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) FISoundEngine *soundEngine;
 @property (nonatomic, strong) FISound *boxHitSound;
+@property (nonatomic, strong) FISound *wordClearSound;
+@property (nonatomic, strong) FISound *explosionSound;
 
 @end
 
@@ -91,7 +94,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         [self removeAllActions];
         xForce = 9.8;
     }
-    self.physicsWorld.gravity=CGPointMake(verticalAxis*10, xForce);
+    self.physicsWorld.gravity=CGVectorMake(verticalAxis*10, xForce);
     if (self.lost == YES && self.boxesOnscreen == NO && self.ended == 0) {
         [self displayEnd];
         self.ended = 1;
@@ -124,7 +127,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 - (void)setupSoundEngine {
     self.soundEngine = [FISoundEngine sharedEngine];
-    self.boxHitSound = [self.soundEngine soundNamed:@"HORBoxClick0.wav" maxPolyphony:16 error:nil];
+    self.boxHitSound = [self.soundEngine soundNamed:@"thump.wav" maxPolyphony:10 error:nil];
+    self.wordClearSound = [self.soundEngine soundNamed:@"whoosh.wav" maxPolyphony:1 error:nil];
+    self.explosionSound = [self.soundEngine soundNamed:@"explode.wav" maxPolyphony:5 error:nil];
 }
 
 -(void)setupMotionManager {
@@ -143,11 +148,17 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 
 -(void)setupBackgroundMusic {
     HORSong *song = [HORSong randomSong];
-    NSString *bgMusicPath = [[NSBundle mainBundle] pathForResource:song.filename ofType:song.extension];
-    NSURL *fileURL = [NSURL URLWithString:bgMusicPath];
-    self.musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+    self.musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:song.url error:nil];
     [self.musicPlayer prepareToPlay];
     self.musicPlayer.delegate = self;
+}
+
+- (void)playEndMusicWithSuccess:(BOOL)success {
+    HORSong *endSong = success ? [HORSong successSong] : [HORSong failSong];
+    self.endMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:endSong.url error:nil];
+    self.endMusic.delegate = self;
+    [self.endMusic prepareToPlay];
+    [self.endMusic play];
 }
 
 -(void)addBackground {
@@ -430,6 +441,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     }
 }
 
+- (void)playExplosionSound {
+    [self.explosionSound play];
+}
 
 #pragma mark - Physics, Touches & Collisions
 
@@ -443,19 +457,21 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             if (self.settings.maxTime > 0) {
                 [self startGameTimer];
             }
-            [self.musicPlayer play];
+            //[self.musicPlayer play];
         } else if ([node.name isEqualToString:@"nextButton"]) {
             [self.endBox removeFromParent];
             NSNumber *nextLevel = @([self.settings.levelNumber intValue] + 1);
             NSLog(@"Going to Level %d", [nextLevel intValue]);
             self.globalScore.currentScore = @([self.globalScore.currentScore intValue] + [self.score intValue]);
             NSLog(@"Global Score is now %d", [self.globalScore.currentScore intValue]);
+            [self.endMusic stop];
             [self goToLevel:nextLevel];
         } else if ([node.name isEqualToString:@"retryButton"]) {
             [HORGameCenterManager updateScore:[self.globalScore.currentScore integerValue]];
             [self.endBox removeFromParent];
             self.globalScore.currentScore = @0;
             //[self goToLevel:self.settings.levelNumber];
+            [self.endMusic stop];
             [self goToLevel:@1];
         }
         if ([node.name isEqualToString:@"okay"]) {
@@ -532,6 +548,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
             SKAction *seq = [SKAction sequence:@[group, remove]];
             [b runAction:seq];
         }
+        [self.wordClearSound play];
         [self clearWordWithWin:YES];
     } else {
         NSLog(@"Invalid Word");
@@ -591,7 +608,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 #pragma - Game Flow
 
 -(void)displayEnd {
-        [self.musicPlayer stop];
+    [self.musicPlayer stop];
     [self enumerateChildNodesWithName:@"box" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
@@ -601,6 +618,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     } else {
         passFail = NO;
     }
+    [self playEndMusicWithSuccess:passFail];
     if (!self.settings.finalLevel) {
         self.endBox = [EndLevelBox endBoxWithPass:passFail score:[self.score intValue] scoreNeeded:self.settings.minScore sceneWidth:CGRectGetWidth(self.frame)];
     } else {

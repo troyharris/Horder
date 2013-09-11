@@ -12,9 +12,11 @@
 #import <CoreImage/CoreImage.h>
 #import "GameScene.h"
 #import "LevelSettings.h"
+#import "HORSong.h"
 
 @interface MainMenuScene ()
 @property BOOL contentCreated;
+@property (nonatomic, strong) AVAudioPlayer *themePlayer;
 @end
 
 @implementation MainMenuScene
@@ -37,10 +39,19 @@
         longitudinalAxis = currentAttitude.yaw;
     }];
     self.scaleMode = SKSceneScaleModeAspectFit;
+    [self playTheme];
     [self createBackground];
     [self createAnchor];
     [self createLogo];
     [self createButton];
+}
+
+- (void)playTheme {
+    HORSong *themeSong = [HORSong themeSong];
+    self.themePlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:themeSong.url error:nil];
+    self.themePlayer.delegate = self;
+    [self.themePlayer prepareToPlay];
+    [self.themePlayer play];
 }
 
 -(void)createBackground {
@@ -63,15 +74,27 @@
     CGFloat boxWidth = (CGRectGetWidth(self.frame) / [name count]) - margin;
     CGSize boxSize = CGSizeMake(boxWidth, boxWidth);
     CGFloat xOffSet = (boxWidth / 2) + margin;
+    CGFloat maxLength = 20;
+    LetterBox *lastLb;
     for (NSString *l in name) {
+        SKNode *previous;
         LetterBox *lb = [[LetterBox alloc] initWithSize:boxSize];
+        if (!lastLb) {
+            NSLog(@"No anchor");
+            previous = _anchor;
+        } else {
+            previous = lastLb;
+        }
         lb.letterNode.text = l;
-        lb.position = CGPointMake(xOffSet, CGRectGetMidY(self.frame) + boxWidth);
+        lb.position = CGPointMake(xOffSet, CGRectGetMinY(self.frame) + (boxWidth / 2));
         xOffSet = xOffSet + boxWidth + margin;
         [self addChild:lb];
         SKPhysicsJointLimit *joint = [SKPhysicsJointLimit jointWithBodyA:_anchor.physicsBody bodyB:lb.physicsBody anchorA:CGPointMake(CGRectGetMidX(_anchor.frame), CGRectGetMidY(_anchor.frame)) anchorB:CGPointMake(CGRectGetMidY(lb.frame), CGRectGetMidY(lb.frame))];
-        joint.maxLength = 50;
+        joint.maxLength = maxLength;
         [self.physicsWorld addJoint:joint];
+        lastLb = lb;
+        margin = margin + boxWidth + 5;
+        maxLength = maxLength + boxWidth;
     }
 }
 
@@ -85,7 +108,7 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    self.physicsWorld.gravity=CGPointMake(verticalAxis*2, -9.8);
+    self.physicsWorld.gravity=CGVectorMake(verticalAxis*2, -9.8);
     
 }
 
@@ -100,6 +123,7 @@
             [blurTrans setDefaults];
             self.shouldEnableEffects = YES;
             SKTransition *trans = [SKTransition transitionWithCIFilter:blurTrans duration:1.0];
+            [self.themePlayer stop];
             [self.view presentScene:game transition:trans];
         }
     }

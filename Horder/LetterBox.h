@@ -15,6 +15,7 @@
 
 @optional
 - (void)removedLetterBoxFromParent:(LetterBox *)letterBox;
+- (void)playExplosionSound;
 
 @end
 

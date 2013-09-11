@@ -17,7 +17,7 @@
 + (LevelSettings *)levelWithNumber:(NSNumber *)levelNumber {
     switch ([levelNumber intValue]) {
         case 1:
-            return [LevelSettings levelOne];
+            return [LevelSettings levelThirteen];
             break;
         case 2:
             return [LevelSettings levelTwo];

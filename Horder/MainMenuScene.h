@@ -8,9 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import <CoreMotion/CoreMotion.h>
+#import <AVFoundation/AVFoundation.h>
 #import "Button.h"
 
-@interface MainMenuScene : SKScene {
+@interface MainMenuScene : SKScene <AVAudioPlayerDelegate> {
     float verticalAxis, lateralAxis, longitudinalAxis;
 }
 

@@ -14,6 +14,8 @@
     HORSong *song = [[HORSong alloc] init];
     song.filename = filename;
     song.extension = extension;
+    NSString *musicPath = [[NSBundle mainBundle] pathForResource:filename ofType:extension];
+    song.url = [NSURL URLWithString:musicPath];
     return song;
 }
 
@@ -30,6 +32,18 @@
 + (HORSong *)randomSong {
     NSArray *songs = [HORSong arrayOfSongs];
     return (HORSong *)[songs objectAtIndex:arc4random_uniform([songs count])];
+}
+
++ (HORSong *)successSong {
+    return [HORSong songFromFilename:@"scenery-horder-atlantis" extension:@"mp3"];
+}
+
++ (HORSong *)themeSong {
+    return [HORSong songFromFilename:@"scenery-horder-myk" extension:@"mp3"];
+}
+
++ (HORSong *)failSong {
+    return [HORSong songFromFilename:@"scenery-horder-orbit" extension:@"mp3"];
 }
 
 @end

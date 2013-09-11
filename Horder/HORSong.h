@@ -12,7 +12,11 @@
 
 @property (nonatomic, strong) NSString *filename;
 @property (nonatomic, strong) NSString *extension;
+@property (nonatomic, strong) NSURL *url;
 
 + (HORSong *)randomSong;
++ (HORSong *)successSong;
++ (HORSong *)themeSong;
++ (HORSong *)failSong;
 
 @end

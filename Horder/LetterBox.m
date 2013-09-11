@@ -104,10 +104,12 @@ static inline BOOL skSpecialRoll() {
     SKAction *blinkOffQuick = [SKAction colorizeWithColor:[UIColor whiteColor] colorBlendFactor:1.0 duration:0.125];
     SKAction *zoom = [SKAction scaleBy:8 duration:0.2];
     SKAction *fade = [SKAction fadeOutWithDuration:0.2];
+    //SKAction *sound = [SKAction playSoundFileNamed:@"explosion.wav" waitForCompletion:NO];
     SKAction *group = [SKAction group:@[zoom, fade]];
     SKAction *remove = [SKAction removeFromParent];
     SKAction *seq = [SKAction sequence:@[blinkOn, blinkOff, blinkOnQuick, blinkOffQuick, group, remove]];
     [self runAction:seq completion:^(void){
+        [self.delegate playExplosionSound];
         [self.delegate removedLetterBoxFromParent:self];
     }];
 }
